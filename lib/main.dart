@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'app/pages/home_page/home_page.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'toucanet',
+        debugShowCheckedModeBanner: false,
+        title: 'toucanet',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Container());
+        home: HomePage());
   }
 }
