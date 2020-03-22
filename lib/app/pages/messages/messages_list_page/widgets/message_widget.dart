@@ -21,25 +21,30 @@ class _MessageWidgetState extends State<MessageWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: Indents.medium),
       child: Container(
+        height: 100,
         color: AppColors.mainColor,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             UserAvatar(),
-            Container(
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(color: Colors.grey[100], width: 5))),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    MessageTitle(
-                        text:
-                            '${widget.message.senderFirstname} ${widget.message.senderLastName}'),
-                    MessageText(text: widget.message.text),
-                  ],
-                )),
+            Expanded(
+                child: Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom:
+                                BorderSide(color: Colors.grey[700], width: .5))),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        MessageTitle(
+                            text:
+                                '${widget.message.senderFirstname} ${widget.message.senderLastName}'),
+                        MessageText(text: widget.message.text),
+                        Expanded(
+                          child: Container(),
+                        )
+                      ],
+                    ))),
           ],
         ),
       ),

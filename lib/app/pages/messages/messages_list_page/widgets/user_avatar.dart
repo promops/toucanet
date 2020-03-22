@@ -15,8 +15,8 @@ class _UserAvatarState extends State<UserAvatar> {
     return Padding(
         padding: const EdgeInsets.all(Indents.medium),
         child: Container(
-          width: 100,
-          height: 100,
+          width: 80,
+          height: 80,
           child: Shimmer(
             loop: 2,
             child: ClipRRect(
@@ -26,7 +26,7 @@ class _UserAvatarState extends State<UserAvatar> {
                       "https://www.zoosite.com.ua/img/poroda/319/319_1.jpg",
                   //placeholder: (context, url) =>
                   errorWidget: (context, url, error) => Icon(Icons.error),
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                 )),
             gradient: LinearGradient(colors: [Colors.grey, Colors.grey[200]]),
           ),
