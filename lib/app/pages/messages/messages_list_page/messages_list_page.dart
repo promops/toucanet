@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'widgets/message_widget.dart';
+
 import '../../../../data/models/message.dart';
+import 'widgets/message_widget.dart';
 
 class MessagesListPage extends StatefulWidget {
   @override

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/app/styles/fonts.dart';
+import 'package:toucanet/app/styles/indents.dart';
 
 class MessageText extends StatelessWidget {
   final String text;
@@ -6,8 +8,11 @@ class MessageText extends StatelessWidget {
   const MessageText({Key key, this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(text),
+    return Padding(
+      padding: const EdgeInsets.only(top: Indents.medium),
+      child: Container(
+        child: Text(text, style: Fonts.h2),
+      ),
     );
   }
 }

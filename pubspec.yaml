@@ -16,6 +16,7 @@ dependencies:
   equatable: ^1.1.1
   webview_flutter: ^0.3.14+1
   cached_network_image: ^2.0.0
+  shimmer: ^1.1.0
 
 
 dev_dependencies:

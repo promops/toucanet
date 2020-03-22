@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
+import '../../../../../data/models/message.dart';
+import '../../../../styles/app_colors.dart';
+import '../../../../styles/indents.dart';
 import 'message_text.dart';
 import 'message_title.dart';
 import 'user_avatar.dart';
-import '../../../../styles/colors.dart';
-import '../../../../styles/indents.dart';
-import '../../../../../data/models/message.dart';
 
 class MessageWidget extends StatefulWidget {
   final Message message;
@@ -18,20 +19,27 @@ class _MessageWidgetState extends State<MessageWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: medium),
+      padding: const EdgeInsets.only(bottom: Indents.medium),
       child: Container(
-        color: mainColor,
+        color: AppColors.mainColor,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             UserAvatar(),
-            Column(
-              children: <Widget>[
-                MessageTitle(
-                    text:
-                        '${widget.message.senderFirstname} ${widget.message.senderLastName}'),
-                MessageText(text: widget.message.text)
-              ],
-            ),
+            Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.grey[100], width: 5))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    MessageTitle(
+                        text:
+                            '${widget.message.senderFirstname} ${widget.message.senderLastName}'),
+                    MessageText(text: widget.message.text),
+                  ],
+                )),
           ],
         ),
       ),
