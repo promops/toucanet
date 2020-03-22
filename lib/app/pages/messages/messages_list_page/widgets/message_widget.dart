@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/pages/messages/messages_list_page/widgets/message_text.dart';
-import 'package:toucanet/app/pages/messages/messages_list_page/widgets/message_title.dart';
-import 'package:toucanet/app/pages/messages/messages_list_page/widgets/user_avatar.dart';
-import 'package:toucanet/app/styles/colors.dart';
-import 'package:toucanet/app/styles/indents.dart';
-import 'package:toucanet/data/models/message.dart';
+import 'message_text.dart';
+import 'message_title.dart';
+import 'user_avatar.dart';
+import '../../../../styles/colors.dart';
+import '../../../../styles/indents.dart';
+import '../../../../../data/models/message.dart';
 
 class MessageWidget extends StatefulWidget {
   final Message message;

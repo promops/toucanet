@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/pages/messages/messages_list_page/messages_list_page.dart';
-import 'package:toucanet/app/styles/colors.dart';
+
+import '../../styles/colors.dart';
+import '../messages/messages_list_page/messages_list_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

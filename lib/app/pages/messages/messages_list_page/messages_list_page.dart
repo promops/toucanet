@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/pages/messages/messages_list_page/widgets/message_widget.dart';
-import 'package:toucanet/data/models/message.dart';
+import 'widgets/message_widget.dart';
+import '../../../../data/models/message.dart';
 
 class MessagesListPage extends StatefulWidget {
   @override
