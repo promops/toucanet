@@ -1,3 +1,7 @@
+class Message {
+  final String text;
+  final String senderFirstname;
+  final String senderLastName;
 
-abstract class Message{}
-  
+  Message({this.text, this.senderFirstname, this.senderLastName});
+}

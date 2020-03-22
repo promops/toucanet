@@ -1,5 +1,5 @@
-const small = 4;
+const double small = 4;
 
-const medium = 8;
+const double medium = 8;
 
-const large = 16;
+const double large = 16;
