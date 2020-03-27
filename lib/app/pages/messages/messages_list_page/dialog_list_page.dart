@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../data/models/message.dart';
-import 'widgets/message_widget.dart';
+import 'widgets/dialog_widget.dart';
 
-class MessagesListPage extends StatefulWidget {
+class DialogListPage extends StatefulWidget {
   @override
-  _MessagesListPageState createState() => _MessagesListPageState();
+  _DialogListPageState createState() => _DialogListPageState();
 }
 
-class _MessagesListPageState extends State<MessagesListPage> {
+class _DialogListPageState extends State<DialogListPage> {
   Message _message;
 
   @override
@@ -22,9 +22,9 @@ class _MessagesListPageState extends State<MessagesListPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        MessageWidget(message: _message),
-        MessageWidget(message: _message),
-        MessageWidget(message: _message)
+        DialogWidget(message: _message),
+        DialogWidget(message: _message),
+        DialogWidget(message: _message)
       ],
     );
   }

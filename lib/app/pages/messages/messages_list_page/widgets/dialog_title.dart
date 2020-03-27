@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:toucanet/app/styles/fonts.dart';
 import 'package:toucanet/app/styles/indents.dart';
 
-class MessageTitle extends StatelessWidget {
+class DialogTitle extends StatelessWidget {
   final String text;
 
-  const MessageTitle({Key key, this.text}) : super(key: key);
+  const DialogTitle({Key key, this.text}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Padding(
