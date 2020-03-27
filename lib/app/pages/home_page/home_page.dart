@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/app/pages/home_page/widgets/custom_tab_bar/custom_tab.dart';
+import 'package:toucanet/app/pages/home_page/widgets/custom_tab_bar/custom_tab_bar.dart';
 
 import '../../styles/app_colors.dart';
 import '../messages/messages_list_page/messages_list_page.dart';
@@ -29,17 +31,21 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.mainColor,
-        bottomNavigationBar: TabBar(
+        bottomNavigationBar: CustomTabBar(
           controller: _tabController,
           tabs: <Widget>[
-            Tab(
-              icon: Icon(Icons.message),
-              text: 'Чаты',
+            CustomTab(
+              child: ImageIcon(
+                AssetImage('assets/icons/mail.png'),
+                color: Colors.white,
+              ),
             ),
-            Tab(
-              icon: Icon(Icons.portrait),
-              text: 'Профиль',
-            )
+            CustomTab(
+              child: ImageIcon(
+                AssetImage('assets/icons/user.png'),
+                color: Colors.white,
+              ),
+            ),
           ],
         ),
         body: TabBarView(
