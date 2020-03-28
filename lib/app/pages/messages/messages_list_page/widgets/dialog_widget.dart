@@ -22,9 +22,9 @@ class _DialogWidgetState extends State<DialogWidget> {
     return InkWell(
         onTap: () => Navigator.pushNamed(context, '/dialog'),
         child: Padding(
-          padding: const EdgeInsets.only(bottom: Indents.medium),
+          padding: const EdgeInsets.only(bottom: Indents.medium, top: Indents.medium),
           child: Container(
-            height: 100,
+            height: 80,
             color: AppColors.mainColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
