@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:toucanet/data/services/account_service.dart';
+
 import 'package:toucanet/app/blocs/app_bloc/app_bloc.dart';
-import 'package:toucanet/data/repositories/account_repository.dart';
 
 import 'package:toucanet/app/pages/home_page/home_page.dart';
-import 'package:toucanet/app/pages/auth_page/auth_page.dart';
-
+import 'package:toucanet/app/pages/auth_pages/auth_page.dart';
 import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
 
 class App extends StatelessWidget 
@@ -14,16 +14,16 @@ class App extends StatelessWidget
   @override
   Widget build(BuildContext context) 
   {
-    final AccountRepository accountRepository = RepositoryProvider.of<AccountRepository>(context);
+    final AccountService accountService = RepositoryProvider.of<AccountService>(context);
     
     return MaterialApp(
       home: 
         BlocBuilder(
-          bloc: AppBloc(accountRepository)..add(AppStarted()),
+          bloc: AppBloc(accountService)..add(AppStarted()),
           builder: (context, state) 
           {
             if (state is! AppInitialState) return Offstage();
-            return (state as AppInitialState).isAuth ? HomePage() : AuthPage();
+            return (state as AppInitialState).isAuth ? HomePage() : AuthPage(accountService);
           }
         ),
       
@@ -35,7 +35,7 @@ class App extends StatelessWidget
       ),
 
       routes: {
-        // '/': (context) => HomePage(),
+        '/main': (context) => HomePage(),
         '/dialog': (context) => DialogPage(),
       },
 

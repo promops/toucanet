@@ -10,7 +10,35 @@ class AuthInitState extends AuthState
   List<Object> get props => [];
 }
 
-class AuthSignInState extends AuthState
+class AuthBrowserLoginState extends AuthState
+{
+  final authUrl;
+
+  AuthBrowserLoginState(this.authUrl);
+
+  @override
+  List<Object> get props => [authUrl];
+}
+
+class AuthVKAppLoginState extends AuthState
+{
+  @override
+  List<Object> get props => [];
+}
+
+class AuthSuccessState extends AuthState
+{
+  @override
+  List<Object> get props => [];
+}
+
+class AuthAccessDeniedState extends AuthState
+{
+  @override
+  List<Object> get props => [];
+}
+
+class AuthErrorState extends AuthState
 {
   @override
   List<Object> get props => [];

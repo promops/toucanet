@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:toucanet/data/repositories/account_repository.dart';
+import 'package:toucanet/data/services/account_service.dart';
 
 class Injector extends StatelessWidget 
 {
@@ -16,7 +16,7 @@ class Injector extends StatelessWidget
     return MultiRepositoryProvider(
       providers: 
       [
-        RepositoryProvider<AccountRepository>(create: (_) => AccountRepository()),
+        RepositoryProvider<AccountService>(create: (_) => AccountService()),
       ],
 
       child: this.child,
