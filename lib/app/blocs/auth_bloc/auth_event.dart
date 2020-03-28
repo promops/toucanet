@@ -1,27 +1,27 @@
-import 'package:equatable/equatable.dart';
+part of 'auth_bloc.dart';
 
-class AuthEvent extends Equatable{
+@immutable
+abstract class AuthEvent extends Equatable 
+{}
+
+class AuthSuccessEvent extends AuthEvent
+{
+  final String code;
+
+  AuthSuccessEvent(this.code);
 
   @override
-  // TODO: implement props
-  List<Object> get props => null;
+  List<Object> get props => [code];
 }
 
-class AuthInit extends AuthEvent{
-
+class AuthErrorEvent extends AuthEvent
+{
+  @override
+  List<Object> get props => [];
 }
-class AuthSignIn extends AuthEvent{
 
-}
-
-class AuthUserAgreed extends AuthEvent{
-}
-class AuthServerError extends AuthEvent{
-
-}
-class AuthLoad extends AuthEvent{
-
-}
-class AuthFinishLoad extends AuthEvent{
-  
+class AuthHttpErrorEvent extends AuthEvent
+{
+  @override
+  List<Object> get props => [];
 }
