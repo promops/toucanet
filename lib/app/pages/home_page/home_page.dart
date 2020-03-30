@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../styles/app_colors.dart';
-import '../../styles/fonts.dart';
-import '../../widgets/app_bar/custom_app_bar.dart';
-import '../../widgets/app_bar/widgets/backward_button.dart';
 import '../messages/messages_list_page/dialog_list_page.dart';
+import '../user_profile_page/user_profile_page.dart';
 import 'widgets/custom_tab_bar/custom_tab.dart';
 import 'widgets/custom_tab_bar/custom_tab_bar.dart';
 
@@ -33,10 +31,6 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(
-          leading: BackwardButton(),
-          title: Text('Диалоги', style: Fonts.h1),
-        ),
         backgroundColor: AppColors.mainColor,
         bottomNavigationBar: CustomTabBar(
           controller: _tabController,
@@ -55,8 +49,9 @@ class _HomePageState extends State<HomePage>
             ),
           ],
         ),
-        body: TabBarView(
-            controller: _tabController,
-            children: [DialogListPage(), Container()]));
+        body: TabBarView(controller: _tabController, children: [
+          DialogListPage(),
+          UserProfilePage(),
+        ]));
   }
 }

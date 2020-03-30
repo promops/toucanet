@@ -7,8 +7,7 @@ const double _kAppBarHeight = 46.0;
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({Key key, this.leading, this.trailing, this.title})
-      : assert(leading != null),
-        super(key: key);
+      : super(key: key);
 
   final Widget leading;
   final Widget trailing;

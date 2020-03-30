@@ -17,16 +17,7 @@ class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
   _CustomTabBarState createState() => _CustomTabBarState();
 
   @override
-  Size get preferredSize {
-    // for (final Widget item in tabs) {
-    //   if (item is Tab) {
-    //     final Tab tab = item;
-    //     if ((tab.text != null || tab.child != null) && tab.icon != null)
-    //       return Size.fromHeight(_kTextAndIconTabHeight + indicatorWeight);
-    //   }
-    // }
-    return Size.fromHeight(_kTabHeight);
-  }
+  Size get preferredSize => Size.fromHeight(_kTabHeight);
 }
 
 class _CustomTabBarState extends State<CustomTabBar> {
@@ -54,10 +45,11 @@ class _CustomTabBarState extends State<CustomTabBar> {
     return Container(
       height: _kTabHeight,
       decoration: BoxDecoration(
-          color: AppColors.additionalColor,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(14),
-          )),
+        color: AppColors.additionalColor,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(14),
+        ),
+      ),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: wrappedTabs),
