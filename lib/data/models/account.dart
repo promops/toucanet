@@ -1,34 +1,50 @@
-import 'package:flutter/foundation.dart';
-
 class AccountModel 
 {
   int id;
-  String name;
+  int created;
   String token;
+  int expiresIn;
 
-  AccountModel({@required this.id, @required this.token}) : 
+  AccountModel(this.id, this.token, this.expiresIn, [this.created]) : 
     assert(token != null),
-    assert(token.length > 0);
+    assert(token.length > 0)
+  {
+    this.created = created ?? DateTime.now().millisecondsSinceEpoch;
+  }
 
   AccountModel.clone(AccountModel account) : 
-    this(id: account.id, token: account.token);
+    this(account.id, account.token, account.expiresIn);
+
+  AccountModel copyWith({int id, String token, int created, int expiresIn}) => AccountModel(
+      id ?? this.id,
+      token ?? this.token,
+      expiresIn ?? this.expiresIn,
+      created ?? this.created
+  );
 
   Map<String, dynamic> toJson() =>
   {
-    'id': id ?? '',
-    'token': token ?? ''
+    'id': id ?? 0,
+    'token': token ?? '',
+    'created': created ?? 0,
+    'expiresIn': expiresIn ?? 0
   };
 
   factory AccountModel.fromJson(Map<String, dynamic> json) 
   {
-    if (json == null) throw ArgumentError;
-    
+    if (json == null) throw ArgumentError();
+
     return AccountModel(
-      id: json['id'],
-      token: json ['token']
+      json['id'], 
+      json['token'], 
+      json['expiresIn'], 
+      json['created']
     );
   }
 
   @override
   String toString() => this.toJson().toString();
+
+  bool get isValid =>
+    expiresIn <= 0 || created + expiresIn * 1000 > DateTime.now().millisecondsSinceEpoch;
 }

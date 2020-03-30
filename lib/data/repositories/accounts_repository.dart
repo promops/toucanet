@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:toucanet/data/models/account.dart';
 import 'package:flutter_keychain/flutter_keychain.dart';
 
-class AccountRepository
+class AccountsRepository
 {
   static const _keychain = 'accounts';
-  static final AccountRepository _instance = new AccountRepository._();
+  static final AccountsRepository _instance = new AccountsRepository._();
 
   AccountModel _currentAccount;
   List<AccountModel> _allAccounts = [];
@@ -14,13 +14,13 @@ class AccountRepository
   List<AccountModel> get all => this._allAccounts;
   AccountModel get current => this._currentAccount;
 
-  AccountRepository._();
-  factory AccountRepository() => _instance;
+  AccountsRepository._();
+  factory AccountsRepository() => _instance;
 
   Future<void> init() async
   {
     try {
-      String jsonString = await FlutterKeychain.get(key: AccountRepository._keychain);
+      String jsonString = await FlutterKeychain.get(key: AccountsRepository._keychain);
       List<dynamic> accounts = json.decode(jsonString ?? '[]');
 
       if (accounts is! List) return;
@@ -39,23 +39,21 @@ class AccountRepository
     await this._updateStorage();
   }
 
-  Future<void> add(AccountModel account) async 
+  Future<void> addOrUpdate(AccountModel account) async 
   {
     try {
-      this._allAccounts.firstWhere((a) => a.id == account.id);
+      this._allAccounts.firstWhere((a) => a.id == account.id)
+        ..token = account.token
+        ..created = account.created
+        ..expiresIn = account.expiresIn;
     }
     catch (_) 
     {
       this._currentAccount = AccountModel.clone(account); 
       this._allAccounts.add(this._currentAccount);
-
-      await this._updateStorage();
     }
-  }
 
-  Future<void> update(AccountModel account) async 
-  {
-    
+    await this._updateStorage();
   }
 
   Future<void> remove(AccountModel account) async 
@@ -73,7 +71,7 @@ class AccountRepository
   {
     try {
       await FlutterKeychain.put(
-        key: AccountRepository._keychain, 
+        key: AccountsRepository._keychain, 
         value: json.encode(this._allAccounts.map((a) => a.toJson()).toList())
       );
     }

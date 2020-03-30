@@ -32,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
     if (event is AuthBrowserUpdateEvent) 
     {
       try {
-        final account = this._authService.auth(event.url);
+        final account = this._authService.browserAuth(event.url);
 
         if (account != null) 
         {
