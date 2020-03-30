@@ -17,6 +17,7 @@ class App extends StatelessWidget
     final AccountService accountService = RepositoryProvider.of<AccountService>(context);
     
     return MaterialApp(
+
       home: 
         BlocBuilder(
           bloc: AppBloc(accountService)..add(AppStarted()),
