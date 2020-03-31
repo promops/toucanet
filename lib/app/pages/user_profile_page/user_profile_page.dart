@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/models/user_model/user_model.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/fonts.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
-import '../../widgets/app_bar/widgets/backward_button.dart';
+import '../../widgets/loading_indicator.dart';
 import 'widgets/user_avatar.dart';
+import 'widgets/user_counters_model.dart';
 import 'widgets/user_information.dart';
+import 'widgets/user_status.dart';
 
 class UserProfilePage extends StatefulWidget {
   @override
@@ -22,27 +25,42 @@ class _UserProfilePageState extends State<UserProfilePage> {
         bloc: BlocProvider.of<UserBloc>(context),
         builder: (context, UserState state) {
           if (state is UserInformation) {
-            var currentUser = state.user;
+            UserModel currentUser = state.user;
             return Scaffold(
                 backgroundColor: AppColors.mainColor,
                 appBar: CustomAppBar(
                   title: Text('Профиль', style: Fonts.h1),
                 ),
-                body: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                body: Column(
                   children: <Widget>[
-                    UserAvatar(
-                      url: currentUser.photo100,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        UserAvatar(
+                          url: currentUser.photo100,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            UserInformationWidget(
+                              firstName: currentUser.firstName,
+                              lastName: currentUser.lastName,
+                            ),
+                            UserStatus(
+                              status: currentUser.status,
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    UserInformationWidget(
-                      firstName: currentUser.firstName,
-                      lastName: currentUser.lastName,
+                    UserCountersWidget(
+                      userCounters: currentUser.userCounters,
                     )
                   ],
                 ));
           }
 
-          return CircularProgressIndicator();
+          return LoadingIndicator();
         });
   }
 }

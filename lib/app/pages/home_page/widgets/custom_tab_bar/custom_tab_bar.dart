@@ -7,8 +7,9 @@ const double _kTabHeight = 46.0;
 class CustomTabBar extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget> tabs;
   final TabController controller;
+  final int currentIndex;
 
-  const CustomTabBar({Key key, this.tabs, this.controller})
+  const CustomTabBar({Key key, this.tabs, this.controller, this.currentIndex})
       : assert(tabs != null),
         assert(controller != null),
         super(key: key);

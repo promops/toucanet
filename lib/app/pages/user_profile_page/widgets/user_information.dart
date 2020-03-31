@@ -10,20 +10,22 @@ class UserInformationWidget extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Padding(
+      padding: const EdgeInsets.only(top: Indents.extraLarge),
+        child: Row(
       children: <Widget>[
         Text(
           '$firstName',
           style: Fonts.h1,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: Indents.medium),
+          padding: const EdgeInsets.only(left: Indents.small),
         ),
         Text(
           '$lastName',
           style: Fonts.h1,
         )
       ],
-    );
+    ));
   }
 }

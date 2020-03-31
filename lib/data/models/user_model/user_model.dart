@@ -1,19 +1,24 @@
+import 'user_counters_model.dart';
+
 class UserModel {
   UserModel(
       {this.id,
       this.firstName,
       this.lastName,
+      this.status,
       this.deactivated,
       this.isClosed,
       this.sex,
       this.photo200orig,
       this.photo50,
-      this.photo100});
+      this.photo100,
+      this.userCounters});
 
   final int id;
 
   final String firstName;
   final String lastName;
+  final String status;
 
   final String deactivated;
   final bool isClosed;
@@ -24,19 +29,22 @@ class UserModel {
   final String photo50;
   final String photo100;
 
+  UserCountersModel userCounters;
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['id'],
-      firstName: json['first_name'],
-      lastName: json['last_name'],
-      isClosed: json['is_closed'],
-      sex: json['sex'],
-      photo200orig: json['photo_200_orig'],
-      photo50: json['photo_50'],
-      photo100: json['photo_100'],
-    );
+        id: json['id'],
+        firstName: json['first_name'] ?? '',
+        lastName: json['last_name'],
+        status: json['status'],
+        isClosed: json['is_closed'],
+        sex: json['sex'],
+        photo200orig: json['photo_200_orig'],
+        photo50: json['photo_50'],
+        photo100: json['photo_100'],
+        userCounters: UserCountersModel.fromJson(json['counters']));
   }
 
   @override
-  String toString() => '$id $firstName $lastName $photo200orig';
+  String toString() => '$id $firstName $lastName $photo200orig $userCounters';
 }

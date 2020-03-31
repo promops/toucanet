@@ -10,10 +10,13 @@ class VKUsersRemote extends VKRemote {
         'photo_200_orig',
         'photo_50',
         'photo_100',
+        'status',
+        'counters'
       ]
     });
 
     UserModel user = UserModel.fromJson(result.body['response'][0]);
+    print(UserModel.fromJson(result.body['response'][0]));
 
     return user;
   }
