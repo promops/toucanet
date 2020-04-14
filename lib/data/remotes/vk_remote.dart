@@ -32,4 +32,5 @@ abstract class VKRemote
       body: {...?parameters, 'v': this.version}
     );
   }
+
 }

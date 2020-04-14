@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/data/models/message/message.dart';
 
-import '../../../../data/models/message.dart';
 import '../../../styles/app_colors.dart';
 import '../../../styles/fonts.dart';
 import '../../../widgets/app_bar/custom_app_bar.dart';
@@ -18,14 +18,14 @@ class _DialogListPageState extends State<DialogListPage> {
   @override
   void initState() {
     _message =
-        Message(text: 'Hi', senderFirstname: 'Егор', senderLastName: 'Попов');
+        Message(id : 1, text: 'Hi', direction: MessageDirection.IN);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-           backgroundColor: AppColors.mainColor,
+        backgroundColor: AppColors.mainColor,
         appBar: CustomAppBar(
           title: Text('Диалоги', style: Fonts.h1),
         ),

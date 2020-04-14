@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/data/models/message/message.dart';
 
-import '../../../../../data/models/message.dart';
 import '../../../../styles/app_colors.dart';
 import '../../../../styles/indents.dart';
 
@@ -41,7 +41,7 @@ class _DialogWidgetState extends State<DialogWidget> {
                           children: <Widget>[
                             DialogTitle(
                                 text:
-                                    '${widget.message.senderFirstname} ${widget.message.senderLastName}'),
+                                    '${widget.message.id} ${widget.message.text}'),
                             DialogText(text: widget.message.text),
                             Expanded(
                               child: Container(),

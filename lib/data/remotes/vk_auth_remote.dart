@@ -2,8 +2,9 @@ import 'package:toucanet/core/config/config.dart';
 import 'package:toucanet/core/http/http_utils.dart';
 
 import 'package:toucanet/data/models/account.dart';
-import 'package:toucanet/data/remotes/vk_remote.dart';
+
 import 'package:toucanet/data/remotes/exceptions/vk_exception.dart';
+import 'package:toucanet/data/remotes/vk_remote.dart';
 
 class VKAuthRemote extends VKRemote
 {
