@@ -15,14 +15,18 @@ class Http
 
   Http([this.connectTimeout = 0]);
 
-  Future<HttpResponse> get(String url) async => await this._request(url);
-  Future<HttpResponse> post(String url, {body}) async => await this._request(url, body: body ?? {});
+  Future<HttpResponse> get(String url, {Map<String, String> headers}) async => 
+    await this._request(url, headers: headers ?? {});
+
+  Future<HttpResponse> post(String url, {body, Map<String, String> headers}) async => 
+    await this._request(url, body: body ?? {}, headers: headers ?? {});
     
-  Future<HttpResponse> _request(String url, {body}) async 
+  Future<HttpResponse> _request(String url, {body, Map<String, String> headers}) async 
   {
     try {
-      Future<_http.Response> request; 
-      request = body == null ? _http.get(url) : _http.post(url, body: body);
+      Future<_http.Response> request = (body == null) ? 
+        _http.get(url, headers: headers) : 
+        _http.post(url, body: body, headers: headers);
 
       _http.Response response = this.connectTimeout <= 0 ?
         await request :
