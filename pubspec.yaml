@@ -22,8 +22,6 @@ dependencies:
   flutter_keychain: ^1.0.0
   cached_network_image: ^2.0.0
   flutter_webview_plugin: ^0.3.10+2
-  device_info: ^0.4.2+1
-  firebase_messaging: ^6.0.13
 
   
 
