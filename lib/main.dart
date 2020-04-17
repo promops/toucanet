@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:toucanet/app/app.dart';
 import 'package:toucanet/app/injector.dart';
 import 'package:toucanet/core/config/config.dart';
+import 'package:toucanet/data/remotes/vk_account_remote.dart';
 import 'package:toucanet/data/remotes/vk_longpull_remote.dart';
 import 'package:toucanet/data/remotes/vk_messages_remote.dart';
 import 'package:toucanet/data/remotes/vk_users_remote.dart';
@@ -26,7 +27,15 @@ void main() async {
 
   //VKMessagesRemote(AccountsRepository().current.token).getById([552885]);
 
-  await VKLongpullRemote(AccountsRepository().current.token).getLongPullServer();
+  //await VKLongpullRemote(AccountsRepository().current.token).getLongPullServer();
+
+  //await VKAccountRemote(AccountsRepository().current.token).registerDevice();
+
+  //await VKAccountRemote(AccountsRepository().current.token).getPushSettings();
+
+    // await VKAccountRemote(AccountsRepository().current.token).setPushSettings();
+
+    // await VKAccountRemote(AccountsRepository().current.token).getPushSettings();
   
   runApp(Injector(child: App()));
 }
