@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,8 +10,50 @@ import 'package:toucanet/app/pages/home_page/home_page.dart';
 import 'package:toucanet/app/pages/auth_pages/auth_page.dart';
 import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
 
-class App extends StatelessWidget 
+class App extends StatefulWidget 
 {
+
+  @override
+  _AppState createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  static Future<dynamic> hi(Map<String, dynamic> message){
+    print('+++');
+  }
+
+  @override
+  void initState() {
+        _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('on message ${message}');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('on launch $message');
+      },
+
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+
+    
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      print(token);
+    });
+    super.initState();
+  }
+  
+
   @override
   Widget build(BuildContext context) 
   {

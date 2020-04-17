@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/app/pages/messages/dialog_page/text_message_widget.dart';
 import 'package:toucanet/data/models/message/message.dart';
+import 'package:toucanet/data/remotes/vk_account_remote.dart';
+import 'package:toucanet/data/repositories/accounts_repository.dart';
 
 import '../../../styles/app_colors.dart';
 import '../../../styles/fonts.dart';
@@ -17,8 +20,7 @@ class _DialogListPageState extends State<DialogListPage> {
 
   @override
   void initState() {
-    _message =
-        Message(id : 1, text: 'Hi', direction: MessageDirection.IN);
+    _message = Message(id: 1, text: 'Hi', direction: MessageDirection.IN);
     super.initState();
   }
 
@@ -33,7 +35,13 @@ class _DialogListPageState extends State<DialogListPage> {
           children: <Widget>[
             DialogWidget(message: _message),
             DialogWidget(message: _message),
-            DialogWidget(message: _message)
+            DialogWidget(message: _message),
+
+            RaisedButton(
+              child: Text('register'),
+              onPressed: () async =>{
+                await VKAccountRemote(AccountsRepository().current.token).registerDevice()
+            })
           ],
         ));
   }
