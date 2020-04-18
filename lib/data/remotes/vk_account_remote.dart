@@ -16,12 +16,14 @@ class VKAccountRemote extends VKRemote {
 
     final result = await this.call('account.registerDevice', {
       'token': pushToken,
-      'device_id': 'db5c7074-71f8-4899-a0e8-86deac2ae629',
-      'system_version' : "6.1.2",
+      'device_id': deviceId,
+      'system_version' : "9.1.2",
       'device_year' : 2017,
       'device_model' : 'Google pixel 2',
       'settings': json.encode({"msg": "on", "chat": "on", "friend": "on"})
     });
+
+    print(pushToken);
 
     print(result.body['response']);
   }

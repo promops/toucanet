@@ -3,7 +3,6 @@
 *.log
 *.pyc
 *.swp
-
 .DS_Store
 .atom/
 .buildlog/
@@ -31,17 +30,12 @@
 .pub/
 /build/
 
-/config/
-
-/android/app/key.jks
-
-/android/key.properties
-
-
-
 # Web related
 lib/generated_plugin_registrant.dart
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+config/vk.json
+config/app.json
+android/app/google-services.json
 android/app/google-services.json

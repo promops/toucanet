@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,6 +37,8 @@ void main() async {
     // await VKAccountRemote(AccountsRepository().current.token).setPushSettings();
 
     // await VKAccountRemote(AccountsRepository().current.token).getPushSettings();
+
+    
   
   runApp(Injector(child: App()));
 }
