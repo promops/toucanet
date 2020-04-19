@@ -1,20 +1,20 @@
-import 'package:toucanet/core/config/config.dart';
+
+import 'package:toucanet/core/helper/config.dart';
 import 'package:toucanet/core/http/http_utils.dart';
 
 import 'package:toucanet/data/models/account.dart';
-
-import 'package:toucanet/data/remotes/exceptions/vk_exception.dart';
 import 'package:toucanet/data/remotes/vk_remote.dart';
+import 'package:toucanet/data/remotes/exceptions/vk_exception.dart';
 
 class VKAuthRemote extends VKRemote
 {
-  String scope = Config.vk.auth.permissions.join(',');
-  String clientId = Config.vk.auth.clientId.toString();
-  String oauthUrl = Config.vk.auth.oauthUrl + 'authorize';
-  String redirectUrl = Config.vk.auth.oauthUrl + 'blank.html';
+  final int clientId = Config.get(['vk', 'auth', 'clientId']);
+  final String oauthUrl = Config.get(['vk', 'auth', 'oauthUrl']) + 'authorize';
+  final String redirectUrl = Config.get(['vk', 'auth', 'oauthUrl']) + 'blank.html';
+  final String permissions = Config.get<List>(['vk', 'auth', 'permissions']).join(',');
 
   String get authUrl =>
-    '$oauthUrl?client_id=$clientId&redirect_uri=$redirectUrl&scope=$scope&v=$version&response_type=token';
+    '$oauthUrl?client_id=$clientId&redirect_uri=$redirectUrl&scope=$permissions&v=$version&response_type=token';
 
   Future<AccountModel> updateAuth() async
   {
