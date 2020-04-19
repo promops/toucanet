@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:toucanet/app/app.dart';
 import 'package:toucanet/app/injector.dart';
-import 'package:toucanet/core/config/config.dart';
+import 'package:toucanet/core/helper/config.dart';
 import 'package:toucanet/core/notification/push_manager.dart';
 import 'package:toucanet/data/remotes/vk_account_remote.dart';
 import 'package:toucanet/data/remotes/vk_longpull_remote.dart';
@@ -17,10 +17,12 @@ import 'data/services/auth_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Config.load();
+  await Config().load(['vk', 'app']);
   await AccountsRepository().init();
 
-  PushManager().init();
+  print(Config());
+
+  // PushManager().init();
 
   //AuthService().isAuth(AccountsRepository().current);
   //await AccountsRepository().clearAll();

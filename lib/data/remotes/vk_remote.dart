@@ -1,13 +1,14 @@
 import 'package:toucanet/core/http/http.dart';
-import 'package:toucanet/core/config/config.dart';
+import 'package:toucanet/core/helper/config.dart';
+
 
 abstract class VKRemote
 {
   final Http http;
   final String accessToken;
 
-  String baseUrl = Config.vk.api.baseUrl;
-  String version = Config.vk.api.version;
+  String baseUrl = Config.get(['vk', 'api', 'baseUrl']);
+  String version = Config.get(['vk', 'api', 'version'], '5.103');
 
   VKRemote([this.accessToken, int connectTimeout = 0]) : 
     this.http = Http(connectTimeout);
