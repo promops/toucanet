@@ -14,30 +14,23 @@ import 'package:toucanet/app/pages/home_page/home_page.dart';
 import 'package:toucanet/app/pages/auth_pages/auth_page.dart';
 import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
 
-class App extends StatefulWidget 
-{
-
+class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
 }
 
-Future<dynamic> backgroundHandle(Map<String, dynamic> message){
-    print('$message');
-    //PushManager().displayNotification('фыв');
-  }
+Future<dynamic> backgroundHandle(Map<String, dynamic> message) {
+  print('$message');
+  //PushManager().displayNotification('фыв');
+}
 
 class _AppState extends State<App> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-
-
   @override
   void initState() {
-
-
-
     print('123');
-        _firebaseMessaging.configure(
+    _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) {
         print('on message ${message}');
         //print('on message');
@@ -54,10 +47,7 @@ class _AppState extends State<App> {
       onLaunch: (Map<String, dynamic> message) {
         print('on launch $message');
       },
-      
       onBackgroundMessage: backgroundHandle,
-
-
     );
     _firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(sound: true, badge: true, alert: true));
@@ -66,48 +56,34 @@ class _AppState extends State<App> {
       print("Settings registered: $settings");
     });
 
-    
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
       print(token);
     });
 
- 
-
- 
     super.initState();
   }
-  
 
   @override
-  Widget build(BuildContext context) 
-  {
-    final AccountService accountService = RepositoryProvider.of<AccountService>(context);
-    
+  Widget build(BuildContext context) {
+    final AccountService accountService =
+        RepositoryProvider.of<AccountService>(context);
+
     return MaterialApp(
-
-      home: 
-        BlocBuilder(
+      home: BlocBuilder(
           bloc: AppBloc(accountService)..add(AppStarted()),
-          builder: (context, state) 
-          {
+          builder: (context, state) {
             if (state is! AppInitialState) return Offstage();
-            return (state as AppInitialState).isAuth ? HomePage() : AuthPage(accountService);
-          }
-        ),
-      
+            return (state as AppInitialState).isAuth
+                ? HomePage()
+                : AuthPage(accountService);
+          }),
       title: 'toucanet',
-
-      theme: ThemeData(
-        fontFamily: 'Montserrat',
-        primarySwatch: Colors.blue
-      ),
-
+      theme: ThemeData(fontFamily: 'Montserrat', primarySwatch: Colors.blue),
       routes: {
         '/main': (context) => HomePage(),
         '/dialog': (context) => DialogPage(),
       },
-
       debugShowCheckedModeBanner: false,
     );
   }
