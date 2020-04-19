@@ -1,7 +1,11 @@
 import 'dart:convert';
 
-part 'json_serializer.dart';
-part 'json_syntax_exception.dart';
+abstract class JsonSerializer
+{
+  Map<String, dynamic> toJson();
+}
+
+class JsonSyntaxException implements Exception {}
 
 typedef S JsonDeserializer<S>(Map<String, dynamic> json);
 
