@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toucanet/app/pages/messages/dialog_page/text_message_widget.dart';
+import 'package:toucanet/core/notification/push_manager.dart';
 import 'package:toucanet/data/models/message/message.dart';
 import 'package:toucanet/data/remotes/vk_account_remote.dart';
 import 'package:toucanet/data/repositories/accounts_repository.dart';
@@ -36,12 +37,24 @@ class _DialogListPageState extends State<DialogListPage> {
             DialogWidget(message: _message),
             DialogWidget(message: _message),
             DialogWidget(message: _message),
-
             RaisedButton(
-              child: Text('register'),
-              onPressed: () async =>{
-                await VKAccountRemote(AccountsRepository().current.token).registerDevice()
-            })
+                child: Text('register'),
+                onPressed: () async => {
+                      await VKAccountRemote(AccountsRepository().current.token)
+                          .registerDevice()
+                    }),
+            RaisedButton(
+                child: Text('unregister'),
+                onPressed: () async => {
+                      await VKAccountRemote(AccountsRepository().current.token)
+                          .unregisterDevice()
+                    }),
+
+                    RaisedButton(
+                child: Text('push'),
+                onPressed: () async => {
+                      await PushManager().displayNotification('Короче ты пидорас')
+                    })
           ],
         ));
   }

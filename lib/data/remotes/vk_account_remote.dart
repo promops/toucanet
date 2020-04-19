@@ -51,4 +51,19 @@ class VKAccountRemote extends VKRemote {
 
     print(result.body['response']);
   }
+
+    Future<void> unregisterDevice() async {
+    String deviceId = await DeviceInfo.deviceId;
+    String pushToken = await FirebaseMessaging().getToken();
+    String systemVersion = await DeviceInfo.systemVersion;
+
+
+    final result = await this.call('account.unregisterDevice', {
+      'device_id': deviceId,
+      
+    });
+
+
+    print(result.body['response']);
+  }
 }

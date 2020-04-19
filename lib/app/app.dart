@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:toucanet/core/notification/push_manager.dart';
 
 import 'package:toucanet/data/services/account_service.dart';
 
@@ -17,18 +21,32 @@ class App extends StatefulWidget
   _AppState createState() => _AppState();
 }
 
+Future<dynamic> backgroundHandle(Map<String, dynamic> message){
+    print('$message');
+    //PushManager().displayNotification('фыв');
+  }
+
 class _AppState extends State<App> {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
-  static Future<dynamic> hi(Map<String, dynamic> message){
-    print('+++');
-  }
+
 
   @override
   void initState() {
+
+
+
+    print('123');
         _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) {
         print('on message ${message}');
+        //print('on message');
+        dynamic text = message['data']['context'];
+
+        String id = json.decode(text)['msg_id'];
+        print('$text');
+        print(id);
+        PushManager().displayNotification('фыв');
       },
       onResume: (Map<String, dynamic> message) {
         print('on resume $message');
@@ -36,6 +54,9 @@ class _AppState extends State<App> {
       onLaunch: (Map<String, dynamic> message) {
         print('on launch $message');
       },
+      
+      onBackgroundMessage: backgroundHandle,
+
 
     );
     _firebaseMessaging.requestNotificationPermissions(
@@ -50,6 +71,8 @@ class _AppState extends State<App> {
       assert(token != null);
       print(token);
     });
+
+ 
 
  
     super.initState();

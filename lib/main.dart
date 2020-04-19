@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:toucanet/app/app.dart';
 import 'package:toucanet/app/injector.dart';
 import 'package:toucanet/core/config/config.dart';
+import 'package:toucanet/core/notification/push_manager.dart';
 import 'package:toucanet/data/remotes/vk_account_remote.dart';
 import 'package:toucanet/data/remotes/vk_longpull_remote.dart';
 import 'package:toucanet/data/remotes/vk_messages_remote.dart';
@@ -18,6 +19,8 @@ void main() async {
 
   await Config.load();
   await AccountsRepository().init();
+
+  PushManager().init();
 
   //AuthService().isAuth(AccountsRepository().current);
   //await AccountsRepository().clearAll();
