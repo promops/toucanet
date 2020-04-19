@@ -37,5 +37,4 @@ lib/generated_plugin_registrant.dart
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 config/vk.json
 config/app.json
-android/app/google-services.json
-android/app/google-services.json
+

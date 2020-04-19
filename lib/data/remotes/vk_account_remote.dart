@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../../core/device/device_info.dart';
+import '../../core/helper/device_info.dart';
 import 'vk_remote.dart';
 
 class VKAccountRemote extends VKRemote {

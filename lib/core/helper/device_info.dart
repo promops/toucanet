@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 
 class DeviceInfo {
+
   static get deviceId async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
     if (Platform.isAndroid) {
       var info = await deviceInfo.androidInfo;
-      print(info.androidId);
       return info.androidId;
     }
 
@@ -23,13 +23,17 @@ class DeviceInfo {
   static get systemVersion async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-    var info = await deviceInfo.androidInfo;
+    if (Platform.isAndroid) {
+      var info = await deviceInfo.androidInfo;
 
-    var release = info.version.release;
-    var sdkInt = info.version.sdkInt;
-    var manufacturer = info.manufacturer;
-    var model = info.model;
+      var release = info.version.release;
+      var sdkInt = info.version.sdkInt;
+      var manufacturer = info.manufacturer;
+      var model = info.model;
 
-    return '$release $sdkInt $manufacturer $model';
+      return '$release $sdkInt $manufacturer $model';
+    }
+
+    return '';
   }
 }
