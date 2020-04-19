@@ -38,3 +38,4 @@ lib/generated_plugin_registrant.dart
 config/vk.json
 config/app.json
 
+android/app/google-services.json
