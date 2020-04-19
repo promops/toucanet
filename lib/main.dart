@@ -1,18 +1,11 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:toucanet/app/app.dart';
-import 'package:toucanet/app/injector.dart';
-import 'package:toucanet/core/config/config.dart';
-import 'package:toucanet/core/notification/push_manager.dart';
-import 'package:toucanet/data/remotes/vk_account_remote.dart';
-import 'package:toucanet/data/remotes/vk_longpull_remote.dart';
-import 'package:toucanet/data/remotes/vk_messages_remote.dart';
-import 'package:toucanet/data/remotes/vk_users_remote.dart';
-import 'package:toucanet/data/repositories/accounts_repository.dart';
-
-import 'data/services/auth_service.dart';
+import 'app/app.dart';
+import 'app/injector.dart';
+import 'core/config/config.dart';
+import 'core/helper/push_manager.dart';
+import 'data/repositories/accounts_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +13,7 @@ void main() async {
   await Config.load();
   await AccountsRepository().init();
 
-  PushManager().init();
+  await PushManager().init();
 
   //AuthService().isAuth(AccountsRepository().current);
   //await AccountsRepository().clearAll();
@@ -37,11 +30,9 @@ void main() async {
 
   //await VKAccountRemote(AccountsRepository().current.token).getPushSettings();
 
-    // await VKAccountRemote(AccountsRepository().current.token).setPushSettings();
+  // await VKAccountRemote(AccountsRepository().current.token).setPushSettings();
 
-    // await VKAccountRemote(AccountsRepository().current.token).getPushSettings();
-
-    
+  // await VKAccountRemote(AccountsRepository().current.token).getPushSettings();
   
   runApp(Injector(child: App()));
 }

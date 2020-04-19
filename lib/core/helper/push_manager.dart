@@ -1,8 +1,7 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class PushManager {
-
-   static final PushManager _singleton = PushManager._internal();
+  static final PushManager _singleton = PushManager._internal();
 
   factory PushManager() {
     return _singleton;
@@ -13,7 +12,7 @@ class PushManager {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  init() async {
+  Future<void> init() async {
     var initializationSettingsAndroid =
         AndroidInitializationSettings('test_icon');
 
@@ -27,7 +26,9 @@ class PushManager {
         onSelectNotification: selectNotification);
   }
 
-  displayNotification(String text) async {
+  Future<void> displayNotification(String text,
+      {String title = 'Toucanet', String payload = ''}) async {
+        
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
@@ -37,12 +38,11 @@ class PushManager {
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
-    await flutterLocalNotificationsPlugin.show(
-        0, 'plain title', text, platformChannelSpecifics,
-        payload: 'item x');
+    await flutterLocalNotificationsPlugin
+        .show(0, title, text, platformChannelSpecifics, payload: payload);
   }
 
-  Future selectNotification(String payload) async {
+  Future<void> selectNotification(String payload) async {
     if (payload != null) {
       print('notification payload: ' + payload);
     }

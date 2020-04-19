@@ -1,18 +1,13 @@
-import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:toucanet/core/notification/push_manager.dart';
 
-import 'package:toucanet/data/services/account_service.dart';
-
-import 'package:toucanet/app/blocs/app_bloc/app_bloc.dart';
-
-import 'package:toucanet/app/pages/home_page/home_page.dart';
-import 'package:toucanet/app/pages/auth_pages/auth_page.dart';
-import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
+import '../core/helper/push_manager.dart';
+import '../data/services/account_service.dart';
+import 'blocs/app_bloc/app_bloc.dart';
+import 'pages/auth_pages/auth_page.dart';
+import 'pages/home_page/home_page.dart';
+import 'pages/messages/dialog_page/dialog_page.dart';
 
 class App extends StatefulWidget {
   @override
@@ -21,7 +16,6 @@ class App extends StatefulWidget {
 
 Future<dynamic> backgroundHandle(Map<String, dynamic> message) {
   print('$message');
-  //PushManager().displayNotification('фыв');
 }
 
 class _AppState extends State<App> {
@@ -29,23 +23,16 @@ class _AppState extends State<App> {
 
   @override
   void initState() {
-    print('123');
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) {
-        print('on message ${message}');
-        //print('on message');
-        dynamic text = message['data']['context'];
-
-        String id = json.decode(text)['msg_id'];
-        print('$text');
-        print(id);
-        PushManager().displayNotification('фыв');
+       // print('on message ${message}');
+       // PushManager().displayNotification('фыв');
       },
       onResume: (Map<String, dynamic> message) {
-        print('on resume $message');
+        //print('on resume $message');
       },
       onLaunch: (Map<String, dynamic> message) {
-        print('on launch $message');
+        //print('on launch $message');
       },
       onBackgroundMessage: backgroundHandle,
     );
@@ -53,12 +40,12 @@ class _AppState extends State<App> {
         const IosNotificationSettings(sound: true, badge: true, alert: true));
     _firebaseMessaging.onIosSettingsRegistered
         .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
+     // print("Settings registered: $settings");
     });
 
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
-      print(token);
+     // print(token);
     });
 
     super.initState();
