@@ -8,3 +8,12 @@ class DialogInitial extends DialogState {
   @override
   List<Object> get props => [];
 }
+
+class DialogList extends DialogState {
+  DialogList(this.dialogs);
+
+  List<Conversation> dialogs;
+
+  @override
+  List<Object> get props => [];
+}
