@@ -1,6 +1,11 @@
 class Message {
   Message(
-      {this.id, this.date, this.fromId, this.readState, this.text, this.direction});
+      {this.id,
+      this.date,
+      this.fromId,
+      this.readState,
+      this.text,
+      this.direction});
   final int id;
   final int date;
 
@@ -10,15 +15,13 @@ class Message {
 
   final MessageDirection direction;
 
-
-
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
       id: json['id'],
-      date: json['friends'],
-
-      fromId: json['user_id'],
-      text: json['title'],
+      date: json['date'],
+      fromId: json['from_id'],
+      text: json['text'],
+      direction: MessageDirection.IN
     );
   }
 
@@ -26,4 +29,4 @@ class Message {
   String toString() => '$id $text';
 }
 
-enum MessageDirection { IN, OUT}
+enum MessageDirection { IN, OUT }

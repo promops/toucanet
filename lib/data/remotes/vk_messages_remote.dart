@@ -1,3 +1,5 @@
+import 'package:toucanet/data/models/message/conversation_response.dart';
+
 import '../models/message/conversation.dart';
 import '../models/message/message.dart';
 import 'vk_remote.dart';
@@ -13,11 +15,24 @@ class VKMessagesRemote extends VKRemote {
     print(result);
   }
 
-  Future<List<Conversation>> getConversations(int offset) async {}
+  Future<List<Conversation>> getConversations(int offset, {int count = 2}) async {
 
+    final result = await this.call('messages.getConversations', {'offset': offset, 'count' : count, 'filter' : 'all'});
 
+    //print(result.body['response']['items']);
+
+    List<ConversationResponse> list = [];
+
+    result.body['response']['items'].forEach((item)=>{
+      list.add(ConversationResponse.fromJson(item))
+      //print(item['conversation'])
+    });
+
+    print(list);
+
+    
   
-
+  }
 }
 
 

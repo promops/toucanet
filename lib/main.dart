@@ -29,27 +29,14 @@ void main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
 
-  await WorkersManager().init(workersCount: 1);
+  //await WorkersManager().init(workersCount: 1);
 
-  Task task = Task(runTimer);
-
-  WorkersManager().workers[0].execute(task);
-
-
-   WorkersManager().workers[0].getBroadcast().listen((data) => print(data));
+  await VKMessagesRemote(AccountsRepository().current.token).getConversations(2);
    
  
   runApp(Injector(child: App()));
 }
 
-void runTimer(SendPort sendPort) {
-  int counter = 0;
-  Timer.periodic(Duration(seconds: 1), (Timer t) {
-    counter++;
-    String msg = 'notification ' + counter.toString();  
-    stdout.write('SEND: ' + msg + ' - ');  
-    sendPort.send(msg);
-  });
-}
+
 
 
