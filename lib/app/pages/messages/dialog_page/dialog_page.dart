@@ -16,7 +16,9 @@ class _DialogPageState extends State<DialogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.mainColor,
-      body: ListView(
+      body: 
+      
+      ListView(
         children: [
           TextMessageWidget(message),
           TextMessageWidget(message2)

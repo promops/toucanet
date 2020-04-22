@@ -10,9 +10,10 @@ class ConversationResponse {
 
   factory ConversationResponse.fromJson(Map<String, dynamic> json) {
     return ConversationResponse(
-        conversation: json['conversation'], lastMessage: json['last_message']);
+        conversation: Conversation.fromJson(json['conversation']),
+        lastMessage: Message.fromJson(json['last_message']));
   }
 
   @override
-  String toString()=> '$conversation $lastMessage';
+  String toString() => '$conversation $lastMessage';
 }

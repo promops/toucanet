@@ -17,6 +17,12 @@ class Conversation {
 
   final int outRead;
 
+  String avatarUrl;
+
+  String senderFirstName;
+
+  String senderLastName;
+
   Message lastMessage;
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
@@ -25,7 +31,7 @@ class Conversation {
       // lastMessage: json.containsKey('last_message')
       //     ? Message.fromJson(json['last_message'])
       //     : null,
-      lastMessage: Message.fromJson(json['last_message']),
+      //lastMessage: Message.fromJson(json['last_message']),
       inRead: json['in_read'],
       outRead: json['out_read'],
     );

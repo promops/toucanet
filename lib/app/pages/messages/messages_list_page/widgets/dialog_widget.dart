@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/data/models/message/conversation.dart';
 import 'package:toucanet/data/models/message/message.dart';
 
 import '../../../../styles/app_colors.dart';
@@ -9,9 +10,9 @@ import 'dialog_title.dart';
 import 'user_avatar.dart';
 
 class DialogWidget extends StatefulWidget {
-  final Message message;
+  final Conversation conversation;
 
-  const DialogWidget({Key key, this.message}) : super(key: key);
+  const DialogWidget({Key key, this.conversation}) : super(key: key);
   @override
   _DialogWidgetState createState() => _DialogWidgetState();
 }
@@ -29,7 +30,7 @@ class _DialogWidgetState extends State<DialogWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                UserAvatar(),
+                UserAvatar(url : widget.conversation.avatarUrl),
                 Expanded(
                     child: Container(
                         decoration: BoxDecoration(
@@ -41,8 +42,8 @@ class _DialogWidgetState extends State<DialogWidget> {
                           children: <Widget>[
                             DialogTitle(
                                 text:
-                                    '${widget.message.id} ${widget.message.text}'),
-                            DialogText(text: widget.message.text),
+                                    '${widget.conversation.senderFirstName} ${widget.conversation.senderLastName}'),
+                            DialogText(text: widget.conversation.lastMessage.text),
                             Expanded(
                               child: Container(),
                             )

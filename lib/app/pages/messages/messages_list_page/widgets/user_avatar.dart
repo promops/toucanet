@@ -6,6 +6,8 @@ import 'package:toucanet/app/styles/indents.dart';
 
 class UserAvatar extends StatefulWidget {
   String url;
+
+  UserAvatar({this.url});
   @override
   _UserAvatarState createState() => _UserAvatarState();
 }
@@ -23,8 +25,9 @@ class _UserAvatarState extends State<UserAvatar> {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(120),
                   child: CachedNetworkImage(
-                    imageUrl:
-                        "https://www.zoosite.com.ua/img/poroda/319/319_1.jpg",
+                    imageUrl: widget.url == null
+                        ? "https://www.zoosite.com.ua/img/poroda/319/319_1.jpg"
+                        : widget.url,
                     errorWidget: (context, url, error) => Icon(Icons.error),
                     fit: BoxFit.cover,
                   )),

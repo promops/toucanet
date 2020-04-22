@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/pages/messages/dialog_page/text_message_widget.dart';
-import 'package:toucanet/core/helper/push_manager.dart';
-import 'package:toucanet/data/models/message/message.dart';
-import 'package:toucanet/data/remotes/vk_account_remote.dart';
-import 'package:toucanet/data/repositories/accounts_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toucanet/app/widgets/loading_indicator.dart';
+import '../../../blocs/dialog_bloc/dialog_bloc.dart';
+import '../dialog_page/text_message_widget.dart';
+import '../../../../core/helper/push_manager.dart';
+import '../../../../data/models/message/message.dart';
+import '../../../../data/remotes/vk_account_remote.dart';
+import '../../../../data/repositories/accounts_repository.dart';
 
 import '../../../styles/app_colors.dart';
 import '../../../styles/fonts.dart';
@@ -27,35 +30,57 @@ class _DialogListPageState extends State<DialogListPage> {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<DialogBloc>(context).add(FetchDialogs(2));
+
     return Scaffold(
         backgroundColor: AppColors.mainColor,
         appBar: CustomAppBar(
           title: Text('Диалоги', style: Fonts.h1),
         ),
-        body: ListView(
-          children: <Widget>[
-            DialogWidget(message: _message),
-            DialogWidget(message: _message),
-            DialogWidget(message: _message),
-            RaisedButton(
-                child: Text('register'),
-                onPressed: () async => {
-                      await VKAccountRemote(AccountsRepository().current.token)
-                          .registerDevice()
-                    }),
-            RaisedButton(
-                child: Text('unregister'),
-                onPressed: () async => {
-                      await VKAccountRemote(AccountsRepository().current.token)
-                          .unregisterDevice()
-                    }),
+        body: 
 
-                    RaisedButton(
-                child: Text('push'),
-                onPressed: () async => {
-                      await PushManager().displayNotification('test push')
-                    })
-          ],
-        ));
+        BlocBuilder(
+          bloc: BlocProvider.of<DialogBloc>(context),
+          builder: (BuildContext context, DialogState state)
+          {
+            if(state is DialogList){
+              return ListView(
+                children: <Widget>[
+                  for(var dialog in state.dialogs)
+                    DialogWidget(conversation: dialog,)
+                ],
+              );
+            }
+
+            return LoadingIndicator();
+          }
+          )
+        // ListView(
+        //   children: <Widget>[
+         //    DialogWidget(message: _message),
+        //     DialogWidget(message: _message),
+        //     DialogWidget(message: _message),
+        //     RaisedButton(
+        //         child: Text('register'),
+        //         onPressed: () async => {
+        //               await VKAccountRemote(AccountsRepository().current.token)
+        //                   .registerDevice()
+        //             }),
+        //     RaisedButton(
+        //         child: Text('unregister'),
+        //         onPressed: () async => {
+        //               await VKAccountRemote(AccountsRepository().current.token)
+        //                   .unregisterDevice()
+        //             }),
+
+        //             RaisedButton(
+        //         child: Text('push'),
+        //         onPressed: () async => {
+        //               await PushManager().displayNotification('test push')
+        //             })
+        //   ],
+        // )
+        
+        );
   }
 }
