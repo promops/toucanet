@@ -33,7 +33,7 @@ class VKApiLongPoll
       try {
         // https://im.vk.com/nim186556087?act=a_check&key=84fc8667c14c469c89e453ed239&ts=1768878785&wait=25&mode=2&version=3
 
-        lastTimeStamp = VKApiLongPollEventsResponse(1, {}).ts;
+        lastTimeStamp = VKLongPollEventsResponse(1, {}).ts;
       }
       catch(_) {
 

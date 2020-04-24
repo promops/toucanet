@@ -1,4 +1,4 @@
-import 'vk_api_exception.dart';
+part of 'vk_api_exception.dart';
 
 class VKApiMarketAlbumNotFoundException extends VKApiException
 {

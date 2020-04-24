@@ -8,7 +8,7 @@ class VKApiRequest
 
   Future<HttpResponse> execute(String method, [Map<String, dynamic> parameters]) async
   {
-    parameters = parameters ?? {};
+    parameters ??= {};
 
     parameters.updateAll((_, value) 
     {
