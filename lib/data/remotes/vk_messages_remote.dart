@@ -15,44 +15,37 @@ class VKMessagesRemote extends VKRemote {
 
     //Message message = Message.fromJson(result.body['response'][0]);
 
-    print(result);
   }
 
   Future<List<Conversation>> getConversations(int offset,
-      {int count = 2}) async {
+      {int count = 10}) async {
     final result = await this.call('messages.getConversations',
         {'offset': offset, 'count': count, 'filter': 'all'});
 
-    //print(result.body['response']['items']);
-
-    List<Conversation> list = [];
+    List<Conversation> conversationsList = [];
     Conversation conversation;
-    UserModel user;
     List<int> userIds = [];
 
-    // Future.forEach(result.body['response']['items'], (void) async {
-
-    // });
 
     result.body['response']['items'].forEach((item) async => {
           conversation = Conversation.fromJson(item['conversation']),
           conversation.lastMessage = Message.fromJson(item['last_message']),
-          list.add(conversation)
+          conversationsList.add(conversation)
         });
 
-    list.forEach((item) => userIds.add(conversation.peer.id));
+    conversationsList.forEach((item) => userIds.add(item.peer.id));
 
-    //TODO: Сделать нормально одним запросом
-    for (var conversation in list) {
-      user = await VKUsersRemote(AccountsRepository().current.token)
-          .getUser(ids: [conversation.peer.id]);
-      conversation.senderFirstName = user.firstName;
-      conversation.senderLastName = user.lastName;
-      conversation.avatarUrl = user.photo50;
+
+    var usersList = await VKUsersRemote(AccountsRepository().current.token).getUser(ids :userIds);
+
+    for (int i = 0; i < conversationsList.length; i++) {
+      UserModel user = usersList[i];
+
+      conversationsList[i].senderFirstName = user.firstName;
+      conversationsList[i].senderLastName = user.lastName;
+      conversationsList[i].avatarUrl = user.photo50;
     }
 
-    print(list);
-
-    return list;
+    return conversationsList;
   }
 }

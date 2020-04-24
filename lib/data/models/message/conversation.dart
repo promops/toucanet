@@ -38,5 +38,5 @@ class Conversation {
   }
 
   @override
-  String toString() => '$peer $lastMessage';
+  String toString() => '$peer';
 }

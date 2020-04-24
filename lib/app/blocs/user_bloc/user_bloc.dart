@@ -19,10 +19,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UserEvent event,
   ) async* {
     if (event is FetchUserEvent) {
-      UserModel user =
+      List<UserModel> user =
           await VKUsersRemote(AccountsRepository().current.token).getUser();
 
-      yield UserInformation(user);
+      yield UserInformation(user[0]);
     }
   }
 }

@@ -31,7 +31,7 @@ void main() async {
 
   //await WorkersManager().init(workersCount: 1);
 
-  await VKMessagesRemote(AccountsRepository().current.token).getConversations(2);
+  //await VKMessagesRemote(AccountsRepository().current.token).getConversations(2);
    
  
   runApp(Injector(child: App()));

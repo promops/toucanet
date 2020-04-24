@@ -11,7 +11,7 @@ class DialogText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: Indents.medium),
       child: Container(
-        child: Text(text, style: Fonts.h2),
+        child: Text(text, style: Fonts.h2, maxLines: 1, overflow: TextOverflow.fade),
       ),
     );
   }
