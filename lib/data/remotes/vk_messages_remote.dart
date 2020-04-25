@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:toucanet/data/remotes/vk_users_remote.dart';
 import 'package:toucanet/data/repositories/accounts_repository.dart';
 
@@ -51,19 +53,29 @@ class VKMessagesRemote extends VKRemote {
   Future<List<Message>> getHistory(int offset, int userId,
       {int count = 10}) async {
     final result = await this.call('messages.getHistory',
-        {'offset': offset, 'count': count, 'user_id': userId});
+        {'offset': offset, 'rev' : 0, 'count': count, 'user_id': userId});
 
     List<Message> messagesList = [];
     //print(result.body);
 
-     result.body['response']['items'].forEach((message) async => {
-           messagesList.add(Message.fromJson(message)),
+    result.body['response']['items'].forEach((message) async => {
+          messagesList.add(Message.fromJson(message)),
           //print(message)
         });
 
     print(messagesList);
 
-    return messagesList;
+    return messagesList.reversed.toList();
+  }
 
+  Future<void> send(int userId, String message) async {
+    final result = await this.call('messages.send', {
+      'user_id': userId,
+      'random_id': Random().nextInt(4294967295),
+      'user_id': userId,
+      'message': message
+    });
+
+    print(result);
   }
 }
