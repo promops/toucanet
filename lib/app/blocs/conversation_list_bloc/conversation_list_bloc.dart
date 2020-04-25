@@ -7,14 +7,30 @@ import '../../../data/models/message/conversation.dart';
 import '../../../data/remotes/vk_messages_remote.dart';
 import '../../../data/repositories/accounts_repository.dart';
 
+import 'package:rxdart/rxdart.dart';
+
 part 'conversation_list_event.dart';
 part 'conversation_list_state.dart';
 
-class ConversationListBloc extends Bloc<ConversationsListEvent, ConversationListState> {
+class ConversationListBloc
+    extends Bloc<ConversationsListEvent, ConversationListState> {
   @override
   ConversationListState get initialState => Loading();
 
   int offset = 0;
+
+@override
+Stream<ConversationListState> transformEvents(
+  Stream<ConversationsListEvent> events,
+  Stream<ConversationListState> Function(ConversationsListEvent event) next,
+) {
+    final nonDebounceStream =
+      events.where((event) => event is! FetchDialogs);
+    final debounceStream = events
+      .where((event) => event is FetchDialogs)
+      .debounceTime(Duration(milliseconds: 300));
+    return super.transformEvents(MergeStream([nonDebounceStream, debounceStream]), next);
+}
 
   @override
   Stream<ConversationListState> mapEventToState(

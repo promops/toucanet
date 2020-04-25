@@ -37,9 +37,18 @@ class VKMessagesRemote extends VKRemote {
 
 
     var usersList = await VKUsersRemote(AccountsRepository().current.token).getUser(ids :userIds);
+    print(usersList);
+
+    print(conversationsList);
+
+    print(usersList.length);
+
+    print(conversationsList.length);
+
 
     for (int i = 0; i < conversationsList.length; i++) {
       UserModel user = usersList[i];
+
 
       conversationsList[i].senderFirstName = user.firstName;
       conversationsList[i].senderLastName = user.lastName;

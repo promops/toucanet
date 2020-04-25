@@ -11,7 +11,7 @@ class ConversationList extends ConversationListState {
   List<Conversation> dialogs;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [dialogs];
 }
 
 class Loading extends ConversationListState {

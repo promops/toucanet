@@ -51,6 +51,8 @@ class _DialogListPageState extends State<DialogListPage> {
             BlocBuilder(
                 bloc: _dialogBloc,
                 builder: (BuildContext context, ConversationListState state) {
+                
+
                   if (state is ConversationList) {
                     return ListView.builder(
                         controller: _controller,
@@ -66,7 +68,7 @@ class _DialogListPageState extends State<DialogListPage> {
                         });
                   }
 
-                  return LoadingIndicator();
+                  return Container();
                 }));
   }
 }

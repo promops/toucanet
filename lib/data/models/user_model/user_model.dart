@@ -46,5 +46,5 @@ class UserModel {
   }
 
   @override
-  String toString() => '$id $firstName $lastName $photo200orig $userCounters';
+  String toString() => '$firstName $lastName';
 }
