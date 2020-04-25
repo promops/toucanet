@@ -17,7 +17,7 @@ class _TextMessageWidgetState extends State<TextMessageWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: widget.message.direction == MessageDirection.IN
+      mainAxisAlignment: widget.message.out == 0 
           ? MainAxisAlignment.start
           : MainAxisAlignment.end,
       children: [

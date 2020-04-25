@@ -1,11 +1,13 @@
 class Message {
-  Message(
-      {this.id,
-      this.date,
-      this.fromId,
-      this.readState,
-      this.text,
-      this.direction});
+  Message({
+    this.id,
+    this.date,
+    this.fromId,
+    this.readState,
+    this.text,
+    this.out,
+  });
+
   final int id;
   final int date;
 
@@ -13,7 +15,7 @@ class Message {
   final int readState;
   final String text;
 
-  final MessageDirection direction;
+  int out;
 
   factory Message.fromJson(Map<String, dynamic> json) {
     return Message(
@@ -21,12 +23,10 @@ class Message {
       date: json['date'],
       fromId: json['from_id'],
       text: json['text'],
-      direction: MessageDirection.IN
+      out: json['out'],
     );
   }
 
   @override
   String toString() => '$id $text';
 }
-
-enum MessageDirection { IN, OUT }

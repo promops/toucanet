@@ -14,7 +14,6 @@ class VKMessagesRemote extends VKRemote {
         await this.call('messages.getById', {'fields': [], 'message_ids': ids});
 
     //Message message = Message.fromJson(result.body['response'][0]);
-
   }
 
   Future<List<Conversation>> getConversations(int offset,
@@ -26,7 +25,6 @@ class VKMessagesRemote extends VKRemote {
     Conversation conversation;
     List<int> userIds = [];
 
-
     result.body['response']['items'].forEach((item) async => {
           conversation = Conversation.fromJson(item['conversation']),
           conversation.lastMessage = Message.fromJson(item['last_message']),
@@ -35,20 +33,12 @@ class VKMessagesRemote extends VKRemote {
 
     conversationsList.forEach((item) => userIds.add(item.peer.id));
 
+    var usersList = await VKUsersRemote(AccountsRepository().current.token)
+        .getUser(ids: userIds);
 
-    var usersList = await VKUsersRemote(AccountsRepository().current.token).getUser(ids :userIds);
-    print(usersList);
-
-    print(conversationsList);
-
-    print(usersList.length);
-
-    print(conversationsList.length);
-
-
+    //TODO: Пофиксить вывод аккаунтов компаний
     for (int i = 0; i < conversationsList.length; i++) {
       UserModel user = usersList[i];
-
 
       conversationsList[i].senderFirstName = user.firstName;
       conversationsList[i].senderLastName = user.lastName;
@@ -56,5 +46,24 @@ class VKMessagesRemote extends VKRemote {
     }
 
     return conversationsList;
+  }
+
+  Future<List<Message>> getHistory(int offset, int userId,
+      {int count = 10}) async {
+    final result = await this.call('messages.getHistory',
+        {'offset': offset, 'count': count, 'user_id': userId});
+
+    List<Message> messagesList = [];
+    //print(result.body);
+
+     result.body['response']['items'].forEach((message) async => {
+           messagesList.add(Message.fromJson(message)),
+          //print(message)
+        });
+
+    print(messagesList);
+
+    return messagesList;
+
   }
 }

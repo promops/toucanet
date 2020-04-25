@@ -8,3 +8,16 @@ class ConversationInitial extends ConversationState {
   @override
   List<Object> get props => [];
 }
+
+class MessagesList extends ConversationState {
+  MessagesList(this.messages);
+  List<Message> messages;
+
+  @override
+  List<Object> get props => [messages];
+}
+
+class Loading extends ConversationState {
+  @override
+  List<Object> get props => [];
+}

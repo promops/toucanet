@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
 import 'package:toucanet/data/models/message/conversation.dart';
 import 'package:toucanet/data/models/message/message.dart';
 
@@ -21,7 +22,7 @@ class _DialogWidgetState extends State<DialogWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () => Navigator.pushNamed(context, '/dialog'),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DialogPage(conversation : widget.conversation) )),
         child: Padding(
           padding: const EdgeInsets.only(bottom: Indents.medium, top: Indents.medium),
           child: Container(
