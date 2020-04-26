@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toucanet/data/objects/user_model/user_model.dart';
 
-import '../../../data/models/user_model/user_model.dart';
+
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/fonts.dart';

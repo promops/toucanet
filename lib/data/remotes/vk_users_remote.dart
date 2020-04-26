@@ -1,4 +1,5 @@
-import '../models/user_model/user_model.dart';
+import 'package:toucanet/data/objects/user_model/user_model.dart';
+
 import 'vk_remote.dart';
 
 class VKUsersRemote extends VKRemote {

@@ -17,23 +17,41 @@ package com.example.toucanet_app
 //     }
 // }
 
+//рабочая
+// import io.flutter.app.FlutterApplication
+// import io.flutter.plugin.common.PluginRegistry
+// import io.flutter.plugin.common.PluginRegistry.PluginRegistrantCallback
+// import io.flutter.plugins.GeneratedPluginRegistrant
+// import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService
+
+// class Application : FlutterApplication(), PluginRegistrantCallback {
+
+// override fun onCreate() {
+//     super.onCreate()
+//     FlutterFirebaseMessagingService.setPluginRegistrant(this)
+// }
+
+// override fun registerWith(registry: PluginRegistry?) {
+//     io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin.registerWith(registry?.registrarFor("io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin"));
+// }
+// }
 
 import io.flutter.app.FlutterApplication
 import io.flutter.plugin.common.PluginRegistry
 import io.flutter.plugin.common.PluginRegistry.PluginRegistrantCallback
-import io.flutter.plugins.GeneratedPluginRegistrant
 import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService
 
 class Application : FlutterApplication(), PluginRegistrantCallback {
+    override fun onCreate() {
+        super.onCreate()
+        FlutterFirebaseMessagingService.setPluginRegistrant(this)
+    }
 
-override fun onCreate() {
-    super.onCreate()
-    FlutterFirebaseMessagingService.setPluginRegistrant(this)
-}
-
-override fun registerWith(registry: PluginRegistry?) {
-    io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin.registerWith(registry?.registrarFor("io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin"));
-}
+    override fun registerWith(registry: PluginRegistry?) {
+        if (registry != null) {
+            FirebaseCloudMessagingPluginRegistrant.registerWith(registry)
+        }
+    }
 }
 
 

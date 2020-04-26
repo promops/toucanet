@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:toucanet/data/objects/user_model/user_model.dart';
 
-import '../../../data/models/user_model/user_model.dart';
+
 import '../../../data/remotes/vk_users_remote.dart';
 import '../../../data/repositories/accounts_repository.dart';
 

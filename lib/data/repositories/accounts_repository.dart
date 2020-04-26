@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:toucanet/data/models/account.dart';
+
 import 'package:flutter_keychain/flutter_keychain.dart';
+import 'package:toucanet/data/objects/account.dart';
 
 class AccountsRepository
 {

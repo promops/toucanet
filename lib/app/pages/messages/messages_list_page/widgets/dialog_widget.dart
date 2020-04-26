@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
-import 'package:toucanet/data/models/message/conversation.dart';
-import 'package:toucanet/data/models/message/message.dart';
+import 'package:toucanet/data/objects/message/conversation.dart';
 
 import '../../../../styles/app_colors.dart';
 import '../../../../styles/indents.dart';
@@ -31,7 +30,7 @@ class _DialogWidgetState extends State<DialogWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                UserAvatar(url : widget.conversation.avatarUrl),
+               // UserAvatar(url : widget.conversation.avatarUrl),
                 Expanded(
                     child: Container(
                         decoration: BoxDecoration(
@@ -43,8 +42,8 @@ class _DialogWidgetState extends State<DialogWidget> {
                           children: <Widget>[
                             DialogTitle(
                                 text:
-                                    '${widget.conversation.senderFirstName} ${widget.conversation.senderLastName}'),
-                            DialogText(text: widget.conversation.lastMessage.text),
+                                    'asd '),
+                            //DialogText(text: widget.conversation.lastMessage.text),
                             Expanded(
                               child: Container(),
                             )

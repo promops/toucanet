@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toucanet/app/blocs/conversation_bloc/conversation_bloc.dart';
 import 'package:toucanet/app/styles/app_colors.dart';
 import 'package:toucanet/app/widgets/loading_indicator.dart';
-import 'package:toucanet/data/models/message/conversation.dart';
+import 'package:toucanet/data/objects/message/conversation.dart';
+
 import 'package:toucanet/data/remotes/vk_messages_remote.dart';
 import 'package:toucanet/data/repositories/accounts_repository.dart';
 
-import '../../../../data/models/message/message.dart';
+
 import 'text_message_widget.dart';
 
 class DialogPage extends StatefulWidget {

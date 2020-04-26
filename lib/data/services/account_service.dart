@@ -1,4 +1,5 @@
-import 'package:toucanet/data/models/account.dart';
+
+import 'package:toucanet/data/objects/account.dart';
 import 'package:toucanet/data/repositories/accounts_repository.dart';
 
 class AccountService

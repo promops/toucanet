@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/data/objects/message/message.dart';
 
-import '../../../../data/models/message/message.dart';
+
 import 'message_widget.dart';
 
 class TextMessageWidget extends StatefulWidget implements MessageWidget {

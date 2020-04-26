@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/styles/fonts.dart';
-import 'package:toucanet/app/styles/indents.dart';
 
-import '../../../../data/models/user_model/user_counters_model.dart';
+import '../../../../data/objects/user_model/user_counters_model.dart';
+import '../../../styles/fonts.dart';
+import '../../../styles/indents.dart';
+
 
 class UserCountersWidget extends StatelessWidget {
   final UserCountersModel userCounters;

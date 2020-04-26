@@ -1,5 +1,5 @@
-import 'package:toucanet/data/models/account.dart';
-import 'package:toucanet/data/remotes/vk_auth_remote.dart';
+import '../objects/account.dart';
+import '../remotes/vk_auth_remote.dart';
 
 class AuthService
 {

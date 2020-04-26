@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:toucanet/data/objects/message/conversation.dart';
 
-import '../../../data/models/message/conversation.dart';
+
 import '../../../data/remotes/vk_messages_remote.dart';
 import '../../../data/repositories/accounts_repository.dart';
 
@@ -38,7 +39,6 @@ Stream<ConversationListState> transformEvents(
   ) async* {
     final currentState = state;
 
-    print(event);
     if (event is FetchDialogs) {
       //   List<Conversation> list =
       //       await VKMessagesRemote(AccountsRepository().current.token)
@@ -46,12 +46,12 @@ Stream<ConversationListState> transformEvents(
 
       //   yield DialogList(list);
 
-      yield ConversationList((currentState is Loading
-              ? List<Conversation>()
-              : (currentState as ConversationList).dialogs) +
-          await VKMessagesRemote(AccountsRepository().current.token)
-              .getConversations(offset));
-      offset += 10;
+      // yield ConversationList((currentState is Loading
+      //         ? List<Conversation>()
+      //         : (currentState as ConversationList).dialogs) +
+      //     await VKMessagesRemote(AccountsRepository().current.token)
+      //         .getConversations(offset));
+      // offset += 10;
     }
   }
 }

@@ -1,4 +1,5 @@
-import 'package:toucanet/data/models/message/message.dart';
+
+import 'package:toucanet/data/objects/message/message.dart';
 
 abstract class MessageWidget {
   final Message message;

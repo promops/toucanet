@@ -14,6 +14,7 @@ import 'package:toucanet/data/remotes/vk_longpull_remote.dart';
 import 'package:toucanet/data/remotes/vk_messages_remote.dart';
 import 'package:toucanet/data/remotes/vk_users_remote.dart';
 import 'package:toucanet/data/repositories/accounts_repository.dart';
+import 'package:toucanet/data/services/messages_service.dart';
 
 import 'core/helper/push_manager.dart';
 import 'data/services/auth_service.dart';
@@ -23,7 +24,7 @@ void main() async {
 
   await Config().load(['vk', 'app']);
   await AccountsRepository().init();
-  await PushManager().init();
+  //await PushManager().init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
 
@@ -31,6 +32,8 @@ void main() async {
 
   //await VKMessagesRemote(AccountsRepository().current.token).getConversations(2);
   // await VKMessagesRemote(AccountsRepository().current.token).getHistory(5, 50123451);
+
+  await MessagesService().getConversations(0);
  
   runApp(Injector(child: App()));
 }

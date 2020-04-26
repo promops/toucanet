@@ -6,8 +6,9 @@ class Conversation {
       {this.peer,
       this.lastMessageId,
       this.inRead,
-      this.outRead,
-      this.lastMessage});
+      this.outRead
+      
+      });
 
   final Peer peer;
 
@@ -17,21 +18,17 @@ class Conversation {
 
   final int outRead;
 
-  String avatarUrl;
+  // String avatarUrl;
 
-  String senderFirstName;
+  // String senderFirstName;
 
-  String senderLastName;
+  // String senderLastName;
 
-  Message lastMessage;
+  // Message lastMessage;
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       peer: Peer.fromJson(json['peer']),
-      // lastMessage: json.containsKey('last_message')
-      //     ? Message.fromJson(json['last_message'])
-      //     : null,
-      //lastMessage: Message.fromJson(json['last_message']),
       inRead: json['in_read'],
       outRead: json['out_read'],
     );

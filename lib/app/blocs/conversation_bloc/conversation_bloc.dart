@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../data/models/message/message.dart';
+import 'package:toucanet/data/objects/message/message.dart';
+
 import '../../../data/remotes/vk_messages_remote.dart';
 import '../../../data/repositories/accounts_repository.dart';
 
