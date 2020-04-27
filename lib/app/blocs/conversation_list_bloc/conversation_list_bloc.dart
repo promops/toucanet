@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:toucanet/app/view_models/dialog_view_model.dart';
 import 'package:toucanet/data/objects/message/conversation.dart';
+import 'package:toucanet/data/services/messages_service.dart';
 
 
 import '../../../data/remotes/vk_messages_remote.dart';
@@ -46,12 +48,11 @@ Stream<ConversationListState> transformEvents(
 
       //   yield DialogList(list);
 
-      // yield ConversationList((currentState is Loading
-      //         ? List<Conversation>()
-      //         : (currentState as ConversationList).dialogs) +
-      //     await VKMessagesRemote(AccountsRepository().current.token)
-      //         .getConversations(offset));
-      // offset += 10;
+      yield ConversationList((currentState is Loading
+              ? List<DialogViewModel>()
+              : (currentState as ConversationList).dialogs) +
+          await MessagesService().getConversations(offset));
+      offset += 10;
     }
   }
 }

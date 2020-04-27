@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
+import 'package:toucanet/app/view_models/dialog_view_model.dart';
 import 'package:toucanet/data/objects/message/conversation.dart';
 
 import '../../../../styles/app_colors.dart';
@@ -10,7 +11,7 @@ import 'dialog_title.dart';
 import 'user_avatar.dart';
 
 class DialogWidget extends StatefulWidget {
-  final Conversation conversation;
+  final DialogViewModel conversation;
 
   const DialogWidget({Key key, this.conversation}) : super(key: key);
   @override
@@ -21,16 +22,21 @@ class _DialogWidgetState extends State<DialogWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => DialogPage(conversation : widget.conversation) )),
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    DialogPage(conversation: widget.conversation))),
         child: Padding(
-          padding: const EdgeInsets.only(bottom: Indents.medium, top: Indents.medium),
+          padding: const EdgeInsets.only(
+              bottom: Indents.medium, top: Indents.medium),
           child: Container(
             height: 80,
             color: AppColors.mainColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-               // UserAvatar(url : widget.conversation.avatarUrl),
+                UserAvatar(url: widget.conversation.avatarUrl),
                 Expanded(
                     child: Container(
                         decoration: BoxDecoration(
@@ -40,10 +46,8 @@ class _DialogWidgetState extends State<DialogWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            DialogTitle(
-                                text:
-                                    'asd '),
-                            //DialogText(text: widget.conversation.lastMessage.text),
+                            DialogTitle(text: widget.conversation.title),
+                            DialogText(text: widget.conversation.lastMessage),
                             Expanded(
                               child: Container(),
                             )

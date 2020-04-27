@@ -1,3 +1,5 @@
+import 'package:toucanet/data/objects/message/chat_settings.dart';
+
 import 'message.dart';
 import 'peer.dart';
 
@@ -6,9 +8,8 @@ class Conversation {
       {this.peer,
       this.lastMessageId,
       this.inRead,
-      this.outRead
-      
-      });
+      this.outRead,
+      this.chatSettings});
 
   final Peer peer;
 
@@ -18,19 +19,14 @@ class Conversation {
 
   final int outRead;
 
-  // String avatarUrl;
-
-  // String senderFirstName;
-
-  // String senderLastName;
-
-  // Message lastMessage;
+  final ChatSettings chatSettings;
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
       peer: Peer.fromJson(json['peer']),
       inRead: json['in_read'],
       outRead: json['out_read'],
+      chatSettings: json['chat_settings'] != null ? ChatSettings.fromJson(json['chat_settings']) : null
     );
   }
 

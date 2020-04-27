@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toucanet/app/blocs/conversation_bloc/conversation_bloc.dart';
 import 'package:toucanet/app/styles/app_colors.dart';
+import 'package:toucanet/app/view_models/dialog_view_model.dart';
 import 'package:toucanet/app/widgets/loading_indicator.dart';
 import 'package:toucanet/data/objects/message/conversation.dart';
 
@@ -13,7 +14,7 @@ import 'text_message_widget.dart';
 
 class DialogPage extends StatefulWidget {
   const DialogPage({Key key, this.conversation}) : super(key: key);
-  final Conversation conversation;
+  final DialogViewModel conversation;
 
   @override
   _DialogPageState createState() => _DialogPageState();
@@ -27,17 +28,17 @@ class _DialogPageState extends State<DialogPage> {
   void initState() {
     _conversationBloc = ConversationBloc();
     _textController = TextEditingController();
-    _conversationBloc.add(FetchMessages(widget.conversation.peer.id));
+    //_conversationBloc.add(FetchMessages(widget.conversation.peer.id));
 
     super.initState();
   }
 
   void _sendButtonHandler() async {
-    await VKMessagesRemote(AccountsRepository().current.token)
-        .send(widget.conversation.peer.id, _textController.text);
-    _conversationBloc.add(FetchMessages(widget.conversation.peer.id));
+    // await VKMessagesRemote(AccountsRepository().current.token)
+    //     .send(widget.conversation.peer.id, _textController.text);
+    // _conversationBloc.add(FetchMessages(widget.conversation.peer.id));
 
-    _textController.text = '';
+    // _textController.text = '';
   }
 
   @override

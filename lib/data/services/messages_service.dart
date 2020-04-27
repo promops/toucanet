@@ -16,18 +16,27 @@ class MessagesService {
             .getConversations(offset);
 
     for (var item in response.items) {
-      UserModel sender = response.profiles.firstWhere(
-          (user) => user.id == item.conversation.peer.id,
-          orElse: () =>
-              UserModel(firstName: 'asd', lastName: '123', photo50: '123'));
+      if (item.conversation.peer.type == 'chat') {
+        dialogModels.add(DialogViewModel(
+            lastMessage: item.lastMessage.text,
+            avatarUrl: item.conversation.chatSettings.photo.photo50,
+            title: '${item.conversation.chatSettings.title}'));
+      } else {
+        UserModel sender = response.profiles.firstWhere(
+            (user) => user.id == item.conversation.peer.id,
+            orElse: () =>
+                UserModel(firstName: 'asd', lastName: '123', photo50: '123'));
 
-      dialogModels.add(DialogViewModel(
-          lastMessage: item.lastMessage.text,
-          avatarUrl: sender.photo50,
-          title: '${sender.firstName} ${sender.lastName}'));
+        dialogModels.add(DialogViewModel(
+            lastMessage: item.lastMessage.text,
+            avatarUrl: sender.photo50,
+            title: '${sender.firstName} ${sender.lastName}'));
+      }
     }
 
-    print(dialogModels);
+    //print(response.items);
+
+    dialogModels.forEach((f) => print(f.avatarUrl));
 
     return dialogModels;
   }
