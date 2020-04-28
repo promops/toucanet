@@ -20,7 +20,7 @@ class _DialogListPageState extends State<DialogListPage> {
 
   void _onScroll() {
     final maxScroll = _controller.position.maxScrollExtent;
- 
+
     final currentScroll = _controller.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
       print('++');
@@ -30,7 +30,7 @@ class _DialogListPageState extends State<DialogListPage> {
 
   @override
   void initState() {
-    _controller  = ScrollController();
+    _controller = ScrollController();
     _dialogBloc = ConversationListBloc();
     _controller.addListener(_onScroll);
     _dialogBloc.add(FetchDialogs());
@@ -39,36 +39,40 @@ class _DialogListPageState extends State<DialogListPage> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Починить контроллер для скролла
+    return SizedBox.expand(
+        child: DraggableScrollableSheet(
+            initialChildSize: 0.8,
+            minChildSize: 0.8,
+            builder: (BuildContext context, _controller) {
+              return ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(44),
+                      topRight: Radius.circular(44)),
+                  child: Container(
+                      color: AppColors.mainColor,
+                      child: BlocBuilder(
+                          bloc: _dialogBloc,
+                          builder: (BuildContext context,
+                              ConversationListState state) {
+                            if (state is ConversationList) {
+                              return ListView.builder(
+                                  controller: _controller,
+                                  itemCount: state.dialogs.length + 1,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    if (index != state.dialogs.length) {
+                                      return DialogWidget(
+                                          conversation: state.dialogs[index]);
+                                    }
+                                    return index % 10 != 0
+                                        ? Offstage()
+                                        : LoadingIndicator();
+                                  });
+                            }
 
-
-    return Scaffold(
-        backgroundColor: AppColors.mainColor,
-        appBar: CustomAppBar(
-          title: Text('Диалоги', style: Fonts.h1),
-        ),
-        body:
-
-            BlocBuilder(
-                bloc: _dialogBloc,
-                builder: (BuildContext context, ConversationListState state) {
-                
-
-                  if (state is ConversationList) {
-                    return ListView.builder(
-                        controller: _controller,
-                        itemCount: state.dialogs.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index != state.dialogs.length) {
-                            return DialogWidget(
-                                conversation: state.dialogs[index]);
-                          }
-                          return index % 10 != 0
-                              ? Offstage()
-                              : LoadingIndicator();
-                        });
-                  }
-
-                  return Container();
-                }));
+                            return Container();
+                          })));
+            }));
   }
 }
