@@ -11,9 +11,9 @@ import 'dialog_title.dart';
 import 'user_avatar.dart';
 
 class DialogWidget extends StatefulWidget {
-  final DialogViewModel conversation;
+  final DialogViewModel dialogModel;
 
-  const DialogWidget({Key key, this.conversation}) : super(key: key);
+  const DialogWidget({Key key, this.dialogModel}) : super(key: key);
   @override
   _DialogWidgetState createState() => _DialogWidgetState();
 }
@@ -26,28 +26,24 @@ class _DialogWidgetState extends State<DialogWidget> {
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) =>
-                    DialogPage(conversation: widget.conversation))),
+                    DialogPage(dialogModel: widget.dialogModel))),
         child: Padding(
           padding: const EdgeInsets.only(
-              bottom: Indents.medium, top: Indents.medium),
+              bottom: Indents.medium, top: Indents.medium, right: Indents.large, left: Indents.medium),
           child: Container(
             height: 80,
             color: AppColors.mainColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                UserAvatar(url: widget.conversation.avatarUrl),
+                UserAvatar(url: widget.dialogModel.avatarUrl, online : widget.dialogModel.online),
                 Expanded(
                     child: Container(
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.grey[700], width: .5))),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            DialogTitle(text: widget.conversation.title),
-                            DialogText(text: widget.conversation.lastMessage),
+                            DialogTitle(text: widget.dialogModel.title),
+                            DialogText(text: widget.dialogModel.lastMessage),
                             Expanded(
                               child: Container(),
                             )

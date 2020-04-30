@@ -10,8 +10,14 @@ class DialogTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top: Indents.medium),
-        child: Container(
-          child: Text(text, style: Fonts.h1),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(child:Container(
+              child: Text(text, style: Fonts.h1.copyWith(color: Colors.grey[700],), overflow: TextOverflow.ellipsis ),
+            )),
+            Text('17:40',  style: Fonts.h1.copyWith(color: Colors.grey[700], fontSize: 12))
+          ],
         ));
   }
 }

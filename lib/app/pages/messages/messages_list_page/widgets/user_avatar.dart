@@ -6,8 +6,9 @@ import 'package:toucanet/app/styles/indents.dart';
 
 class UserAvatar extends StatefulWidget {
   String url;
+  bool online;
 
-  UserAvatar({this.url});
+  UserAvatar({this.url, this.online});
   @override
   _UserAvatarState createState() => _UserAvatarState();
 }
@@ -32,7 +33,7 @@ class _UserAvatarState extends State<UserAvatar> {
                     fit: BoxFit.cover,
                   )),
             ),
-            Positioned(
+            widget.online ? Positioned(
               right: 0,
               bottom: 0,
               child: ClipRRect(
@@ -52,7 +53,7 @@ class _UserAvatarState extends State<UserAvatar> {
                   ),
                 ),
               ),
-            ),
+            ) : Offstage(),
           ],
         ));
   }
