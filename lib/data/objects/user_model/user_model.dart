@@ -12,7 +12,7 @@ class UserModel {
       this.photo200orig,
       this.photo50,
       this.photo100,
-      this.userCounters});
+      this.userCounters, this.online});
 
   final int id;
 
@@ -29,6 +29,8 @@ class UserModel {
   final String photo50;
   final String photo100;
 
+  final int online;
+
   UserCountersModel userCounters;
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -42,6 +44,7 @@ class UserModel {
         photo200orig: json['photo_200_orig'],
         photo50: json['photo_50'],
         photo100: json['photo_100'],
+        online : json['online'],
         userCounters: UserCountersModel.fromJson(json['counters']));
   }
 

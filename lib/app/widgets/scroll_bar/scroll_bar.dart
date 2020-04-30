@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:toucanet/app/styles/indents.dart';
 
 class ScrollBar extends StatefulWidget {
@@ -8,28 +9,50 @@ class ScrollBar extends StatefulWidget {
 }
 
 class _ScrollBarState extends State<ScrollBar> {
-  PageController _controller =
-      PageController(initialPage: 1, viewportFraction: 1 / 3);
+  List<Widget> items;
+
+  ItemScrollController _controller;
+
+  ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
+  void _scrollListener() {
+     print(itemPositionsListener.itemPositions);
+  }
+
+  @override
+  initState() {
+    items = [
+      _scrollItem('Сообщения'),
+      _scrollItem('Профиль'),
+      _scrollItem('Новости'),
+      _scrollItem(''),
+      _scrollItem(''),
+      _scrollItem('')
+    ];
+    _controller = ItemScrollController();
+    itemPositionsListener.itemPositions.addListener(_scrollListener);
+    super.initState();
+  }
 
   Widget _scrollItem(String title) {
     return Padding(
-      padding: EdgeInsets.only(right: 30),
-      child: Text(title),
-    );
+        padding: const EdgeInsets.only(right: 60), child: Text(title));
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top: 0),
-        child: PageView(
-          controller: _controller,
+        child: ScrollablePositionedList.builder(
           scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            _scrollItem('Сообщения'),
-            _scrollItem('Новости'),
-            _scrollItem('Профиль'),
-          ],
-        ));
+          itemScrollController: _controller,
+          itemCount: items.length,
+          itemPositionsListener: itemPositionsListener,
+          itemBuilder: (context, index) {
+            return items[index];
+          },
+        )
+        
+        );
   }
 }

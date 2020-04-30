@@ -30,13 +30,15 @@ class MessagesService {
         dialogModels.add(DialogViewModel(
             lastMessage: item.lastMessage.text,
             avatarUrl: sender.photo50,
+            id: sender.id,
+            online: sender.online == 1 ? true : false,
             title: '${sender.firstName} ${sender.lastName}'));
       }
     }
 
     //print(response.items);
 
-    dialogModels.forEach((f) => print(f.avatarUrl));
+    //dialogModels.forEach((f) => print(f.avatarUrl));
 
     return dialogModels;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toucanet/app/styles/indents.dart';
 
 import '../../../blocs/conversation_list_bloc/conversation_list_bloc.dart';
 import '../../../styles/app_colors.dart';
@@ -50,6 +51,7 @@ class _DialogListPageState extends State<DialogListPage> {
                       topLeft: Radius.circular(44),
                       topRight: Radius.circular(44)),
                   child: Container(
+                      padding: const EdgeInsets.only(top: Indents.medium),
                       color: AppColors.mainColor,
                       child: BlocBuilder(
                           bloc: _dialogBloc,
@@ -63,7 +65,7 @@ class _DialogListPageState extends State<DialogListPage> {
                                       (BuildContext context, int index) {
                                     if (index != state.dialogs.length) {
                                       return DialogWidget(
-                                          conversation: state.dialogs[index]);
+                                          dialogModel: state.dialogs[index]);
                                     }
                                     return index % 10 != 0
                                         ? Offstage()

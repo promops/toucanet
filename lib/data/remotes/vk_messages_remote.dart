@@ -31,11 +31,13 @@ class VKMessagesRemote extends VKRemote {
         'photo_50',
         'photo_100',
         'status',
-        'counters'
+        'counters',
+        'online'
       ]
     });
 
     var response = Response.fromJson(result.body['response']);
+
 
     return response;
   }
