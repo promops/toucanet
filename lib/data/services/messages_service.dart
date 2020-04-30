@@ -25,7 +25,7 @@ class MessagesService {
         UserModel sender = response.profiles.firstWhere(
             (user) => user.id == item.conversation.peer.id,
             orElse: () =>
-                UserModel(firstName: 'asd', lastName: '123', photo50: '123'));
+                UserModel(firstName: 'asd', lastName: '123', photo50: 'https://sun9-4.userapi.com/c840523/v840523166/2630e/yIvhXFkrTys.jpg?ava=1'));
 
         dialogModels.add(DialogViewModel(
             lastMessage: item.lastMessage.text,

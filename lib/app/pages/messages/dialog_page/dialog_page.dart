@@ -23,12 +23,25 @@ class DialogPage extends StatefulWidget {
 
 class _DialogPageState extends State<DialogPage> {
   ConversationBloc _conversationBloc;
-  TextEditingController _textController;
+  final _scrollThreshold = 400.0;
+
+  ScrollController _controller;
+
+  void _onScroll() {
+    final maxScroll = _controller.position.maxScrollExtent;
+    final minScroll = _controller.position.minScrollExtent;
+    final currentScroll = _controller.position.pixels;
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      _conversationBloc.add(FetchMessages(widget.dialogModel.id));
+    }
+  }
 
   @override
   void initState() {
     _conversationBloc = ConversationBloc();
-    _textController = TextEditingController();
+
+    _controller = ScrollController();
+    _controller.addListener(_onScroll);
     _conversationBloc.add(FetchMessages(widget.dialogModel.id));
 
     super.initState();
@@ -37,10 +50,11 @@ class _DialogPageState extends State<DialogPage> {
   void _sendButtonHandler(String text) async {
     await VKMessagesRemote(AccountsRepository().current.token)
         .send(widget.dialogModel.id, text);
-    _conversationBloc.add(FetchMessages(widget.dialogModel.id));
-
-  print(text);
-    _textController.text = '';
+    //_conversationBloc.add(FetchMessages(widget.dialogModel.id));
+    setState(() {
+      
+    });
+    print(text);
   }
 
   @override
@@ -49,24 +63,28 @@ class _DialogPageState extends State<DialogPage> {
         backgroundColor: AppColors.mainColor,
         body: Column(
           children: <Widget>[
-            Expanded(child:BlocBuilder(
-                bloc: _conversationBloc,
-                builder: (BuildContext context, ConversationState state) {
-                  if (state is MessagesList) {
-                    return ListView(
-                      children: <Widget>[
-                        for (var message in state.messages)
-                          TextMessageWidget(message)
-                      ],
-                    );
-                  }
+            Expanded(
+                child: BlocBuilder(
+                    bloc: _conversationBloc,
+                    builder: (BuildContext context, ConversationState state) {
+                      if (state is MessagesList) {
+                        return ListView.builder(
+                            reverse: true,
+                            controller: _controller,
+                            itemCount: state.messages.length + 1,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index != state.messages.length) {
+                                return TextMessageWidget(state.messages[index]);
+                              }
+                              return index % 12 != 0
+                                  ? Offstage()
+                                  : LoadingIndicator();
+                            });
+                      }
 
-                  return LoadingIndicator();
-                })),
-
-                MessageField(
-                  sendCallback: _sendButtonHandler
-                )
+                      return Container();
+                    })),
+            MessageField(sendCallback: _sendButtonHandler)
           ],
         ));
   }

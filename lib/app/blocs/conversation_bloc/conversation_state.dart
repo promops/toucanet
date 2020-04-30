@@ -11,7 +11,7 @@ class ConversationInitial extends ConversationState {
 
 class MessagesList extends ConversationState {
   MessagesList(this.messages);
-  List<Message> messages;
+  final List<Message> messages;
 
   @override
   List<Object> get props => [messages];

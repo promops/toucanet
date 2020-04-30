@@ -33,7 +33,11 @@ class _MessageFieldState extends State<MessageField> {
             controller: _controller,
           )),
           IconButton(
-              icon: Icon(Icons.send), onPressed:  () async => await  widget.sendCallback(_controller.text))
+              icon: Icon(Icons.send),
+              onPressed: () async => {
+                    await widget.sendCallback(_controller.text),
+                    _controller.text = ''
+                  })
         ],
       ),
     );
