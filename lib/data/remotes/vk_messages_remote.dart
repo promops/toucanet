@@ -58,6 +58,8 @@ class VKMessagesRemote extends VKRemote {
           messagesList.add(Message.fromJson(message)),
         });
 
+    //messagesList.forEach((f)=> print(f.attachments));
+    
     return messagesList;
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:toucanet/app/styles/fonts.dart';
 import 'package:toucanet/app/styles/indents.dart';
+import 'package:toucanet/data/objects/message/attachments/attachment_type.dart';
+import 'package:toucanet/data/objects/message/attachments/models_by_type/sticker.dart';
 import 'package:toucanet/data/objects/message/message.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,13 +22,23 @@ class TextMessageWidget extends StatefulWidget implements MessageWidget {
 class _TextMessageWidgetState extends State<TextMessageWidget> {
   @override
   Widget build(BuildContext context) {
+    print(widget.message.attachments);
+    if (widget.message.attachments.isNotEmpty) {
+      var attach = widget.message.attachments[0];
+      print('++++++++++++');
+      if (attach is Sticker) {
+        return Image.network(attach.images[1].url);
+      }
+    }
+
     return Row(
       mainAxisAlignment: widget.message.out == 0
           ? MainAxisAlignment.start
           : MainAxisAlignment.end,
       children: [
         Container(
-          margin: const EdgeInsets.only(top: Indents.small, bottom: Indents.small),
+          margin:
+              const EdgeInsets.only(top: Indents.small, bottom: Indents.small),
           width: MediaQuery.of(context).size.width * 0.8,
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
@@ -38,7 +50,10 @@ class _TextMessageWidgetState extends State<TextMessageWidget> {
               ? RichText(
                   text: TextSpan(
                       text: widget.message.text,
-                      style: Fonts.h3.copyWith(color: Colors.blue, decoration: TextDecoration.underline,),
+                      style: Fonts.h3.copyWith(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () async {
                           final url = '${widget.message.text}';
