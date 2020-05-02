@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/pages/messages/dialog_page/dialog_page.dart';
-import 'package:toucanet/app/view_models/dialog_view_model.dart';
-import 'package:toucanet/data/objects/message/conversation.dart';
 
 import '../../../../styles/app_colors.dart';
 import '../../../../styles/indents.dart';
-
+import '../../../../view_models/dialog_view_model.dart';
+import '../../dialog_page/dialog_page.dart';
 import 'dialog_text.dart';
 import 'dialog_title.dart';
 import 'user_avatar.dart';

@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:toucanet/app/styles/indents.dart';
 
 class ScrollBar extends StatefulWidget {
   @override

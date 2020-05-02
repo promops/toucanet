@@ -1,6 +1,4 @@
-import 'package:toucanet/data/objects/message/chat_settings.dart';
-
-import 'message.dart';
+import 'chat_settings.dart';
 import 'peer.dart';
 
 class Conversation {

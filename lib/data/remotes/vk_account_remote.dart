@@ -11,19 +11,15 @@ class VKAccountRemote extends VKRemote {
   Future<void> registerDevice() async {
     String deviceId = await DeviceInfo.deviceId;
     String pushToken = await FirebaseMessaging().getToken();
-    String systemVersion = await DeviceInfo.systemVersion;
-
 
     final result = await this.call('account.registerDevice', {
       'token': pushToken,
       'device_id': deviceId,
-      'system_version' : "9.1.2",
-      'device_year' : 2017,
-      'device_model' : 'Google pixel 2',
+      'system_version': "9.1.2",
+      'device_year': 2017,
+      'device_model': 'Google pixel 2',
       'settings': json.encode({"msg": "on", "chat": "on", "friend": "on"})
     });
-
-    print(pushToken);
 
     print(result.body['response']);
   }
@@ -43,26 +39,21 @@ class VKAccountRemote extends VKRemote {
     String pushToken = await FirebaseMessaging().getToken();
 
     final result = await this.call('account.setPushSettings', {
-     // 'token': pushToken,
+      // 'token': pushToken,
       'device_id': deviceId,
-      'key' : pushToken,
+      'key': pushToken,
       'settings': json.encode({"msg": "on", "chat": "on", "friend": "off"})
     });
 
     print(result.body['response']);
   }
 
-    Future<void> unregisterDevice() async {
+  Future<void> unregisterDevice() async {
     String deviceId = await DeviceInfo.deviceId;
-    String pushToken = await FirebaseMessaging().getToken();
-    String systemVersion = await DeviceInfo.systemVersion;
-
 
     final result = await this.call('account.unregisterDevice', {
       'device_id': deviceId,
-      
     });
-
 
     print(result.body['response']);
   }

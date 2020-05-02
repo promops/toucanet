@@ -2,7 +2,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../core/helper/push_manager.dart';
 import '../data/services/account_service.dart';
 import 'blocs/app_bloc/app_bloc.dart';
 import 'pages/auth_pages/auth_page.dart';
@@ -19,34 +18,34 @@ Future<dynamic> backgroundHandle(Map<String, dynamic> message) {
 }
 
 class _AppState extends State<App> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
   void initState() {
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) {
-       // print('on message ${message}');
-       // PushManager().displayNotification('фыв');
-      },
-      onResume: (Map<String, dynamic> message) {
-        //print('on resume $message');
-      },
-      onLaunch: (Map<String, dynamic> message) {
-        //print('on launch $message');
-      },
-      onBackgroundMessage: backgroundHandle,
-    );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-     // print("Settings registered: $settings");
-    });
+    // _firebaseMessaging.configure(
+    //   onMessage: (Map<String, dynamic> message) {
+    //    // print('on message ${message}');
+    //    // PushManager().displayNotification('фыв');
+    //   },
+    //   onResume: (Map<String, dynamic> message) {
+    //     //print('on resume $message');
+    //   },
+    //   onLaunch: (Map<String, dynamic> message) {
+    //     //print('on launch $message');
+    //   },
+    //   onBackgroundMessage: backgroundHandle,
+    // );
+    // _firebaseMessaging.requestNotificationPermissions(
+    //     const IosNotificationSettings(sound: true, badge: true, alert: true));
+    // _firebaseMessaging.onIosSettingsRegistered
+    //     .listen((IosNotificationSettings settings) {
+    //  // print("Settings registered: $settings");
+    // });
 
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-     // print(token);
-    });
+    // _firebaseMessaging.getToken().then((String token) {
+    //   assert(token != null);
+    //  // print(token);
+    // });
 
     super.initState();
   }

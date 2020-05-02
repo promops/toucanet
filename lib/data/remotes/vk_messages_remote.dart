@@ -1,13 +1,7 @@
-import 'dart:io';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
-import 'package:toucanet/data/objects/message/conversation.dart';
-import 'package:toucanet/data/objects/message/message.dart';
-import 'package:toucanet/data/objects/message/response.dart';
-import 'package:toucanet/data/remotes/vk_users_remote.dart';
-import 'package:toucanet/data/repositories/accounts_repository.dart';
-
+import '../objects/message/message.dart';
+import '../objects/message/response.dart';
 import 'vk_remote.dart';
 
 class VKMessagesRemote extends VKRemote {
@@ -18,6 +12,7 @@ class VKMessagesRemote extends VKRemote {
         await this.call('messages.getById', {'fields': [], 'message_ids': ids});
 
     //Message message = Message.fromJson(result.body['response'][0]);
+  
   }
 
   Future<Response> getConversations(int offset, {int count = 10}) async {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:toucanet/app/styles/indents.dart';
 
 import '../../../blocs/conversation_list_bloc/conversation_list_bloc.dart';
 import '../../../styles/app_colors.dart';
-import '../../../styles/fonts.dart';
-import '../../../widgets/app_bar/custom_app_bar.dart';
+import '../../../styles/indents.dart';
 import '../../../widgets/loading_indicator.dart';
 import 'widgets/dialog_widget.dart';
 

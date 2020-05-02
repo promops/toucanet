@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
-import 'package:toucanet/app/styles/app_colors.dart';
-import 'package:toucanet/app/styles/indents.dart';
+
+import '../../../../styles/app_colors.dart';
+import '../../../../styles/indents.dart';
 
 class UserAvatar extends StatefulWidget {
-  String url;
-  bool online;
+  final String url;
+  final bool online;
 
   UserAvatar({this.url, this.online});
   @override

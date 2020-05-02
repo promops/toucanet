@@ -1,12 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/styles/fonts.dart';
-import 'package:toucanet/app/styles/indents.dart';
-import 'package:toucanet/data/objects/message/attachments/attachment_type.dart';
-import 'package:toucanet/data/objects/message/attachments/models_by_type/sticker.dart';
-import 'package:toucanet/data/objects/message/message.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../data/objects/message/attachments/models_by_type/sticker.dart';
+import '../../../../data/objects/message/message.dart';
+import '../../../styles/fonts.dart';
+import '../../../styles/indents.dart';
 import 'message_widget.dart';
 
 class TextMessageWidget extends StatefulWidget implements MessageWidget {

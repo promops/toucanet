@@ -1,6 +1,7 @@
 import 'package:toucanet/data/objects/message/attachments/attachment_type.dart';
 
 import 'attachments/attachment.dart';
+import 'attachments/models_by_type/audio.dart';
 import 'attachments/models_by_type/sticker.dart';
 
 class Message {
@@ -32,9 +33,13 @@ class Message {
         case AttachmentType.sticker:
           attachmentsList.add(Sticker.fromJson(attach[AttachmentType.sticker]));
           break;
+
+        case AttachmentType.audio:
+          attachmentsList.add(Audio.fromJson(attach[AttachmentType.audio]));
+          break;
       }
     }
-    
+
     return Message(
         id: json['id'],
         date: json['date'],

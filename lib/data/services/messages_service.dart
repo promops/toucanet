@@ -9,7 +9,6 @@ class MessagesService {
   ///Вернет список моделей [dialogModels] для вида с распехнутыми диалогами
   Future<List<DialogViewModel>> getConversations(int offset) async {
     List<DialogViewModel> dialogModels = [];
-    DialogViewModel model;
 
     Response response =
         await VKMessagesRemote(AccountsRepository().current.token)
