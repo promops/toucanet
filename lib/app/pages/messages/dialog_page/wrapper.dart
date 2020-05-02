@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/app/pages/messages/dialog_page/attachment_widgets/audio_widget.dart';
 import 'package:toucanet/app/styles/fonts.dart';
 import 'package:toucanet/app/styles/indents.dart';
+import 'package:toucanet/data/objects/message/attachments/models_by_type/audio.dart';
 import 'package:toucanet/data/objects/message/attachments/models_by_type/sticker.dart';
 import 'package:toucanet/data/objects/message/message.dart';
 
@@ -57,6 +59,9 @@ class Wrapper extends StatelessWidget {
     for (var attach in attachList) {
       if (attach is Sticker)
         attachmentWidgets.add(StickerWidget(url: attach.images[1].url));
+
+      if (attach is Audio)
+        attachmentWidgets.add(AudioWidget(title: 'audio', url: attach.url));
     }
   }
 }
