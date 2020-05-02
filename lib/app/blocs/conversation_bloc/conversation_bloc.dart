@@ -18,16 +18,21 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   ConversationState get initialState => Loading();
 
   @override
-  Stream<ConversationState> transformEvents(
-    Stream<ConversationEvent> events,
-    Stream<ConversationState> Function(ConversationEvent event) next,
+  Stream<Transition<ConversationEvent, ConversationState>> transformEvents(
+      Stream<ConversationEvent> events,
+      TransitionFunction<ConversationEvent, ConversationState> transitionFn
   ) {
-    final nonDebounceStream = events.where((event) => event is! FetchMessages);
-    final debounceStream = events
+      final nonDebounceStream = events
+        .where((event) => event is! FetchMessages);
+
+      final debounceStream = events
         .where((event) => event is FetchMessages)
         .debounceTime(Duration(milliseconds: 300));
-    return super.transformEvents(
-        MergeStream([nonDebounceStream, debounceStream]), next);
+
+      return super.transformEvents(
+        nonDebounceStream.mergeWith([debounceStream]),
+        transitionFn,
+      );
   }
 
   @override
