@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:toucanet/app/pages/messages/dialog_page/attachment_widgets/audio_widget.dart';
-import 'package:toucanet/app/styles/fonts.dart';
-import 'package:toucanet/app/styles/indents.dart';
-import 'package:toucanet/data/objects/message/attachments/models_by_type/audio.dart';
-import 'package:toucanet/data/objects/message/attachments/models_by_type/sticker.dart';
-import 'package:toucanet/data/objects/message/message.dart';
 
+import '../../../../data/objects/message/attachments/models_by_type/audio.dart';
+import '../../../../data/objects/message/attachments/models_by_type/photo.dart';
+import '../../../../data/objects/message/attachments/models_by_type/sticker.dart';
+import '../../../../data/objects/message/message.dart';
+import '../../../styles/fonts.dart';
+import '../../../styles/indents.dart';
+import 'attachment_widgets/audio_widget.dart';
+import 'attachment_widgets/photo_widget.dart';
 import 'attachment_widgets/sticker_widget.dart';
 
 class Wrapper extends StatelessWidget {
@@ -57,11 +59,19 @@ class Wrapper extends StatelessWidget {
     if (attachList.isEmpty) return;
 
     for (var attach in attachList) {
-      if (attach is Sticker)
+      if (attach is Sticker) {
         attachmentWidgets.add(StickerWidget(url: attach.images[1].url));
+        continue;
+      }
 
-      if (attach is Audio)
+      if (attach is Audio) {
         attachmentWidgets.add(AudioWidget(title: 'audio', url: attach.url));
+        continue;
+      }
+      if (attach is Photo) {
+        attachmentWidgets.add(PhotoWidget(url: attach.sizes[0].url));
+        continue;
+      }
     }
   }
 }

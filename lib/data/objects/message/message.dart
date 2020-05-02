@@ -2,6 +2,7 @@ import 'package:toucanet/data/objects/message/attachments/attachment_type.dart';
 
 import 'attachments/attachment.dart';
 import 'attachments/models_by_type/audio.dart';
+import 'attachments/models_by_type/photo.dart';
 import 'attachments/models_by_type/sticker.dart';
 
 class Message {
@@ -27,7 +28,7 @@ class Message {
 
   factory Message.fromJson(Map<String, dynamic> json) {
     List<Attachment> attachmentsList = [];
-    //print(json['attachments']);
+
     for (var attach in json['attachments']) {
       switch (attach['type']) {
         case AttachmentType.sticker:
@@ -37,6 +38,9 @@ class Message {
         case AttachmentType.audio:
           attachmentsList.add(Audio.fromJson(attach[AttachmentType.audio]));
           break;
+
+        case AttachmentType.photo :
+          attachmentsList.add(Photo.fromJson(attach[AttachmentType.photo]));
       }
     }
 
