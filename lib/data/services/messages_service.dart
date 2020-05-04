@@ -22,7 +22,8 @@ class MessagesService {
             avatarUrl: 'https://sun9-4.userapi.com/c840523/v840523166/2630e/yIvhXFkrTys.jpg?ava=1',
             title: '${item.conversation.chatSettings.title}',
             out: item.conversation.chatSettings.state == 'in' ? false : true,
-            online: false
+            online: false,
+            id: item.conversation.peer.id
             ));
       } else {
         UserModel sender = response.profiles.firstWhere(
@@ -39,10 +40,6 @@ class MessagesService {
             title: '${sender.firstName} ${sender.lastName}'));
       }
     }
-
-    //print(response.items);
-
-    //dialogModels.forEach((f) => print(f.avatarUrl));
 
     return dialogModels;
   }

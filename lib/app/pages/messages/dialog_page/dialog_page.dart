@@ -9,7 +9,7 @@ import '../../../styles/app_colors.dart';
 import '../../../view_models/dialog_view_model.dart';
 import '../../../widgets/loading_indicator.dart';
 import 'message_field.dart';
-import 'text_message_widget.dart';
+
 
 class DialogPage extends StatefulWidget {
   const DialogPage({Key key, this.dialogModel}) : super(key: key);

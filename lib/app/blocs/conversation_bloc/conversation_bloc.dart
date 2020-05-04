@@ -42,11 +42,6 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     final currentState = state;
 
     if (event is FetchMessages) {
-      // var messages = await VKMessagesRemote(AccountsRepository().current.token)
-      //     .getHistory(0, event.userId);
-      //     print(messages);
-      // yield MessagesList(messages);
-
       yield MessagesList((currentState is Loading
               ? List<Message>()
               : (currentState as MessagesList).messages) +

@@ -31,7 +31,6 @@ class Http
       _http.Response response = this.connectTimeout <= 0 ?
         await request :
         await request.timeout(Duration(milliseconds: this.connectTimeout));
-
       return this._transformResponse(response);
     }
     on  SocketException catch (_) { throw OfflineException(); }
