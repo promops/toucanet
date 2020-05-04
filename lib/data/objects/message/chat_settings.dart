@@ -10,12 +10,14 @@ class ChatSettings {
   final String state;
 
   final Photo photo;
+  
 
   List<int> activeIds;
 
   factory ChatSettings.fromJson(Map<String, dynamic> json) {
     return ChatSettings(
         ownerId: json['owner_id'],
+        state : json['state'],
         title: json['title'],
         photo: json['photo'] != null ? Photo.fromJson(json['photo']) : null,
         activeIds: json['active_ids'].cast<int>());

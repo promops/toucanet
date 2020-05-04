@@ -21,11 +21,12 @@ class Conversation {
 
   factory Conversation.fromJson(Map<String, dynamic> json) {
     return Conversation(
-      peer: Peer.fromJson(json['peer']),
-      inRead: json['in_read'],
-      outRead: json['out_read'],
-      chatSettings: json['chat_settings'] != null ? ChatSettings.fromJson(json['chat_settings']) : null
-    );
+        peer: Peer.fromJson(json['peer']),
+        inRead: json['in_read'],
+        outRead: json['out_read'],
+        chatSettings: json['chat_settings'] != null
+            ? ChatSettings.fromJson(json['chat_settings'])
+            : null);
   }
 
   @override

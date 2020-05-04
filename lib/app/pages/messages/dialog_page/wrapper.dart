@@ -69,7 +69,7 @@ class Wrapper extends StatelessWidget {
         continue;
       }
       if (attach is Photo) {
-        attachmentWidgets.add(PhotoWidget(url: attach.sizes[0].url));
+        attachmentWidgets.add(PhotoWidget(url: attach.sizes[0].url, photo: attach));
         continue;
       }
     }

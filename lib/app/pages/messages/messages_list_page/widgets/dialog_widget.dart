@@ -27,26 +27,35 @@ class _DialogWidgetState extends State<DialogWidget> {
                     DialogPage(dialogModel: widget.dialogModel))),
         child: Padding(
           padding: const EdgeInsets.only(
-              bottom: Indents.medium, top: Indents.medium, right: Indents.large, left: Indents.medium),
+              bottom: Indents.medium,
+              top: Indents.medium,
+              right: Indents.large,
+              left: Indents.medium
+              ),
           child: Container(
             height: 80,
             color: AppColors.mainColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                UserAvatar(url: widget.dialogModel.avatarUrl, online : widget.dialogModel.online),
+                UserAvatar(
+                    url: widget.dialogModel.avatarUrl,
+                    online: widget.dialogModel.online),
                 Expanded(
                     child: Container(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            DialogTitle(text: widget.dialogModel.title),
-                            DialogText(text: widget.dialogModel.lastMessage),
-                            Expanded(
-                              child: Container(),
-                            )
-                          ],
-                        ))),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    DialogTitle(text: widget.dialogModel.title),
+                    DialogText(
+                        text: widget.dialogModel.out
+                            ? 'Вы: ' + widget.dialogModel.lastMessage
+                            : widget.dialogModel.lastMessage),
+                    Expanded(
+                      child: Container(),
+                    )
+                  ],
+                ))),
               ],
             ),
           ),

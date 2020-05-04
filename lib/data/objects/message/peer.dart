@@ -10,7 +10,7 @@ class Peer {
   factory Peer.fromJson(Map<String, dynamic> json) {
     return Peer(
       id: json['id'],
-      type: json['ftype'],
+      type: json['type'],
       localId: json['local_id'],
     );
   }

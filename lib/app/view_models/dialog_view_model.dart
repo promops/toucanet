@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
+
 class DialogViewModel {
-  DialogViewModel({this.avatarUrl, this.title, this.lastMessage, this.id, this.online});
+  DialogViewModel({this.avatarUrl, this.title, this.lastMessage, this.id, @required this.online, @required this.out});
   final String avatarUrl;
 
   final String title;
@@ -9,6 +11,8 @@ class DialogViewModel {
   final int id;
 
   bool online;
+
+  bool out;
 
   @override
   String toString() => '$title $lastMessage';

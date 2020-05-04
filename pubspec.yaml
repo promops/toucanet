@@ -17,6 +17,8 @@ dependencies:
   url_launcher: ^5.4.5
   video_player: ^0.10.9+1
   chewie_audio: ^1.0.0+1
+  audio_service: ^0.7.2
+  photo_view: ^0.9.2
 
   bloc: ^4.0.0
   rxdart: ^0.24.0

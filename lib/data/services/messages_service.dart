@@ -16,10 +16,14 @@ class MessagesService {
 
     for (var item in response.items) {
       if (item.conversation.peer.type == 'chat') {
+        
         dialogModels.add(DialogViewModel(
             lastMessage: item.lastMessage.text,
-            avatarUrl: item.conversation.chatSettings.photo.photo50,
-            title: '${item.conversation.chatSettings.title}'));
+            avatarUrl: 'https://sun9-4.userapi.com/c840523/v840523166/2630e/yIvhXFkrTys.jpg?ava=1',
+            title: '${item.conversation.chatSettings.title}',
+            out: item.conversation.chatSettings.state == 'in' ? false : true,
+            online: false
+            ));
       } else {
         UserModel sender = response.profiles.firstWhere(
             (user) => user.id == item.conversation.peer.id,
@@ -31,6 +35,7 @@ class MessagesService {
             avatarUrl: sender.photo50,
             id: sender.id,
             online: sender.online == 1 ? true : false,
+            out : item.lastMessage.out == 1 ? true : false,
             title: '${sender.firstName} ${sender.lastName}'));
       }
     }

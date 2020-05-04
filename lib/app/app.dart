@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,21 +57,22 @@ class _AppState extends State<App> {
         RepositoryProvider.of<AccountService>(context);
 
     return MaterialApp(
-      home: BlocBuilder(
-          bloc: AppBloc(accountService)..add(AppStarted()),
-          builder: (context, state) {
-            if (state is! AppInitialState) return Offstage();
-            return (state as AppInitialState).isAuth
-                ? HomePage()
-                : AuthPage(accountService);
-          }),
-      title: 'toucanet',
-      theme: ThemeData(fontFamily: 'Montserrat', primarySwatch: Colors.blue),
-      routes: {
-        '/main': (context) => HomePage(),
-        '/dialog': (context) => DialogPage(),
-      },
-      debugShowCheckedModeBanner: false,
-    );
+        title: 'toucanet',
+        theme: ThemeData(fontFamily: 'Montserrat', primarySwatch: Colors.blue),
+        routes: {
+          '/main': (context) => HomePage(),
+          '/dialog': (context) => DialogPage(),
+        },
+        debugShowCheckedModeBanner: false,
+        home: AudioServiceWidget(
+          child: BlocBuilder(
+              bloc: AppBloc(accountService)..add(AppStarted()),
+              builder: (context, state) {
+                if (state is! AppInitialState) return Offstage();
+                return (state as AppInitialState).isAuth
+                    ? HomePage()
+                    : AuthPage(accountService);
+              }),
+        ));
   }
 }
