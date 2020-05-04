@@ -1,7 +1,15 @@
 import 'package:flutter/foundation.dart';
 
 class DialogViewModel {
-  DialogViewModel({this.avatarUrl, this.title, this.lastMessage,this.type, @required this.id, @required this.online, @required this.out});
+  DialogViewModel({
+    this.avatarUrl,
+    this.title,
+    this.lastMessage,
+    this.type,
+    @required this.id,
+    @required this.online,
+    @required this.out,
+  });
   final String avatarUrl;
 
   final String title;

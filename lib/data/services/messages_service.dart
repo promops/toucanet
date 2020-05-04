@@ -24,7 +24,7 @@ class MessagesService {
             out: item.conversation.chatSettings.state == 'in' ? false : true,
             online: false,
             id: item.conversation.peer.id,
-            type: 'chat'
+            type: 'chat',
             ));
       } else {
         UserModel sender = response.profiles.firstWhere(

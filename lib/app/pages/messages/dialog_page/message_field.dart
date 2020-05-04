@@ -20,16 +20,20 @@ class _MessageFieldState extends State<MessageField> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
+      width: MediaQuery.of(context).size.width,
+        child: Container(
       margin: const EdgeInsets.only(
           left: Indents.large, right: Indents.large, bottom: Indents.medium),
       height: 40,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16), color: Colors.blueAccent),
+          borderRadius: BorderRadius.circular(16), color: Colors.grey[200]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Expanded(
               child: TextField(
+            decoration: InputDecoration(border: InputBorder.none),
             controller: _controller,
           )),
           IconButton(
@@ -40,6 +44,6 @@ class _MessageFieldState extends State<MessageField> {
                   })
         ],
       ),
-    );
+    ));
   }
 }

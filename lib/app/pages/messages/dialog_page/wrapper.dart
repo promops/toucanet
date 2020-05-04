@@ -11,13 +11,15 @@ import 'attachment_widgets/photo_widget.dart';
 import 'attachment_widgets/sticker_widget.dart';
 
 class Wrapper extends StatelessWidget {
-  Wrapper({this.message});
+  Wrapper({this.message, @required this.withPhoto});
 
   Message message;
 
   List<Widget> children;
 
   List<Widget> attachmentWidgets = [];
+
+  bool withPhoto;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,12 @@ class Wrapper extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
               ...attachmentWidgets
-            ]))
+            ])),
+
+        this.withPhoto ? Container(
+          width: 20, height: 20,
+          
+        ) : Offstage()
       ],
     );
   }
