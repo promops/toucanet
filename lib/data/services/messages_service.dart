@@ -23,7 +23,8 @@ class MessagesService {
             title: '${item.conversation.chatSettings.title}',
             out: item.conversation.chatSettings.state == 'in' ? false : true,
             online: false,
-            id: item.conversation.peer.id
+            id: item.conversation.peer.id,
+            type: 'chat'
             ));
       } else {
         UserModel sender = response.profiles.firstWhere(
@@ -37,6 +38,7 @@ class MessagesService {
             id: sender.id,
             online: sender.online == 1 ? true : false,
             out : item.lastMessage.out == 1 ? true : false,
+            type : 'user',
             title: '${sender.firstName} ${sender.lastName}'));
       }
     }

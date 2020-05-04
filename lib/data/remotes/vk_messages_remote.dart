@@ -12,7 +12,6 @@ class VKMessagesRemote extends VKRemote {
         await this.call('messages.getById', {'fields': [], 'message_ids': ids});
 
     //Message message = Message.fromJson(result.body['response'][0]);
-  
   }
 
   Future<Response> getConversations(int offset, {int count = 10}) async {
@@ -33,7 +32,6 @@ class VKMessagesRemote extends VKRemote {
 
     var response = Response.fromJson(result.body['response']);
 
-
     return response;
   }
 
@@ -44,7 +42,7 @@ class VKMessagesRemote extends VKRemote {
 
   Future<List<Message>> getHistory(int offset, int userId,
       {int count = 12}) async {
-        print(userId);
+    print(userId);
     final result = await this.call('messages.getHistory',
         {'offset': offset, 'rev': 0, 'count': count, 'user_id': userId});
 
@@ -55,17 +53,22 @@ class VKMessagesRemote extends VKRemote {
         });
 
     //messagesList.forEach((f)=> print(f.attachments));
-    
+
     return messagesList;
   }
 
-  Future<void> send(int userId, String message) async {
-    final result = await this.call('messages.send', {
-      'user_id': userId,
-      'random_id': Random().nextInt(4294967295),
-      'user_id': userId,
-      'message': message
-    });
+  Future<void> send(int userId, String message, String type) async {
+    var result = type == 'user'
+        ? await this.call('messages.send', {
+            'user_id': userId,
+            'random_id': Random().nextInt(4294967295),
+            'message': message
+          })
+        : await this.call('messages.send', {
+            'peer_id': userId,
+            'random_id': Random().nextInt(4294967295),
+            'message': message
+          });
 
     print(result);
   }

@@ -10,7 +10,6 @@ import '../../../view_models/dialog_view_model.dart';
 import '../../../widgets/loading_indicator.dart';
 import 'message_field.dart';
 
-
 class DialogPage extends StatefulWidget {
   const DialogPage({Key key, this.dialogModel}) : super(key: key);
   final DialogViewModel dialogModel;
@@ -39,6 +38,7 @@ class _DialogPageState extends State<DialogPage> {
 
     _controller = ScrollController();
     _controller.addListener(_onScroll);
+    print(widget.dialogModel.id);
     _conversationBloc.add(FetchMessages(widget.dialogModel.id));
 
     super.initState();
@@ -46,7 +46,7 @@ class _DialogPageState extends State<DialogPage> {
 
   void _sendButtonHandler(String text) async {
     await VKMessagesRemote(AccountsRepository().current.token)
-        .send(widget.dialogModel.id, text);
+        .send(widget.dialogModel.id, text, widget.dialogModel.type);
     //_conversationBloc.add(FetchMessages(widget.dialogModel.id));
     setState(() {});
     print(text);
