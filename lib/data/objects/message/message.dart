@@ -1,10 +1,10 @@
-import 'package:toucanet/data/objects/message/attachments/attachment_type.dart';
-
+import '../enums/attachment_type.dart';
 import 'attachments/attachment.dart';
 import 'attachments/models_by_type/audio.dart';
 import 'attachments/models_by_type/photo.dart';
 import 'attachments/models_by_type/sticker.dart';
 
+///Модель для сообщения
 class Message {
   Message(
       {this.id,
@@ -39,7 +39,7 @@ class Message {
           attachmentsList.add(Audio.fromJson(attach[AttachmentType.audio]));
           break;
 
-        case AttachmentType.photo :
+        case AttachmentType.photo:
           attachmentsList.add(Photo.fromJson(attach[AttachmentType.photo]));
       }
     }

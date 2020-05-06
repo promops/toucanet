@@ -1,4 +1,5 @@
-import '../user_model/user_model.dart';
+
+import '../user/user_model.dart';
 import 'conversation_response.dart';
 
 class Response {
@@ -14,7 +15,8 @@ class Response {
     List<ConversationResponse> items = [];
     List<UserModel> profiles = [];
 
-    json['items'].forEach((item) => items.add(ConversationResponse.fromJson(item)));
+    json['items']
+        .forEach((item) => items.add(ConversationResponse.fromJson(item)));
     json['profiles'].forEach((item) => profiles.add(UserModel.fromJson(item)));
 
     return Response(count: json['count'], items: items, profiles: profiles);

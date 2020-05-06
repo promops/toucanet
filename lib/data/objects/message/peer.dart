@@ -1,3 +1,4 @@
+///Модель для отправителя/получателя сообщения
 class Peer {
   Peer({this.id, this.type, this.localId});
 

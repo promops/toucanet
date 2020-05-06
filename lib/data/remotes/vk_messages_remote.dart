@@ -42,7 +42,6 @@ class VKMessagesRemote extends VKRemote {
 
   Future<List<Message>> getHistory(int offset, int userId,
       {int count = 12}) async {
-    print(userId);
     final result = await this.call('messages.getHistory',
         {'offset': offset, 'rev': 0, 'count': count, 'user_id': userId});
 
@@ -51,8 +50,6 @@ class VKMessagesRemote extends VKRemote {
     result.body['response']['items'].forEach((message) async => {
           messagesList.add(Message.fromJson(message)),
         });
-
-    //messagesList.forEach((f)=> print(f.attachments));
 
     return messagesList;
   }

@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import 'user_counters_model.dart';
 
-class UserModel {
+class UserModel extends Equatable{
   UserModel(
       {this.id,
       this.firstName,
@@ -48,6 +50,11 @@ class UserModel {
         userCounters: UserCountersModel.fromJson(json['counters']));
   }
 
+  
+
   @override
   String toString() => '$firstName $lastName';
+
+  @override
+  List<Object> get props => [id];
 }

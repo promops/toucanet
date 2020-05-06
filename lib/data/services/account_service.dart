@@ -1,14 +1,11 @@
+import '../objects/account.dart';
+import '../repositories/accounts_repository.dart';
 
-import 'package:toucanet/data/objects/account.dart';
-import 'package:toucanet/data/repositories/accounts_repository.dart';
-
-class AccountService
-{
+class AccountService {
   final AccountsRepository accountRepository = AccountsRepository();
 
-  bool get hasAccount => 
-    accountRepository.current?.token?.isNotEmpty ?? false;  
+  bool get hasAccount => accountRepository.current?.token?.isNotEmpty ?? false;
 
-  Future<void> addAccount(AccountModel account) async => 
-    await accountRepository.addOrUpdate(account);
+  Future<void> addAccount(AccountModel account) async =>
+      await accountRepository.addOrUpdate(account);
 }

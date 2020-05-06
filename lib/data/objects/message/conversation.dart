@@ -1,6 +1,7 @@
 import 'chat_settings.dart';
 import 'peer.dart';
 
+///Модель для диалога
 class Conversation {
   Conversation(
       {this.peer,

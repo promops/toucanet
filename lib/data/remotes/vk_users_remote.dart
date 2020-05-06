@@ -1,5 +1,4 @@
-import 'package:toucanet/data/objects/user_model/user_model.dart';
-
+import '../objects/user/user_model.dart';
 import 'vk_remote.dart';
 
 class VKUsersRemote extends VKRemote {
@@ -18,9 +17,8 @@ class VKUsersRemote extends VKRemote {
     });
 
     List<UserModel> users = [];
-    result.body['response'].forEach((user) => {
-      users.add(UserModel.fromJson(user))
-    });
+    result.body['response']
+        .forEach((user) => {users.add(UserModel.fromJson(user))});
 
     return users;
   }
