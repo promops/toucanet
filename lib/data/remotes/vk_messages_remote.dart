@@ -42,8 +42,13 @@ class VKMessagesRemote extends VKRemote {
 
   Future<List<Message>> getHistory(int offset, int userId,
       {int count = 12}) async {
-    final result = await this.call('messages.getHistory',
-        {'offset': offset, 'rev': 0, 'count': count, 'user_id': userId});
+    final result = await this.call('messages.getHistory', {
+      'offset': offset,
+      'rev': 0,
+      'count': count,
+      'user_id': userId,
+      'extended': 1
+    });
 
     List<Message> messagesList = [];
 

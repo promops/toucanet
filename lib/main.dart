@@ -21,7 +21,7 @@ void main() async {
   //await VKMessagesRemote(AccountsRepository().current.token).getConversations(2);
   // await VKMessagesRemote(AccountsRepository().current.token).getHistory(5, 50123451);
 
-  await MessagesService().getConversations(0);
+  //await MessagesService().getConversations(0);
  
   runApp(Injector(child: App()));
 }

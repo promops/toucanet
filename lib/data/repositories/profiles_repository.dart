@@ -1,4 +1,4 @@
-import 'package:toucanet/data/objects/user_model/user_model.dart';
+import '../objects/user/user_model.dart';
 
 class ProfilesRepository {
   static final ProfilesRepository _instance = ProfilesRepository._();

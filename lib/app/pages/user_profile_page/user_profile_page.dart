@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:toucanet/data/objects/user/user_model.dart';
 
-
-
+import '../../../data/objects/user/user_model.dart';
 import '../../blocs/user_bloc/user_bloc.dart';
 import '../../styles/app_colors.dart';
 import '../../styles/fonts.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/loading_indicator.dart';
 import 'widgets/user_avatar.dart';
-
-import 'widgets/user_counters_model.dart';
 import 'widgets/user_information.dart';
 import 'widgets/user_status.dart';
 

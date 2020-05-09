@@ -24,7 +24,7 @@ class Message {
 
   final List<Attachment> attachments;
 
-  int out;
+  final int out;
 
   factory Message.fromJson(Map<String, dynamic> json) {
     List<Attachment> attachmentsList = [];

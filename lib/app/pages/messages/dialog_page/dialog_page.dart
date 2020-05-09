@@ -64,7 +64,10 @@ class _DialogPageState extends State<DialogPage> {
                     Container(),
                     Column(
                       children: <Widget>[
-                        Text(widget.dialogModel.title, style: Fonts.h1.copyWith(color: Colors.white),)
+                        Text(
+                          widget.dialogModel.title,
+                          style: Fonts.h1.copyWith(color: Colors.white),
+                        )
                       ],
                     ),
                     Container()
@@ -94,7 +97,11 @@ class _DialogPageState extends State<DialogPage> {
                                             (BuildContext context, int index) {
                                           if (index != state.messages.length) {
                                             return Wrapper(
-                                                message: state.messages[index], withPhoto: false);
+                                              message: state.messages[index],
+                                              withPhoto: true,
+                                              photoUrl:
+                                                  widget.dialogModel.avatarUrl,
+                                            );
                                           }
                                           return index % 12 != 0
                                               ? Offstage()

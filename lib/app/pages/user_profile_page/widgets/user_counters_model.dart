@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../data/objects/user_model/user_counters_model.dart';
+import '../../../../data/objects/user/user_counters_model.dart';
 import '../../../styles/fonts.dart';
 import '../../../styles/indents.dart';
 

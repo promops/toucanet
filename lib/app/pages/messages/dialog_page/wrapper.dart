@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../data/objects/message/attachments/models_by_type/audio.dart';
@@ -11,9 +12,11 @@ import 'attachment_widgets/photo_widget.dart';
 import 'attachment_widgets/sticker_widget.dart';
 
 class Wrapper extends StatelessWidget {
-  Wrapper({this.message, @required this.withPhoto});
+  Wrapper({this.message, @required this.withPhoto, this.photoUrl});
 
   Message message;
+
+  String photoUrl;
 
   List<Widget> children;
 
@@ -51,11 +54,15 @@ class Wrapper extends StatelessWidget {
                     ),
               ...attachmentWidgets
             ])),
-
-        this.withPhoto ? Container(
-          width: 20, height: 20,
-          
-        ) : Offstage()
+        this.withPhoto && this.message.out == 0
+            ? Padding(
+              padding: EdgeInsets.only(left: Indents.medium),
+                child: Container(
+                    width: 20,
+                    height: 20,
+                    child: CachedNetworkImage(imageUrl: this.photoUrl)),
+              )
+            : Offstage()
       ],
     );
   }
@@ -76,7 +83,8 @@ class Wrapper extends StatelessWidget {
         continue;
       }
       if (attach is Photo) {
-        attachmentWidgets.add(PhotoWidget(url: attach.sizes[0].url, photo: attach));
+        attachmentWidgets
+            .add(PhotoWidget(url: attach.sizes[0].url, photo: attach));
         continue;
       }
     }

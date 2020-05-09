@@ -51,8 +51,17 @@ class MessagesService {
   }
 
   Future<List<MessageViewModel>> getHistory(int offset, int userId) async {
+    List<MessageViewModel> messagesList;
+
     List<Message> messages =
         await VKMessagesRemote(AccountsRepository().current.token)
             .getHistory(offset, userId);
+
+    //TODO: Распарсить модель в модель
+    for (var message in messages) {
+      messagesList.add(MessageViewModel(
+        out: message.out == 1 ? true : false,
+      ));
+    }
   }
 }
