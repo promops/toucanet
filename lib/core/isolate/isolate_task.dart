@@ -1,24 +1,25 @@
-part of 'isolate_manager.dart';
+part of 'isolate_supervisor.dart';
 
-enum TaskStatus { awaiting, processing }
+enum TaskStatus { awaiting, processing, completed }
 enum TaskPriority { low, regular, high }
 
-typedef IsolateEntryPoint<R, A> = R Function(IsolateContext<A> context);
+typedef IsolateEntryPoint<R, A> = R Function(IsolateContext<R, A> context);
 
 class IsolateTask<R, A>
 {
   final A arguments;
   final Capability capability;
+  final TaskPriority priority;
   final IsolateEntryPoint<R, A> function;
 
   TaskStatus status = TaskStatus.awaiting;
-  TaskPriority priority = TaskPriority.regular;
 
-  IsolateTask(this.function, this.arguments) : 
+  IsolateTask(this.function, this.arguments, [TaskPriority priority]) : 
     assert(function != null),
-    this.capability = Capability();
+    this.capability = Capability(),
+    this.priority = priority ?? TaskPriority.regular;
 
-  R execute() => this.function(IsolateContext<A>(this.arguments));
+  void close() => this.status = TaskStatus.completed;
 
   @override
   int get hashCode => capability.hashCode;
