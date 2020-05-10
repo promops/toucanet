@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:toucanet/core/helper/config.dart';
 import 'package:toucanet/core/http/http.dart';
+import 'package:toucanet/core/isolate/isolate_supervisor.dart';
 import 'package:toucanet/core/vk/objects/vk_longpoll_events_response.dart';
+import 'package:toucanet/core/vk/objects/vk_longpoll_server.dart';
 
 part 'vk_api_request.dart';
 part 'vk_api_longpoll.dart';
@@ -16,11 +17,10 @@ class VKApiClient
   VKApiRequest _request;
   VKApiLongPoll _longPoll;
 
-  String baseUrl = Config.get(['vk', 'api', 'baseUrl']);
-  String version = Config.get(['vk', 'api', 'version'], '5.103');
+  Map<String, dynamic> config = Config.get(['vk', 'api'], {});
 
-  get request => _request ??= VKApiRequest(this);
-  get longPoll => _longPoll ??= VKApiLongPoll(this);
+  get longPoll => _longPoll ??= VKApiLongPoll(this.request);
+  get request => _request ??= VKApiRequest(this.httpClient, this.accessToken, this.config);
 
-  VKApiClient(this.accessToken, {httpClient}) : this.httpClient = httpClient ?? Http();
+  VKApiClient(this.accessToken, {httpClient}) : this.httpClient = httpClient ?? Http(30);
 }

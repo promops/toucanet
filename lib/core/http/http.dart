@@ -23,20 +23,27 @@ class Http
     
   Future<HttpResponse> _request(String url, {body, Map<String, String> headers}) async 
   {
+    //TODO: Обработка параметров
     try {
+      if (this.connectTimeout > 0) {
+        headers['Connection'] = 'Keep-Alive';
+        headers['Keep-Alive'] = 'timeout=$connectTimeout, max=10';
+      }
+
       Future<_http.Response> request = (body == null) ? 
         _http.get(url, headers: headers) : 
         _http.post(url, body: body, headers: headers);
 
       _http.Response response = this.connectTimeout <= 0 ?
         await request :
-        await request.timeout(Duration(milliseconds: this.connectTimeout));
+        await request.timeout(Duration(milliseconds: this.connectTimeout * 1000));
       return this._transformResponse(response);
     }
     on  SocketException catch (_) { throw OfflineException(); }
     on    HttpException catch (_) { throw ServerUnavailableException(); }
     on TimeoutException catch (_) { throw ServerUnavailableException(); }
     catch (exception) { 
+      print(exception);
       throw ResponseFormatException(); 
     }
   }

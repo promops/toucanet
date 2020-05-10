@@ -2,9 +2,15 @@ part of 'vk_api_client.dart';
 
 class VKApiRequest
 {
-  final VKApiClient client;
+  final Http client;
+  final String accessToken;
 
-  VKApiRequest(this.client);
+  final String baseUrl;
+  final double version;
+
+  VKApiRequest(this.client, this.accessToken, config) :
+    baseUrl = config['baseUrl'] ?? '',
+    version = config['version'] ?? 5.103;
 
   Future<HttpResponse> execute(String method, [Map<String, dynamic> parameters]) async
   {
@@ -17,13 +23,13 @@ class VKApiRequest
       return value;
     });
 
-    if (client.accessToken != null) {
-      parameters['access_token'] = client.accessToken;
+    if (this.accessToken != null) {
+      parameters['access_token'] = this.accessToken;
     }
     
-    return await client.httpClient.post(
-      client.baseUrl + 'method/$method', 
-      body: {...?parameters, 'v': client.version}
+    return await this.client.post(
+      baseUrl + 'method/$method', 
+      body: {...?parameters, 'v': '$version'}
     );
   }
 }

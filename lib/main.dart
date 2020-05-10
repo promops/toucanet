@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'app/app.dart';
 import 'app/injector.dart';
 import 'core/helper/config.dart';
+import 'core/vk/vk_api_client.dart';
 import 'data/repositories/accounts_repository.dart';
 import 'data/services/messages_service.dart';
 
@@ -12,6 +13,9 @@ void main() async {
 
   await Config().load(['vk', 'app']);
   await AccountsRepository().init();
+
+  VKApiClient(AccountsRepository().current.token).longPoll;
+
   //await PushManager().init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 

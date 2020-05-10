@@ -2,49 +2,66 @@ part of 'vk_api_client.dart';
 
 class VKApiLongPoll
 {
-  Isolate _isolate;
-  ReceivePort _receivePort;
-  Stream _broadcastReceivePort;
+  final Stream<VKLongPollEventsResponse> stream = null;
 
-  final VKApiClient client;
-
-  static const retryAttempts = 3;
-  static const connectTimeout = 25000;
-
-  VKApiLongPoll(this.client) 
-  { 
-    this._runLongPollWorker(); 
+  VKApiLongPoll(request) {
+    IsolateSupervisor().launch(
+      VKApiLongPoll._longpollWorker, 
+      VKApiLongPollArguments(request)
+    ).listen((event) {print('Msg: $event');});
   }
 
-  Future<void> _runLongPollWorker() async
+  static Stream<Map> _longpollWorker(IsolateContext context) async*
   {
-    _receivePort = ReceivePort();
-    _isolate = await Isolate.spawn(_longpollWorker, _receivePort.sendPort);
+    final params = (context.args as VKApiLongPollArguments);
+    final apiClient = params.request;
 
-    (_broadcastReceivePort = _receivePort.asBroadcastStream())
-      .listen((res) => print(res));
-  }
+    final serverResponse = await apiClient.execute(
+      'messages.getLongPollServer', 
+      {'need_pts': 1, 'lp_version': 3}
+    );
 
-  static Future<void> _longpollWorker(SendPort sendPort) async
-  {
-    int lastTimeStamp = 0;
+    final longpollServer = VKLongPollServer.fromJson(serverResponse.body['response']);
 
-    while (true) {
+    final ts = longpollServer.ts;
+    int newPts = 0;
+
+    while(true) {
       try {
-        // https://im.vk.com/nim186556087?act=a_check&key=84fc8667c14c469c89e453ed239&ts=1768878785&wait=25&mode=2&version=3
+        final history = await apiClient.execute( //TODO: Таймаут сервера
+          'messages.getLongPollHistory',
+          {
+            'ts': '$ts',
+            'pts': '$newPts',
+            'lp_version': '3'
+          }
+        );
 
-        lastTimeStamp = VKLongPollEventsResponse(1, {}).ts;
-      }
-      catch(_) {
+        if (history.body['response'] != null) 
+        {
+          newPts = history.body['response']['new_pts'] ?? newPts;
 
+          for (final message in history.body['response']['messages']['items']) {
+            yield message;
+          }
+        }
       }
+      catch(error) {
+        print(error);
+      }
+
+      await Future.delayed(Duration(milliseconds: params.connectTimeout));
     }
-  }
 
-  Future<void> dispose() async 
-  {
-    _isolate.kill();
-    _receivePort.close();
   }
 }
 
+class VKApiLongPollArguments
+{
+  final VKApiRequest request;
+
+  final int retryAttempts = 3;
+  final int connectTimeout = 15000;
+
+  VKApiLongPollArguments(this.request);
+}
