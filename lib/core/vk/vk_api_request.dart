@@ -6,7 +6,7 @@ class VKApiRequest
   final String accessToken;
 
   final String baseUrl;
-  final double version;
+  final String version;
 
   VKApiRequest(this.client, this.accessToken, config) :
     baseUrl = config['baseUrl'] ?? '',

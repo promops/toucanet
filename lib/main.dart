@@ -16,11 +16,10 @@ void main() async {
 
   VKApiClient(AccountsRepository().current.token).longPoll;
 
+
   //await PushManager().init();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-
-  //await WorkersManager().init(workersCount: 1);
 
   //await VKMessagesRemote(AccountsRepository().current.token).getConversations(2);
   // await VKMessagesRemote(AccountsRepository().current.token).getHistory(5, 50123451);

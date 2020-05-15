@@ -19,7 +19,7 @@ class VKApiClient
 
   Map<String, dynamic> config = Config.get(['vk', 'api'], {});
 
-  get longPoll => _longPoll ??= VKApiLongPoll(this.request);
+  get longPoll => _longPoll ??= VKApiLongPoll().init((this.request));
   get request => _request ??= VKApiRequest(this.httpClient, this.accessToken, this.config);
 
   VKApiClient(this.accessToken, {httpClient}) : this.httpClient = httpClient ?? Http(30);

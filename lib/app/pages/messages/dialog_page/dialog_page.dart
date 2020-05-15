@@ -29,7 +29,7 @@ class _DialogPageState extends State<DialogPage> {
     final maxScroll = _controller.position.maxScrollExtent;
     final currentScroll = _controller.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _conversationBloc.add(FetchMessages(widget.dialogModel.id));
+      _conversationBloc.add(FetchMessages(widget.dialogModel.peerId));
     }
   }
 
@@ -40,14 +40,14 @@ class _DialogPageState extends State<DialogPage> {
     _controller = ScrollController();
     _controller.addListener(_onScroll);
 
-    _conversationBloc.add(FetchMessages(widget.dialogModel.id));
+    _conversationBloc.add(FetchMessages(widget.dialogModel.peerId));
 
     super.initState();
   }
 
   void _sendButtonHandler(String text) async {
     await VKMessagesRemote(AccountsRepository().current.token)
-        .send(widget.dialogModel.id, text, widget.dialogModel.type);
+        .send(widget.dialogModel.peerId, text, widget.dialogModel.type);
 
     setState(() {});
   }
@@ -88,7 +88,10 @@ class _DialogPageState extends State<DialogPage> {
                                 bloc: _conversationBloc,
                                 builder: (BuildContext context,
                                     ConversationState state) {
+                                      // print('state:');
+                                      // print(state);
                                   if (state is MessagesList) {
+                                    //print(state.messages);
                                     return ListView.builder(
                                         reverse: true,
                                         controller: _controller,
@@ -96,7 +99,7 @@ class _DialogPageState extends State<DialogPage> {
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           if (index != state.messages.length) {
-                                            return Wrapper(
+                                            return Wrapper(                                             
                                               message: state.messages[index],
                                               withPhoto: true,
                                               photoUrl:

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:toucanet/core/vk/vk_api_client.dart';
 import 'package:toucanet/data/objects/message/message.dart';
 
 import '../../../data/remotes/vk_messages_remote.dart';
@@ -13,6 +14,16 @@ part 'conversation_state.dart';
 
 class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   int offset = 0;
+  int currentId = 50123451;
+  Message currentMessage;
+
+  ConversationBloc() {
+    VKApiLongPoll().stream.listen((event) {
+      currentMessage = Message.fromJson(event);
+
+      this.add(NewMessage());
+    });
+  }
 
   @override
   ConversationState get initialState => Loading();
@@ -20,34 +31,35 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   @override
   Stream<Transition<ConversationEvent, ConversationState>> transformEvents(
       Stream<ConversationEvent> events,
-      TransitionFunction<ConversationEvent, ConversationState> transitionFn
-  ) {
-      final nonDebounceStream = events
-        .where((event) => event is! FetchMessages);
+      TransitionFunction<ConversationEvent, ConversationState> transitionFn) {
+    final nonDebounceStream = events.where((event) => event is! FetchMessages);
 
-      final debounceStream = events
+    final debounceStream = events
         .where((event) => event is FetchMessages)
         .debounceTime(Duration(milliseconds: 300));
 
-      return super.transformEvents(
-        nonDebounceStream.mergeWith([debounceStream]),
-        transitionFn,
-      );
+    return super.transformEvents(
+      nonDebounceStream.mergeWith([debounceStream]),
+      transitionFn,
+    );
   }
 
   @override
   Stream<ConversationState> mapEventToState(
     ConversationEvent event,
   ) async* {
-    final currentState = state;
-
     if (event is FetchMessages) {
-      yield MessagesList((currentState is Loading
+      currentId = event.userId;
+      yield MessagesList((state is Loading
               ? List<Message>()
-              : (currentState as MessagesList).messages) +
+              : (state as MessagesList).messages) +
           await VKMessagesRemote(AccountsRepository().current.token)
               .getHistory(offset, event.userId));
-      offset += 12;
+      if (event.changeOffset) offset += 12;
+    }
+
+    if (event is NewMessage) {
+      yield MessagesList([currentMessage] + (state as MessagesList).messages);
     }
   }
 }

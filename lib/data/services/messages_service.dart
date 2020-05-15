@@ -1,3 +1,5 @@
+import 'package:toucanet/data/repositories/conversations_repository.dart';
+
 import '../../app/view_models/dialog_view_model.dart';
 import '../../app/view_models/message_view_model.dart';
 import '../objects/enums/dialog_types.dart';
@@ -27,7 +29,7 @@ class MessagesService {
           title: '${item.conversation.chatSettings.title}',
           out: item.conversation.chatSettings.state == 'in' ? false : true,
           online: false,
-          id: item.conversation.peer.id,
+          peerId: item.conversation.peer.id,
           type: DialogTypes.chat,
         ));
       } else {
@@ -39,13 +41,15 @@ class MessagesService {
         dialogModels.add(DialogViewModel(
             lastMessage: item.lastMessage.text,
             avatarUrl: sender.photo50,
-            id: sender.id,
+            peerId: sender.id,
             online: sender.online == 1 ? true : false,
             out: item.lastMessage.out == 1 ? true : false,
             type: DialogTypes.user,
             title: '${sender.firstName} ${sender.lastName}'));
       }
     }
+
+    //ConversationsRepository().add(dialogModels);
 
     return dialogModels;
   }

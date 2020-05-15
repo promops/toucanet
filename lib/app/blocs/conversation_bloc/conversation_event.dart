@@ -5,9 +5,15 @@ abstract class ConversationEvent extends Equatable {
 }
 
 class FetchMessages extends ConversationEvent {
-  FetchMessages(this.userId);
+  FetchMessages(this.userId, {this.changeOffset = true});
   int userId;
+  bool changeOffset;
 
   @override
   List<Object> get props => [userId];
+}
+
+class NewMessage extends ConversationEvent {
+  @override
+  List<Object> get props => [];
 }
