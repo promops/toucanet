@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../styles/app_colors.dart';
 import '../messages/messages_list_page/dialog_list_page.dart';
+import 'package:toucanet/app/blocs/conversation_bloc/conversation_bloc.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage>
   List<Widget> pages;
   TabController _controller;
   int current = 0;
+
 
   @override
   initState() {
@@ -75,14 +77,6 @@ class _HomePageState extends State<HomePage>
                       unselectedLabelStyle: TextStyle(color: Colors.red),
                       labelStyle: TextStyle(fontSize: 12),
                     ),
-                    // TabBarView(
-                    //     physics: PageScrollPhysics(),
-                    //     controller: _controller,
-                    //     children: pages
-                    //     //DialogListPage()
-
-                    //     )
-                    //DialogListPage()
                     pages[current]
                   ],
                 )),

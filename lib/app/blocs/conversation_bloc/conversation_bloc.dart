@@ -14,7 +14,7 @@ part 'conversation_state.dart';
 
 class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   int offset = 0;
-  int currentId = 50123451;
+  int currentId = 0;
   Message currentMessage;
 
   ConversationBloc() {
@@ -59,7 +59,14 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     }
 
     if (event is NewMessage) {
-      yield MessagesList([currentMessage] + (state as MessagesList).messages);
+      if (currentMessage.fromId == currentId && state is! MessagesList) {
+        yield MessagesList([currentMessage] + (state as MessagesList).messages);
+      }
+    }
+
+    if (event is Reset) {
+      offset = 0;
+      yield initialState;
     }
   }
 }

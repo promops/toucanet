@@ -7,6 +7,8 @@ import '../../dialog_page/dialog_page.dart';
 import 'dialog_text.dart';
 import 'dialog_title.dart';
 import 'user_avatar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toucanet/app/blocs/conversation_bloc/conversation_bloc.dart';
 
 class DialogWidget extends StatefulWidget {
   final DialogViewModel dialogModel;
@@ -23,15 +25,16 @@ class _DialogWidgetState extends State<DialogWidget> {
         onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    DialogPage(dialogModel: widget.dialogModel))),
+                builder: (BuildContext context) => DialogPage(
+                      dialogModel: widget.dialogModel,
+                      bloc: BlocProvider.of<ConversationBloc>(context),
+                    ))),
         child: Padding(
           padding: const EdgeInsets.only(
               bottom: Indents.medium,
               top: Indents.medium,
               right: Indents.large,
-              left: Indents.medium
-              ),
+              left: Indents.medium),
           child: Container(
             height: 80,
             color: AppColors.mainColor,

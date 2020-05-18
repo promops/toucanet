@@ -17,3 +17,8 @@ class NewMessage extends ConversationEvent {
   @override
   List<Object> get props => [];
 }
+
+class Reset extends ConversationEvent {
+  @override
+  List<Object> get props => [];
+}

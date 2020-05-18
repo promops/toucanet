@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toucanet/app/blocs/user_bloc/user_bloc.dart';
-
+import 'package:toucanet/app/blocs/conversation_bloc/conversation_bloc.dart';
 import 'package:toucanet/data/services/account_service.dart';
 
 class Injector extends StatelessWidget {
@@ -21,6 +21,10 @@ class Injector extends StatelessWidget {
             BlocProvider<UserBloc>(
               create: (BuildContext context) => UserBloc(),
             ),
+
+            BlocProvider<ConversationBloc>(
+              create: (BuildContext context) => ConversationBloc(),
+            )
             // BlocProvider<DialogBloc>(
             //     create: (BuildContext context) => DialogBloc())
           ],
