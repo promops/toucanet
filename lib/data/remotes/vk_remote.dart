@@ -1,5 +1,5 @@
 import 'package:toucanet/core/http/http.dart';
-import 'package:toucanet/core/helper/config.dart';
+import 'package:toucanet/core/config.dart';
 
 
 abstract class VKRemote
@@ -10,8 +10,7 @@ abstract class VKRemote
   String baseUrl = Config.get(['vk', 'api', 'baseUrl']);
   String version = Config.get(['vk', 'api', 'version'], '5.103');
 
-  VKRemote([this.accessToken, int connectTimeout = 0]) : 
-    this.http = Http(connectTimeout);
+  VKRemote([this.accessToken]) : this.http = Http();
 
   Future<HttpResponse> call(String method, [Map<String, dynamic> parameters]) async
   {

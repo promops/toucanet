@@ -1,7 +1,7 @@
 import 'package:toucanet/data/repositories/conversations_repository.dart';
 
-import '../../app/view_models/dialog_view_model.dart';
-import '../../app/view_models/message_view_model.dart';
+import '../../app/models/dialog_view_model.dart';
+import '../../app/models/message_view_model.dart';
 import '../objects/enums/dialog_types.dart';
 import '../objects/message/message.dart';
 import '../objects/message/response.dart';
@@ -18,7 +18,7 @@ class MessagesService {
     List<DialogViewModel> dialogModels = [];
 
     Response response =
-        await VKMessagesRemote(AccountsRepository().current.token)
+        await VKMessagesRemote(AccountsRepository().current?.token)
             .getConversations(offset);
 
     for (var item in response.items) {

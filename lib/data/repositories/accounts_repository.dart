@@ -7,16 +7,16 @@ import 'package:toucanet/data/objects/account.dart';
 class AccountsRepository
 {
   static const _keychain = 'accounts';
-  static final AccountsRepository _instance = new AccountsRepository._();
+
+  AccountsRepository._();
+  factory AccountsRepository() => _instance;
+  static final AccountsRepository _instance = AccountsRepository._();
 
   AccountModel _currentAccount;
   List<AccountModel> _allAccounts = [];
 
   List<AccountModel> get all => this._allAccounts;
   AccountModel get current => this._currentAccount;
-
-  AccountsRepository._();
-  factory AccountsRepository() => _instance;
 
   Future<void> init() async
   {

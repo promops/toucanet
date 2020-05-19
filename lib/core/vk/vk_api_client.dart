@@ -1,26 +1,54 @@
-import 'dart:async';
-
-import 'package:toucanet/core/helper/config.dart';
-import 'package:toucanet/core/http/http.dart';
-import 'package:toucanet/core/isolate/isolate_supervisor.dart';
-import 'package:toucanet/core/vk/objects/vk_longpoll_events_response.dart';
-import 'package:toucanet/core/vk/objects/vk_longpoll_server.dart';
-
-part 'vk_api_request.dart';
-part 'vk_api_longpoll.dart';
+part of 'vk_api.dart';
 
 class VKApiClient
 {
-  final Http httpClient;
+  final String baseUrl;
+  final double version;
   final String accessToken;
 
-  VKApiRequest _request;
-  VKApiLongPoll _longPoll;
+  VKApiClient(this.accessToken, config) :
+    baseUrl = config['baseUrl'] ?? '',
+    version = config['version'] ?? 5.103;
 
-  Map<String, dynamic> config = Config.get(['vk', 'api'], {});
+  Future<Map<String, dynamic>> method(
+    String name, [Map<String, dynamic> parameters]) async
+  {
+    parameters = {...?parameters, 'v': version};
+    final response = await this.get(baseUrl + 'method/$name', parameters);
 
-  get longPoll => _longPoll ??= VKApiLongPoll().init((this.request));
-  get request => _request ??= VKApiRequest(this.httpClient, this.accessToken, this.config);
+    if (response['response'] is Map) {
+      return response['response'];
+    }
 
-  VKApiClient(this.accessToken, {httpClient}) : this.httpClient = httpClient ?? Http(30);
+    if (response['error'] is! Map) {
+      throw ExceptionMapper.mapErrorResponseToException(0, '');
+    }
+
+    final errorCode = response['error']['error_code'];
+    final errorMessage = response['error']['error_msg'];
+    throw ExceptionMapper.mapErrorResponseToException(errorCode, errorMessage);
+  }
+
+  Future<Map<String, dynamic>> get(String url, [Map<String, dynamic> parameters]) async
+  {
+    parameters ??= {};
+
+    parameters.updateAll((_, value) 
+    {
+      if (value is num) return '$value';
+      if (value is List) return value.join(',');
+      return '';
+    });
+
+    parameters = parameters.cast<String, String>();
+    
+    if (this.accessToken != null) {
+      parameters['access_token'] = this.accessToken;
+    }
+    
+    final response = await Http().post(url, body: parameters);
+    if (response.body is! Map) return {};
+    
+    return response.body;
+  }
 }

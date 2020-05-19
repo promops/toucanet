@@ -1,66 +1,61 @@
-part of 'vk_api_client.dart';
+part of 'vk_api.dart';
 
-class VKApiLongPoll {
-  Stream stream;
+class VKApiLongPoll 
+{
+  final Map config;
+  final String accessToken;
+  final IsolateSupervisor supervisor;
 
-  static final VKApiLongPoll _instance = VKApiLongPoll._();
-  VKApiLongPoll._();
+  VKApiLongPoll(this.accessToken, this.supervisor, this.config);
 
-  factory VKApiLongPoll() {
-    return _instance;
-  }
+  Stream<dynamic> launch() => 
+    supervisor.launch(VKApiLongPoll._longpollWorker, [accessToken, config]);
+    
+  static Stream<Map> _longpollWorker(IsolateContext context) async* 
+  {
+    final version = 3;
 
-  VKApiLongPoll init(request) {
-    stream = IsolateSupervisor().launch(
-      VKApiLongPoll._longpollWorker,
-      VKApiLongPollArguments(request),
-    );
-    return this;
-  }
+    final config = context.arguments.nearest<Map>();
+    final accessToken = context.arguments.nearest<String>();
 
-  static Stream<Map> _longpollWorker(IsolateContext context) async* {
-    print('init2');
-    final params = (context.args as VKApiLongPollArguments);
-    final apiClient = params.request;
+    final client = VKApiClient(accessToken, config);
 
-    final serverResponse = await apiClient.execute(
-        'messages.getLongPollServer', {'need_pts': 1, 'lp_version': 3});
+    final serverResponse = await client.method(
+      'messages.getLongPollServer', {'need_pts': 1, 'lp_version': version});
 
-    final longpollServer =
-        VKLongPollServer.fromJson(serverResponse.body['response']);
+    final server = VKLongPollServer.fromJson(serverResponse);
 
-    final ts = longpollServer.ts;
-    int newPts = 0;
+    int ts = server.ts;
+    int pts = server.pts;
 
-    while (true) {
-      print('1');
+    while (true) 
+    {
       try {
-        final history = await apiClient.execute(
-            //TODO: Таймаут сервера
-            'messages.getLongPollHistory',
-            {'ts': '$ts', 'pts': '$newPts', 'lp_version': '3'});
+        final eventsResponse = await client.get(
+          'https://${server.server}?act=a_check' +
+            '&key=${server.key}' +
+            '&wait=25' +
+            '&mode=2' +
+            '&ts=$ts' +
+            '&pts=$pts' +
+            '&version=$version'
+        );
 
-        if (history.body['response'] != null) {
-          newPts = history.body['response']['new_pts'] ?? newPts;
+        if (eventsResponse['failed'] != null) break; //TODO: longpoll error handler
+        final events = VKLongPollEventsResponse.fromJson(eventsResponse);
 
-          for (final message in history.body['response']['messages']['items']) {
+        ts = events.ts ?? ts;
+        final history = await client.method(
+          'messages.getLongPollHistory', {'ts': ts, 'pts': pts, 'lp_version': version});
+
+        if (history.isNotEmpty) {
+          pts = history['new_pts'] ?? pts;
+
+          for (final message in history['messages']['items']) {
             yield message;
           }
         }
-      } catch (error) {
-        print(error);
-      }
-
-      await Future.delayed(Duration(milliseconds: params.connectTimeout));
+      } catch (error) { print('Longpoll error: $error'); }
     }
   }
-}
-
-class VKApiLongPollArguments {
-  final VKApiRequest request;
-
-  final int retryAttempts = 3;
-  final int connectTimeout = 15000;
-
-  VKApiLongPollArguments(this.request);
 }

@@ -1,4 +1,4 @@
-import 'package:toucanet/app/view_models/dialog_view_model.dart';
+import 'package:toucanet/app/models/dialog_view_model.dart';
 
 class ConversationsRepository {
   static final ConversationsRepository _instance = ConversationsRepository._();

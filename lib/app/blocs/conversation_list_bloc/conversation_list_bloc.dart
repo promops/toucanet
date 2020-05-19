@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../data/services/messages_service.dart';
-import '../../view_models/dialog_view_model.dart';
+import '../../models/dialog_view_model.dart';
 
 part 'conversation_list_event.dart';
 part 'conversation_list_state.dart';

@@ -2,11 +2,11 @@ import 'vk_api_exception.dart';
 
 abstract class ExceptionMapper 
 {
-  static VKApiException mapErrorResponseToException()
+  static VKApiException mapErrorResponseToException(int errorCode, String errorMessage)
   {
-    final errorCode = 0;
-    final errorMessage = '';
-
+    errorCode ??= 0;
+    errorMessage ??= '';
+    
     switch(errorCode) 
     {
       case 1:

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:toucanet/core/vk/vk_api_client.dart';
+import 'package:toucanet/app/application.dart';
 import 'package:toucanet/data/objects/message/message.dart';
 
 import '../../../data/remotes/vk_messages_remote.dart';
@@ -18,9 +18,8 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   Message currentMessage;
 
   ConversationBloc() {
-    VKApiLongPoll().stream.listen((event) {
+    Application().vkApi.longpoll.launch().listen((event) {
       currentMessage = Message.fromJson(event);
-
       this.add(NewMessage());
     });
   }
@@ -59,7 +58,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
     }
 
     if (event is NewMessage) {
-      if (currentMessage.fromId == currentId && state is! MessagesList) {
+      if (currentMessage.fromId == currentId) {
         yield MessagesList([currentMessage] + (state as MessagesList).messages);
       }
     }

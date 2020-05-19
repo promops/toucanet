@@ -1,5 +1,5 @@
 
-import 'package:toucanet/core/helper/config.dart';
+import 'package:toucanet/core/config.dart';
 import 'package:toucanet/core/http/http_utils.dart';
 
 

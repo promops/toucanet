@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../../core/helper/device_info.dart';
+import '../../core/device.dart';
 import 'vk_remote.dart';
 
 class VKAccountRemote extends VKRemote {
   VKAccountRemote(String accessToken) : super(accessToken);
 
   Future<void> registerDevice() async {
-    String deviceId = await DeviceInfo.deviceId;
+    String deviceId = await Device.id;
     String pushToken = await FirebaseMessaging().getToken();
 
     final result = await this.call('account.registerDevice', {
@@ -25,7 +25,7 @@ class VKAccountRemote extends VKRemote {
   }
 
   Future<void> getPushSettings() async {
-    String deviceId = await DeviceInfo.deviceId;
+    String deviceId = await Device.id;
 
     final result = await this.call('account.getPushSettings', {
       'device_id': deviceId,
@@ -35,7 +35,7 @@ class VKAccountRemote extends VKRemote {
   }
 
   Future<void> setPushSettings() async {
-    String deviceId = await DeviceInfo.deviceId;
+    String deviceId = await Device.id;
     String pushToken = await FirebaseMessaging().getToken();
 
     final result = await this.call('account.setPushSettings', {
@@ -49,7 +49,7 @@ class VKAccountRemote extends VKRemote {
   }
 
   Future<void> unregisterDevice() async {
-    String deviceId = await DeviceInfo.deviceId;
+    String deviceId = await Device.id;
 
     final result = await this.call('account.unregisterDevice', {
       'device_id': deviceId,

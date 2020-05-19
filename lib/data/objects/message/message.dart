@@ -54,5 +54,5 @@ class Message {
   }
 
   @override
-  String toString() => '$id $text $attachments';
+  String toString() => '$id $text $attachments $fromId';
 }

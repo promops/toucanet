@@ -14,4 +14,9 @@ abstract class HttpUtils
     
     return parameters;
   }
+
+  static String buildQueryString(Map<String, String> parameters)
+  {
+    return '';
+  }
 }

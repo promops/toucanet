@@ -3,49 +3,64 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as _http;
 
-import 'exceptions/offline_exception.dart';
-import 'exceptions/response_format_exception.dart';
-import 'exceptions/server_unavailable_exception.dart';
-
 part 'http_response.dart';
+part 'http_exceptions.dart';
 
 class Http 
 {
-  final int connectTimeout;
+  Future<HttpResponse> get(
+    String url, {
+      int connectTimeout = 0,
+      Map<String, String> headers = const {}, 
+      Map<String, String> parameters = const {}
+  }) 
+  async => this._fetch(url, headers: headers, connectTimeout: connectTimeout);
 
-  Http([this.connectTimeout = 0]);
-
-  Future<HttpResponse> get(String url, {Map<String, String> headers}) async => 
-    await this._request(url, headers: headers ?? {});
-
-  Future<HttpResponse> post(String url, {body, Map<String, String> headers}) async => 
-    await this._request(url, body: body ?? {}, headers: headers ?? {});
+  Future<HttpResponse> post(
+    String url, {
+    int connectTimeout = 0,
+    Map<String, String> body = const {}, 
+    Map<String, String> headers = const {},
+    Map<String, String> parameters = const {}, 
+  }) 
+  async => this._fetch(url, body: body, headers: headers, connectTimeout: connectTimeout);
     
-  Future<HttpResponse> _request(String url, {body, Map<String, String> headers}) async 
+  Future<HttpResponse> _fetch(
+    String url, {
+    int connectTimeout,
+    Map<String, String> body, 
+    Map<String, String> headers
+  }) async 
   {
-    //TODO: Обработка параметров
-    try {
-      if (this.connectTimeout > 0) {
-        headers['Connection'] = 'Keep-Alive';
-        headers['Keep-Alive'] = 'timeout=$connectTimeout, max=10';
-      }
+    _http.Response response;
+    
+    if (connectTimeout > 0) {
+      headers['connection'] ??= 'keep-alive';
+    }
 
-      Future<_http.Response> request = (body == null) ? 
+    try {
+      final request = (body == null) ? 
         _http.get(url, headers: headers) : 
         _http.post(url, body: body, headers: headers);
 
-      _http.Response response = this.connectTimeout <= 0 ?
+      response = connectTimeout <= 0 ?
         await request :
-        await request.timeout(Duration(milliseconds: this.connectTimeout * 1000));
+        await request.timeout(Duration(milliseconds: connectTimeout));
+    }
+    on SocketException catch (error) { 
+      throw HttpOfflineException(error.message); 
+    }
+    on HttpException catch (error) { 
+      throw HttpServerUnavailableException(error.message, error.uri);
+    }
+    on TimeoutException catch (error) { 
+      throw HttpServerUnavailableException(error.message); 
+    }
+
+    try {
       return this._transformResponse(response);
     }
-    on  SocketException catch (_) { throw OfflineException(); }
-    on    HttpException catch (_) { throw ServerUnavailableException(); }
-    on TimeoutException catch (_) { throw ServerUnavailableException(); }
-    catch (exception) { 
-      print(exception);
-      throw ResponseFormatException(); 
-    }
+    catch (_) { throw HttpResponseFormatException(''); }
   }
 
   HttpResponse _transformResponse(_http.Response response)
