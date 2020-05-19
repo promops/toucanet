@@ -10,10 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  shimmer: ^1.1.0
   cupertino_icons: ^0.1.2
   flutter_spinkit: ^4.1.2+1
-  scrollable_positioned_list: ^0.1.5
   url_launcher: ^5.4.5
   video_player: ^0.10.9+1
   chewie_audio: ^1.0.0+1
