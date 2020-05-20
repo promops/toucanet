@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toucanet/data/services/messages_service.dart';
 
 import '../../../../app/blocs/conversation_list_bloc/conversation_list_bloc.dart';
 import '../../../styles/app_colors.dart';
@@ -30,7 +31,7 @@ class _DialogListPageState extends State<DialogListPage> {
   @override
   void initState() {
     _controller = ScrollController();
-    _dialogBloc = ConversationListBloc();
+    _dialogBloc = ConversationListBloc(RepositoryProvider.of<MessagesService>(context));
     _controller.addListener(_onScroll);
     _dialogBloc.add(FetchDialogs());
     super.initState();

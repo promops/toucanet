@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
-import 'package:toucanet/data/services/account_service.dart';
 import 'package:toucanet/app/blocs/auth_bloc/auth_bloc.dart';
 
 class AuthPage extends StatelessWidget

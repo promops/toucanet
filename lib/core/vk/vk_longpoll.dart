@@ -1,24 +1,27 @@
-part of 'vk_api.dart';
+part of 'vk.dart';
 
-class VKApiLongPoll 
+class VKLongPoll 
 {
-  final Map config;
+  Stream<dynamic> stream;
+
+  final VKConfig config;
   final String accessToken;
   final IsolateSupervisor supervisor;
 
-  VKApiLongPoll(this.accessToken, this.supervisor, this.config);
+  VKLongPoll(this.accessToken, this.supervisor, this.config);
 
-  Stream<dynamic> launch() => 
-    supervisor.launch(VKApiLongPoll._longpollWorker, [accessToken, config]);
+  void launch() {
+    stream = supervisor.launch(VKLongPoll._longpollWorker, [accessToken, config]);
+  }
     
   static Stream<Map> _longpollWorker(IsolateContext context) async* 
   {
     final version = 3;
 
-    final config = context.arguments.nearest<Map>();
+    final config = context.arguments.nearest<VKConfig>();
     final accessToken = context.arguments.nearest<String>();
 
-    final client = VKApiClient(accessToken, config);
+    final client = VKApi(accessToken, config);
 
     final serverResponse = await client.method(
       'messages.getLongPollServer', {'need_pts': 1, 'lp_version': version});
@@ -31,7 +34,7 @@ class VKApiLongPoll
     while (true) 
     {
       try {
-        final eventsResponse = await client.get(
+        final eventsResponse = await client.request(
           'https://${server.server}?act=a_check' +
             '&key=${server.key}' +
             '&wait=25' +

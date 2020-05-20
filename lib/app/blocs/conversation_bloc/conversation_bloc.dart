@@ -16,9 +16,12 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   int offset = 0;
   int currentId = 0;
   Message currentMessage;
+  VKMessagesRemote messagesRemote;
 
-  ConversationBloc() {
-    Application().vkApi.longpoll.launch().listen((event) {
+  ConversationBloc(this.messagesRemote)
+  {
+    this.messagesRemote.onMessage.listen((event) 
+    {
       currentMessage = Message.fromJson(event);
       this.add(NewMessage());
     });
@@ -52,8 +55,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
       yield MessagesList((state is Loading
               ? List<Message>()
               : (state as MessagesList).messages) +
-          await VKMessagesRemote(AccountsRepository().current.token)
-              .getHistory(offset, event.userId));
+          await messagesRemote.getHistory(offset, event.userId));
       if (event.changeOffset) offset += 12;
     }
 

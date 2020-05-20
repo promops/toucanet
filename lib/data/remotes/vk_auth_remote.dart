@@ -2,13 +2,12 @@
 import 'package:toucanet/core/config.dart';
 import 'package:toucanet/core/http/http_utils.dart';
 
-
 import 'package:toucanet/data/objects/account.dart';
-import 'package:toucanet/data/remotes/vk_remote.dart';
 import 'package:toucanet/data/remotes/exceptions/vk_exception.dart';
 
-class VKAuthRemote extends VKRemote
+class VKAuthRemote
 {
+  String version = Config.get(['vk', 'api', 'version'], '5.103');
   final int clientId = Config.get(['vk', 'auth', 'clientId']);
   final String oauthUrl = Config.get(['vk', 'auth', 'oauthUrl']) + 'authorize';
   final String redirectUrl = Config.get(['vk', 'auth', 'oauthUrl']) + 'blank.html';
@@ -16,17 +15,6 @@ class VKAuthRemote extends VKRemote
 
   String get authUrl =>
     '$oauthUrl?client_id=$clientId&redirect_uri=$redirectUrl&scope=$permissions&v=$version&response_type=token';
-
-  Future<AccountModel> updateAuth() async
-  {
-    final result = await this.http.get(this.authUrl);
-    print(result.headers);
-
-    // final result = await this.call('secure.checkToken',  {'token': this.accessToken});
-
-    return null;
-  }
-
 
  AccountModel parseAuthUrl(String uri)
   {
@@ -45,6 +33,6 @@ class VKAuthRemote extends VKRemote
       );
     }
 
-    return null;
+    throw VKAuthAccessDeniedException('');
   }
 }

@@ -47,7 +47,9 @@ class _DialogPageState extends State<DialogPage> {
   }
 
   void _sendButtonHandler(String text) async {
-    await VKMessagesRemote(AccountsRepository().current.token)
+    // await VKMessagesRemote(AccountsRepository().current.token)
+    
+    await RepositoryProvider.of<VKMessagesRemote>(context)
         .send(widget.dialogModel.peerId, text, widget.dialogModel.type);
 
     setState(() {});

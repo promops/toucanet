@@ -12,6 +12,11 @@ part 'conversation_list_state.dart';
 
 class ConversationListBloc
     extends Bloc<ConversationsListEvent, ConversationListState> {
+
+  final MessagesService messagesService;
+
+  ConversationListBloc(this.messagesService);
+  
   @override
   ConversationListState get initialState => Loading();
 
@@ -51,7 +56,7 @@ class ConversationListBloc
       yield ConversationList((currentState is Loading
               ? List<DialogViewModel>()
               : (currentState as ConversationList).dialogs) +
-          await MessagesService().getConversations(offset));
+          await this.messagesService.getConversations(offset));
       offset += 10;
     }
   }
