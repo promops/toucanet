@@ -1,4 +1,6 @@
-abstract class HttpUtils
+part of 'vk.dart';
+
+abstract class VKUtils
 {
   static Map<String, String> explodeQueryString(String query)
   {
@@ -11,10 +13,5 @@ abstract class HttpUtils
     });
     
     return parameters;
-  }
-
-  static String buildQueryString(Map<String, String> parameters)
-  {
-    return '';
   }
 }

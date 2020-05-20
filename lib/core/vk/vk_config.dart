@@ -32,10 +32,10 @@ class _VKConfigApi
 class _VKConfigAuth
 {
   final int clientId;
-  final String oauthUrl;
+  final String oAuthUrl;
   final List permissions;
 
-  _VKConfigAuth(this.clientId, this.oauthUrl, this.permissions);
+  _VKConfigAuth(this.clientId, this.oAuthUrl, this.permissions);
 
   factory _VKConfigAuth.fromJson(Map<String, dynamic> json) =>
      _VKConfigAuth(json['clientId'], json['oauthUrl'], json['permissions']);

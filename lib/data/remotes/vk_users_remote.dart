@@ -1,11 +1,14 @@
-import '../objects/user/user_model.dart';
-import 'vk_remote.dart';
+import 'package:toucanet/core/vk/vk.dart';
 
-class VKUsersRemote extends VKRemote {
-  VKUsersRemote(String accessToken) : super(accessToken);
+import '../objects/user/user_model.dart';
+
+class VKUsersRemote
+{
+  final VK vk;
+  VKUsersRemote(this.vk);
 
   Future<List<UserModel>> getUser({List<int> ids}) async {
-    final result = await this.call('users.get', {
+    final result = await this.vk.api.method('users.get', {
       'user_ids': ids,
       'fields': [
         'photo_200_orig',
@@ -17,8 +20,7 @@ class VKUsersRemote extends VKRemote {
     });
 
     List<UserModel> users = [];
-    result.body['response']
-        .forEach((user) => {users.add(UserModel.fromJson(user))});
+    result.forEach((user) => {users.add(UserModel.fromJson(user))});
 
     return users;
   }

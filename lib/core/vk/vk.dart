@@ -9,6 +9,8 @@ import './objects/vk_longpoll_events_response.dart';
 import './exceptions/vk_api_exception_mapper.dart';
 
 part 'vk_api.dart';
+part 'vk_auth.dart';
+part 'vk_utils.dart';
 part 'vk_config.dart';
 part 'vk_longpoll.dart';
 
@@ -18,6 +20,7 @@ class VK
   final IsolateSupervisor supervisor;
 
   VKApi _api;
+  VKAuth _auth;
   String _accessToken;
   VKLongPoll _longpoll;
 
@@ -27,6 +30,10 @@ class VK
   void init(String token) {
     this._accessToken = token;
     this.longpoll.launch();
+  }
+
+  VKAuth get auth {
+    return this._auth ??= VKAuth(config);
   }
 
   VKApi get api {

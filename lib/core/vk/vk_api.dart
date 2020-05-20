@@ -7,18 +7,18 @@ class VKApi
 
   VKApi(this.accessToken, this.config);
 
-  Future<Map<String, dynamic>> method(
+  Future<dynamic> method(
     String name, [Map<String, dynamic> parameters]) async
   {
     parameters = {...?parameters, 'v': config.api.version};
     final response = await this.request(config.api.baseUrl + 'method/$name', parameters);
 
-    if (response['response'] is Map) {
+    if (response['response'] != null) {
       return response['response'];
     }
 
     if (response['error'] is! Map) {
-      throw ExceptionMapper.mapErrorResponseToException(0, '');
+      throw ExceptionMapper.mapErrorResponseToException(0, '$response');
     }
 
     final errorCode = response['error']['error_code'];
@@ -26,7 +26,7 @@ class VKApi
     throw ExceptionMapper.mapErrorResponseToException(errorCode, errorMessage);
   }
 
-  Future<Map<String, dynamic>> request(String url, [Map<String, dynamic> parameters]) async
+  Future<dynamic> request(String url, [Map<String, dynamic> parameters]) async
   {
     parameters ??= {};
 
