@@ -6,6 +6,8 @@ import 'package:toucanet/core/http/http.dart';
 
 import './objects/vk_longpoll_server.dart';
 import './objects/vk_longpoll_events_response.dart';
+
+import './exceptions/vk_api_exception.dart';
 import './exceptions/vk_api_exception_mapper.dart';
 
 part 'vk_api.dart';

@@ -26,7 +26,7 @@ class VKApi
     throw ExceptionMapper.mapErrorResponseToException(errorCode, errorMessage);
   }
 
-  Future<dynamic> request(String url, [Map<String, dynamic> parameters]) async
+  Future<Map> request(String url, [Map<String, dynamic> parameters]) async
   {
     parameters ??= {};
 

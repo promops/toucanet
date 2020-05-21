@@ -158,6 +158,7 @@ part 'vk_api_wall_links_forbidden_exception.dart';
 part 'vk_api_wall_reply_owner_flood_exception.dart';
 part 'vk_api_wall_too_many_recipients_exception.dart';
 part 'vk_api_weighted_flood_exception.dart';
+part 'vk_long_poll_exception.dart';
 part 'vk_long_poll_server_key_expired_exception.dart';
 part 'vk_long_poll_server_ts_exception.dart';
 

@@ -2,6 +2,10 @@ part of 'vk.dart';
 
 class VKLongPoll 
 {
+  static const String failedCode = 'failed';
+  static const int tokenExpiredErrorCode = 2;
+  static const int incorrectTsValueErrorCode = 1;
+
   Stream<dynamic> stream;
 
   final VKConfig config;
@@ -16,11 +20,10 @@ class VKLongPoll
     
   static Stream<Map> _longpollWorker(IsolateContext context) async* 
   {
-    final version = 3;
-
     final config = context.arguments.nearest<VKConfig>();
     final accessToken = context.arguments.nearest<String>();
 
+    final version = config.longpoll.version;
     final client = VKApi(accessToken, config);
 
     final serverResponse = await client.method(
@@ -44,10 +47,29 @@ class VKLongPoll
             '&version=$version'
         );
 
-        if (eventsResponse['failed'] != null) break; //TODO: longpoll error handler
-        final events = VKLongPollEventsResponse.fromJson(eventsResponse);
+        if (eventsResponse.isEmpty) throw VKLongPollException();
 
+        final code = eventsResponse[VKLongPoll.failedCode];
+        if (code != null) {
+          switch(code) {
+            case VKLongPoll.tokenExpiredErrorCode: 
+              throw VKLongPollServerKeyExpiredException();
+
+            case VKLongPoll.incorrectTsValueErrorCode: 
+              ts = eventsResponse['ts'] ?? ts;
+              throw VKLongPollServerTsException();
+
+            // {"failed":3}
+            // {"failed":4,"min_version":0,"max_version":1}
+
+            default: 
+              throw VKLongPollException(code);
+          }
+        }
+
+        final events = VKLongPollEventsResponse.fromJson(eventsResponse);
         ts = events.ts ?? ts;
+
         final history = await client.method(
           'messages.getLongPollHistory', {'ts': ts, 'pts': pts, 'lp_version': version});
 
