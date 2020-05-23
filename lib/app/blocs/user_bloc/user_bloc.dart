@@ -12,6 +12,10 @@ part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
+  final VKUsersRemote usersRemote;
+
+  UserBloc(this.usersRemote);
+
   @override
   UserState get initialState => UserInitial();
 
@@ -20,9 +24,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     UserEvent event,
   ) async* {
     if (event is FetchUserEvent) {
-      List<UserModel> user =
-          await VKUsersRemote(AccountsRepository().current.token).getUser();
-
+      List<UserModel> user = await this.usersRemote.getUser();
       yield UserInformation(user[0]);
     }
   }

@@ -1,21 +1,27 @@
 import 'dart:math';
 
+import 'package:toucanet/core/vk/vk.dart';
+
 import '../objects/message/message.dart';
 import '../objects/message/response.dart';
-import 'vk_remote.dart';
 
-class VKMessagesRemote extends VKRemote {
-  VKMessagesRemote(String accessToken) : super(accessToken);
+class VKMessagesRemote 
+{
+  final VK vk;
+  VKMessagesRemote(this.vk);
 
-  Future<List<Message>> getById(List<int> ids) async {
+  Stream<dynamic> get onMessage => this.vk.longpoll.stream;
+
+  Future<List<Message>> getById(List<int> ids) async 
+  {
     final result =
-        await this.call('messages.getById', {'fields': [], 'message_ids': ids});
+        await this.vk.api.method('messages.getById', {'fields': [], 'message_ids': ids});
 
     //Message message = Message.fromJson(result.body['response'][0]);
   }
 
   Future<Response> getConversations(int offset, {int count = 10}) async {
-    final result = await this.call('messages.getConversations', {
+    final result = await this.vk.api.method('messages.getConversations', {
       'offset': offset,
       'count': count,
       'extended': 1,
@@ -30,7 +36,7 @@ class VKMessagesRemote extends VKRemote {
       ]
     });
 
-    var response = Response.fromJson(result.body['response']);
+    var response = Response.fromJson(result);
 
     return response;
   }
@@ -42,7 +48,7 @@ class VKMessagesRemote extends VKRemote {
 
   Future<List<Message>> getHistory(int offset, int userId,
       {int count = 12}) async {
-    final result = await this.call('messages.getHistory', {
+    final result = await this.vk.api.method('messages.getHistory', {
       'offset': offset,
       'rev': 0,
       'count': count,
@@ -52,7 +58,7 @@ class VKMessagesRemote extends VKRemote {
 
     List<Message> messagesList = [];
 
-    result.body['response']['items'].forEach((message) async => {
+    result['items'].forEach((message) async => {
           messagesList.add(Message.fromJson(message)),
         });
 
@@ -61,12 +67,12 @@ class VKMessagesRemote extends VKRemote {
 
   Future<void> send(int userId, String message, String type) async {
     var result = type == 'user'
-        ? await this.call('messages.send', {
+        ? await this.vk.api.method('messages.send', {
             'user_id': userId,
             'random_id': Random().nextInt(4294967295),
             'message': message
           })
-        : await this.call('messages.send', {
+        : await this.vk.api.method('messages.send', {
             'peer_id': userId,
             'random_id': Random().nextInt(4294967295),
             'message': message

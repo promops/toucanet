@@ -15,5 +15,5 @@ void main() async {
     ..options.configurationFiles = ['vk', 'app'];
 
   await app.start();
-  runApp(AppInjector(child: AppView()));
+  runApp(AppInjector(child: AppView(), app: app));
 }

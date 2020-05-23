@@ -5,17 +5,15 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:toucanet/data/services/auth_service.dart';
-import 'package:toucanet/data/services/account_service.dart';
 
 part 'auth_state.dart';
 part 'auth_event.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> 
 {
-  final AccountService accountService;
-  final AuthService _authService = AuthService();
+  final AuthService _authService;
 
-  AuthBloc(this.accountService);
+  AuthBloc(this._authService);
 
   @override
   AuthState get initialState => AuthInitState();
@@ -32,13 +30,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
     if (event is AuthBrowserUpdateEvent) 
     {
       try {
-        final account = this._authService.browserAuth(event.url);
-
-        if (account != null) 
-        {
-          await accountService.addAccount(account);
-          yield AuthSuccessState();
-        }
+        await this._authService.browserAuth(event.url);
+        yield AuthSuccessState();
       }
       catch(_) { yield AuthAccessDeniedState(); }
     }
@@ -46,6 +39,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
 
     if (event is AuthBrowserErrorEvent) 
     {
+      print(this._authService.authUrl);
+      print(event.url);
       if (event.url == this._authService.authUrl) yield AuthErrorState();
     }
 

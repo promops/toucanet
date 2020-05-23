@@ -13,13 +13,15 @@ const String _kDefaultUrl =
     'https://sun9-4.userapi.com/c840523/v840523166/2630e/yIvhXFkrTys.jpg?ava=1';
 
 class MessagesService {
+  final VKMessagesRemote messagesRemote;
+
+  MessagesService(this.messagesRemote);
+
   ///Вернет список моделей [dialogModels] для вида с распехнутыми диалогами
   Future<List<DialogViewModel>> getConversations(int offset) async {
     List<DialogViewModel> dialogModels = [];
 
-    Response response =
-        await VKMessagesRemote(AccountsRepository().current?.token)
-            .getConversations(offset);
+    Response response = await this.messagesRemote.getConversations(offset);
 
     for (var item in response.items) {
       if (item.conversation.peer.type == DialogTypes.chat) {
@@ -57,9 +59,7 @@ class MessagesService {
   Future<List<MessageViewModel>> getHistory(int offset, int userId) async {
     List<MessageViewModel> messagesList;
 
-    List<Message> messages =
-        await VKMessagesRemote(AccountsRepository().current.token)
-            .getHistory(offset, userId);
+    List<Message> messages = await this.messagesRemote.getHistory(offset, userId);
 
     //TODO: Распарсить модель в модель
     for (var message in messages) {

@@ -5,10 +5,13 @@ class AccountModel
   String token;
   int expiresIn;
 
+  bool get isValid =>
+    expiresIn > 0 && 
+    created + expiresIn * 1000 <= DateTime.now().millisecondsSinceEpoch;
+
   AccountModel(this.id, this.token, this.expiresIn, [this.created]) : 
     assert(token != null),
-    assert(token.length > 0)
-  {
+    assert(token.length > 0) {
     this.created = created ?? DateTime.now().millisecondsSinceEpoch;
   }
 
@@ -44,7 +47,4 @@ class AccountModel
 
   @override
   String toString() => this.toJson().toString();
-
-  bool get isValid =>
-    expiresIn <= 0 || created + expiresIn * 1000 > DateTime.now().millisecondsSinceEpoch;
 }

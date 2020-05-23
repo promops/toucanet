@@ -1,27 +1,34 @@
 import 'package:isolate_supervisor/isolate_supervisor.dart';
 
+import 'package:toucanet/core/vk/vk.dart';
 import 'package:toucanet/core/config.dart';
-import 'package:toucanet/core/vk/vk_api.dart';
+
+import 'package:toucanet/data/services/auth_service.dart';
+import 'package:toucanet/data/remotes/vk_users_remote.dart';
+import 'package:toucanet/data/services/messages_service.dart';
+import 'package:toucanet/data/remotes/vk_messages_remote.dart';
 import 'package:toucanet/data/repositories/accounts_repository.dart';
 
 part 'application_options.dart';
 
 class Application
 {
-  VKApi _vkApi;
+  VK vk;
   IsolateSupervisor _supervisor;
+
+  AuthService authService;
+  MessagesService messagesService; 
+  
+  // TODO: Убрать лишнее
+  VKUsersRemote usersRemote;
+  VKMessagesRemote messagesRemote;
 
   final ApplicationOptions options;
   final AccountsRepository accountsRepository;
 
-  VKApi get vkApi => this._vkApi;
   static bool get isProduction => bool.fromEnvironment('dart.vm.product');
 
-  // TODO: Для теста, потом исправтьб
-  static final _instance = Application._internal();
-  factory Application() => _instance;
-
-  Application._internal() : 
+  Application() : 
     options = ApplicationOptions(),
     accountsRepository = AccountsRepository();
 
@@ -32,11 +39,18 @@ class Application
       count: options.numberOfWorkers
     );
 
-    await AccountsRepository().init();
+    await accountsRepository.init();
     await Config().load(options.configurationFiles);
 
-    this._vkApi = VKApi(AccountsRepository().current.token, this._supervisor);
-    this._vkApi.longpoll.launch();
+    this.vk = VK(this._supervisor);
+
+    this.authService = AuthService(this.vk, accountsRepository);
+    this.authService.onAuth = (token) => this.vk.init(token);
+
+    this.usersRemote = VKUsersRemote(vk);
+    this.messagesRemote = VKMessagesRemote(vk);
+    
+    this.messagesService = MessagesService(this.messagesRemote);
   }
 
   Future stop() async 

@@ -1,31 +1,35 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:device_info/device_info.dart';
 
 class Device 
 {
   static final _device = DeviceInfoPlugin();
 
-  static get id async 
+  static get id async
   {
-    if (Platform.isAndroid) return (await _device.androidInfo).androidId;
-    if (Platform.isIOS) return (await _device.iosInfo).identifierForVendor;
-    return '';
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android: 
+        return (await _device.androidInfo).androidId;
+      case TargetPlatform.iOS: 
+        return (await _device.iosInfo).identifierForVendor;
+      default:
+        return '';
+    }
   }
 
-  static get systemVersion async 
+  static get system async
   {
-    if (!Platform.isAndroid) {
-      var info = await _device.androidInfo;
+    if (!Platform.isAndroid) return '';
 
-      var release = info.version.release;
-      var sdkInt = info.version.sdkInt;
-      var manufacturer = info.manufacturer;
-      var model = info.model;
+    var info = await _device.androidInfo;
 
-      return '$release $sdkInt $manufacturer $model';
-    }
-    
-    return '';
+    var model = info.model;
+    var sdkInt = info.version.sdkInt;
+    var release = info.version.release;
+    var manufacturer = info.manufacturer;
+
+    return '$release $sdkInt $manufacturer $model';
   }
 }

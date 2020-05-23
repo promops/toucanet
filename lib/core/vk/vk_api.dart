@@ -1,26 +1,50 @@
-import 'dart:async';
-import 'package:isolate_supervisor/isolate_supervisor.dart';
-
-import 'package:toucanet/core/config.dart';
-import 'package:toucanet/core/http/http.dart';
-
-import './objects/vk_longpoll_server.dart';
-import './objects/vk_longpoll_events_response.dart';
-import './exceptions/vk_api_exception_mapper.dart';
-
-part 'vk_api_client.dart';
-part 'vk_api_longpoll.dart';
+part of 'vk.dart';
 
 class VKApi
 {
+  final VKConfig config;
   final String accessToken;
 
-  final VKApiClient client;
-  final VKApiLongPoll longpoll;
+  VKApi(this.accessToken, this.config);
 
-  static final config = Config.get(['vk', 'api'], {});
+  Future<dynamic> method(
+    String name, [Map<String, dynamic> parameters]) async
+  {
+    parameters = {...?parameters, 'v': config.api.version};
+    final response = await this.request(config.api.baseUrl + 'method/$name', parameters);
 
-  VKApi(this.accessToken, IsolateSupervisor supervisor) : 
-    this.client = VKApiClient(accessToken, config),
-    this.longpoll = VKApiLongPoll(accessToken, supervisor, config);
+    if (response['response'] != null) {
+      return response['response'];
+    }
+
+    if (response['error'] is! Map) {
+      throw ExceptionMapper.mapErrorResponseToException(0, '$response');
+    }
+
+    final errorCode = response['error']['error_code'];
+    final errorMessage = response['error']['error_msg'];
+    throw ExceptionMapper.mapErrorResponseToException(errorCode, errorMessage);
+  }
+
+  Future<Map> request(String url, [Map<String, dynamic> parameters]) async
+  {
+    parameters ??= {};
+
+    parameters.updateAll((_, value) 
+    {
+      if (value is List) return value.join(',');
+      return '$value';
+    });
+
+    parameters = parameters.cast<String, String>();
+    
+    if (this.accessToken != null) {
+      parameters['access_token'] = this.accessToken;
+    }
+    
+    final response = await Http().post(url, body: parameters);
+    if (response.body is! Map) return {};
+    
+    return response.body;
+  }
 }
