@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:toucanet/app/models/message_view_model.dart';
 import 'package:toucanet/data/objects/message/message.dart';
 
 class ConversationViewModel extends Equatable {
@@ -26,7 +27,11 @@ class ConversationViewModel extends Equatable {
 
   bool out;
 
-  List<Message> messages;
+  List<MessageViewModel> _messages;
+
+  void addMessage(MessageViewModel message) {
+    this._messages.add(message);
+  }
 
   @override
   String toString() => '$title $lastMessage';

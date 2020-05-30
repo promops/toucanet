@@ -1,7 +1,9 @@
 import 'package:toucanet/app/models/conversation_view_model.dart';
 import 'package:toucanet/app/models/message_view_model.dart';
+import 'package:toucanet/data/objects/enums/dialog_types.dart';
+import 'package:toucanet/data/repositories/stored_interface.dart';
 
-class ConversationsRepository {
+class ConversationsRepository implements Stored {
   static final ConversationsRepository _instance = ConversationsRepository._();
   ConversationsRepository._();
   factory ConversationsRepository() => _instance;
@@ -20,6 +22,8 @@ class ConversationsRepository {
       _conversationsList..addAll(conversation);
   }
 
+
+  @override
   void addMessage(MessageViewModel message) {
     int _index = _conversationsList
         .indexWhere((element) => element.peerId == message.id);
@@ -27,8 +31,31 @@ class ConversationsRepository {
     //Если такой конференции не было, то создаем
     if (_index < 0) {
       _conversationsList.add(ConversationViewModel(
-          peerId: message.id, online: false, out: message.out));
+          peerId: message.id,
+          online: false,
+          out: message.out,
+          lastMessage: message.text,
+          //TODO как то решить этот момент
+          type: DialogTypes.user,
+          title: message.senderLastName));
+
+      return;
     }
+
+    //Если такая есть, то добавляем в нее сообщение
+    _conversationsList[_index].addMessage(message);
+  }
+
+  @override
+  List<ConversationViewModel> getConversations() {
+    // TODO: implement getConversations
+    throw UnimplementedError();
+  }
+
+  @override
+  MessageViewModel getMessages() {
+    // TODO: implement getMessages
+    throw UnimplementedError();
   }
 
   // void update(ConversationViewModel conversation) {
