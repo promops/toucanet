@@ -3,6 +3,7 @@ import '../../data/objects/message/attachments/attachment.dart';
 class MessageViewModel {
   MessageViewModel(
       {this.senderAvatarUrl,
+      this.id,
       this.text,
       this.senderFirstName,
       this.senderLastName,
@@ -13,9 +14,10 @@ class MessageViewModel {
   final String text;
   final String senderFirstName;
   final String senderLastName;
-  final String date;
+  final int date;
   final String senderAvatarUrl;
   final bool out;
+  final int id;
 
   final List<Attachment> attachments;
 }

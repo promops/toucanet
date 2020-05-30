@@ -8,7 +8,7 @@ abstract class ConversationListState extends Equatable {
 class ConversationList extends ConversationListState {
   ConversationList(this.dialogs);
 
-  final List<DialogViewModel> dialogs;
+  final List<ConversationViewModel> dialogs;
 
   @override
   List<Object> get props => [dialogs];

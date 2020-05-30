@@ -9,3 +9,9 @@ class FetchDialogs extends ConversationsListEvent {
   @override
   List<Object> get props => [];
 }
+
+class NewMessages extends ConversationsListEvent{
+  @override
+  List<Object> get props => [];
+
+}

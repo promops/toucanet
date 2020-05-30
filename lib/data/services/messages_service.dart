@@ -1,6 +1,6 @@
+import 'package:toucanet/app/models/conversation_view_model.dart';
 import 'package:toucanet/data/repositories/conversations_repository.dart';
 
-import '../../app/models/dialog_view_model.dart';
 import '../../app/models/message_view_model.dart';
 import '../objects/enums/dialog_types.dart';
 import '../objects/message/message.dart';
@@ -15,17 +15,19 @@ const String _kDefaultUrl =
 class MessagesService {
   final VKMessagesRemote messagesRemote;
 
+  Stream<dynamic> get onMessage => this.messagesRemote.vk.longpoll.stream;
+
   MessagesService(this.messagesRemote);
 
   ///Вернет список моделей [dialogModels] для вида с распехнутыми диалогами
-  Future<List<DialogViewModel>> getConversations(int offset) async {
-    List<DialogViewModel> dialogModels = [];
+  Future<List<ConversationViewModel>> getConversations(int offset, {int count = 10}) async {
+    List<ConversationViewModel> dialogModels = [];
 
-    Response response = await this.messagesRemote.getConversations(offset);
+    Response response = await this.messagesRemote.getConversations(offset, count: count);
 
     for (var item in response.items) {
       if (item.conversation.peer.type == DialogTypes.chat) {
-        dialogModels.add(DialogViewModel(
+        dialogModels.add(ConversationViewModel(
           lastMessage: item.lastMessage.text,
           avatarUrl: _kDefaultUrl,
           title: '${item.conversation.chatSettings.title}',
@@ -40,7 +42,7 @@ class MessagesService {
             orElse: () => UserModel(
                 firstName: 'asd', lastName: '123', photo50: _kDefaultUrl));
 
-        dialogModels.add(DialogViewModel(
+        dialogModels.add(ConversationViewModel(
             lastMessage: item.lastMessage.text,
             avatarUrl: sender.photo50,
             peerId: sender.id,
@@ -59,12 +61,17 @@ class MessagesService {
   Future<List<MessageViewModel>> getHistory(int offset, int userId) async {
     List<MessageViewModel> messagesList;
 
-    List<Message> messages = await this.messagesRemote.getHistory(offset, userId);
+    List<Message> messages =
+        await this.messagesRemote.getHistory(offset, userId);
 
     //TODO: Распарсить модель в модель
     for (var message in messages) {
       messagesList.add(MessageViewModel(
         out: message.out == 1 ? true : false,
+        id: message.fromId,
+        text: message.text,
+        date: message.date,
+        attachments: message.attachments
       ));
     }
   }

@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:toucanet/view/styles/app_colors.dart';
+import 'package:toucanet/view/styles/indents.dart';
 
-import '../../../../styles/app_colors.dart';
-import '../../../../styles/indents.dart';
 
 class UserAvatar extends StatefulWidget {
   final String url;

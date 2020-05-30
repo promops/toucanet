@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:toucanet/app/models/conversation_view_model.dart';
+import 'package:toucanet/view/pages/messages/dialog_page/dialog_page.dart';
+import 'package:toucanet/view/styles/app_colors.dart';
+import 'package:toucanet/view/styles/indents.dart';
 
-import '../../../../../app/models/dialog_view_model.dart';
-import '../../../../styles/app_colors.dart';
-import '../../../../styles/indents.dart';
-import '../../dialog_page/dialog_page.dart';
 import 'dialog_text.dart';
 import 'dialog_title.dart';
 import 'user_avatar.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toucanet/app/blocs/conversation_bloc/conversation_bloc.dart';
 
 class DialogWidget extends StatefulWidget {
-  final DialogViewModel dialogModel;
+  final ConversationViewModel dialogModel;
 
   const DialogWidget({Key key, this.dialogModel}) : super(key: key);
   @override

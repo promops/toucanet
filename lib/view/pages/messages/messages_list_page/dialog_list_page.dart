@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toucanet/data/services/messages_service.dart';
+import 'package:toucanet/view/widgets/dialog_widget.dart';
 
 import '../../../../app/blocs/conversation_list_bloc/conversation_list_bloc.dart';
 import '../../../styles/app_colors.dart';
 import '../../../styles/indents.dart';
 import '../../../widgets/loading_indicator.dart';
-import 'widgets/dialog_widget.dart';
 
 class DialogListPage extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _DialogListPageState extends State<DialogListPage> {
 
     final currentScroll = _controller.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      print('++');
+      print(_controller.position.pixels);
       _dialogBloc.add(FetchDialogs());
     }
   }

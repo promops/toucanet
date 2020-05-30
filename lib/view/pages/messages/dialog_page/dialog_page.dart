@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toucanet/app/models/conversation_view_model.dart';
 import 'package:toucanet/view/pages/messages/dialog_page/wrapper.dart';
 import 'package:toucanet/view/styles/fonts.dart';
 
 import '../../../../app/blocs/conversation_bloc/conversation_bloc.dart';
-import '../../../../app/models/dialog_view_model.dart';
 import '../../../../data/remotes/vk_messages_remote.dart';
-import '../../../../data/repositories/accounts_repository.dart';
 import '../../../styles/app_colors.dart';
 import '../../../widgets/loading_indicator.dart';
 import 'message_field.dart';
 
 class DialogPage extends StatefulWidget {
   const DialogPage({Key key, this.dialogModel, this.bloc}) : super(key: key);
-  final DialogViewModel dialogModel;
+  final ConversationViewModel dialogModel;
   final ConversationBloc bloc;
 
   @override

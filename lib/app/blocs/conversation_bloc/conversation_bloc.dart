@@ -3,11 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:toucanet/app/application.dart';
 import 'package:toucanet/data/objects/message/message.dart';
 
 import '../../../data/remotes/vk_messages_remote.dart';
-import '../../../data/repositories/accounts_repository.dart';
 
 part 'conversation_event.dart';
 part 'conversation_state.dart';
@@ -20,11 +18,11 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
 
   ConversationBloc(this.messagesRemote)
   {
-    this.messagesRemote.onMessage.listen((event) 
-    {
-      currentMessage = Message.fromJson(event);
-      this.add(NewMessage());
-    });
+    // this.messagesRemote.onMessage.listen((event) 
+    // {
+    //   currentMessage = Message.fromJson(event);
+    //   this.add(NewMessage());
+    // });
   }
 
   @override

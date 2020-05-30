@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:toucanet/data/objects/message/message.dart';
 
-class DialogViewModel extends Equatable {
-  DialogViewModel({
+class ConversationViewModel extends Equatable {
+  ConversationViewModel({
     this.avatarUrl,
     this.title,
     this.lastMessage,
@@ -24,6 +25,8 @@ class DialogViewModel extends Equatable {
   bool online;
 
   bool out;
+
+  List<Message> messages;
 
   @override
   String toString() => '$title $lastMessage';

@@ -1,30 +1,43 @@
-import 'package:toucanet/app/models/dialog_view_model.dart';
+import 'package:toucanet/app/models/conversation_view_model.dart';
+import 'package:toucanet/app/models/message_view_model.dart';
 
 class ConversationsRepository {
   static final ConversationsRepository _instance = ConversationsRepository._();
   ConversationsRepository._();
   factory ConversationsRepository() => _instance;
 
-  List<DialogViewModel> _conversationsList = [];
+  List<ConversationViewModel> _conversationsList = [];
 
   Function onChange;
 
   get list => _conversationsList;
 
-  void add<T>(T conversations) {
-    //conversationsList.add(conversation);
-    if (conversations is DialogViewModel) _conversationsList.add(conversations);
+  void addConversation<T>(T conversation) {
+    if (conversation is ConversationViewModel)
+      _conversationsList.add(conversation);
 
-    if (conversations is List<DialogViewModel>)
-      _conversationsList..addAll(conversations);
+    if (conversation is List<ConversationViewModel>)
+      _conversationsList..addAll(conversation);
   }
 
-  void update(DialogViewModel conversation) {
-    if (_conversationsList.contains(conversation)) {
-      int index = _conversationsList.indexOf(conversation);
-      _conversationsList.replaceRange(index, index + 1, [conversation]);
+  void addMessage(MessageViewModel message) {
+    int _index = _conversationsList
+        .indexWhere((element) => element.peerId == message.id);
 
-      if (this.onChange != null) this.onChange();
+    //Если такой конференции не было, то создаем
+    if (_index < 0) {
+      _conversationsList.add(ConversationViewModel(
+          peerId: message.id, online: false, out: message.out));
     }
   }
+
+  // void update(ConversationViewModel conversation) {
+  //   if (_conversationsList.contains(conversation)) {
+  //     int index = _conversationsList.indexOf(conversation);
+  //     _conversationsList.replaceRange(index, index + 1, [conversation]);
+
+  //     if (this.onChange != null) this.onChange();
+  //   }
+  // }
+
 }
