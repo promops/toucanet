@@ -9,6 +9,7 @@ class ConversationViewModel extends Equatable {
     this.title,
     this.lastMessage,
     this.type,
+    this.lastMessageDate,
     @required this.peerId,
     @required this.online,
     @required this.out,
@@ -18,6 +19,8 @@ class ConversationViewModel extends Equatable {
   final String title;
 
   final String lastMessage;
+
+  final String lastMessageDate;
 
   final int peerId;
 

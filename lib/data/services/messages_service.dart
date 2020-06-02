@@ -17,15 +17,21 @@ class MessagesService {
   MessagesService(this.messagesRemote);
 
   ///Вернет список моделей [dialogModels] для вида с распехнутыми диалогами
-  Future<List<ConversationViewModel>> getConversations(int offset, {int count = 10}) async {
+  Future<List<ConversationViewModel>> getConversations(int offset,
+      {int count = 10}) async {
     List<ConversationViewModel> dialogModels = [];
 
-    Response response = await this.messagesRemote.getConversations(offset, count: count);
+    Response response =
+        await this.messagesRemote.getConversations(offset, count: count);
 
     for (var item in response.items) {
+      DateTime _messageDate =
+          DateTime.fromMillisecondsSinceEpoch(item.lastMessage.date * 1000);
+
       if (item.conversation.peer.type == DialogTypes.chat) {
         dialogModels.add(ConversationViewModel(
           lastMessage: item.lastMessage.text,
+          lastMessageDate: '${_messageDate.hour}:${_messageDate.minute}',
           avatarUrl: _kDefaultUrl,
           title: '${item.conversation.chatSettings.title}',
           out: item.conversation.chatSettings.state == 'in' ? false : true,
@@ -41,6 +47,7 @@ class MessagesService {
 
         dialogModels.add(ConversationViewModel(
             lastMessage: item.lastMessage.text,
+            lastMessageDate: '${_messageDate.hour}:${_messageDate.minute}',
             avatarUrl: sender.photo50,
             peerId: sender.id,
             online: sender.online == 1 ? true : false,
@@ -55,21 +62,20 @@ class MessagesService {
     return dialogModels;
   }
 
+  ///Вернет список сообщений из диалога
   Future<List<MessageViewModel>> getHistory(int offset, int userId) async {
     List<MessageViewModel> messagesList = [];
 
     List<Message> messages =
         await this.messagesRemote.getHistory(offset, userId);
 
-    //TODO: Распарсить модель в модель
     for (var message in messages) {
       messagesList.add(MessageViewModel(
-        out: message.out == 1 ? false : true,
-        id: message.fromId,
-        text: message.text,
-        date: message.date,
-        attachments: message.attachments
-      ));
+          out: message.out == 1 ? false : true,
+          id: message.fromId,
+          text: message.text,
+          date: message.date,
+          attachments: message.attachments));
     }
 
     return messagesList;

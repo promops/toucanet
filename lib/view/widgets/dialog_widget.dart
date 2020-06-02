@@ -49,7 +49,9 @@ class _DialogWidgetState extends State<DialogWidget> {
                         child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    DialogTitle(text: widget.dialogModel.title),
+                    DialogTitle(
+                      date: widget.dialogModel.lastMessageDate,
+                      text: widget.dialogModel.title),
                     DialogText(
                         text: widget.dialogModel.out
                             ? 'Вы: ' + widget.dialogModel.lastMessage
