@@ -39,3 +39,4 @@ config/vk.json
 config/app.json
 
 android/app/google-services.json
+pubspec.lock
