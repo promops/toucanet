@@ -24,7 +24,7 @@ class AuthPage extends StatelessWidget
           listener: (_, state) 
           {
             if (state is AuthSuccessState) 
-            {
+            { 
               webviewPlugin.hide();
               Navigator.pushReplacementNamed(context, '/main');
             }

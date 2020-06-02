@@ -1,13 +1,10 @@
-import 'package:toucanet/app/models/conversation_view_model.dart';
-import 'package:toucanet/data/repositories/conversations_repository.dart';
-
+import '../../app/models/conversation_view_model.dart';
 import '../../app/models/message_view_model.dart';
 import '../objects/enums/dialog_types.dart';
 import '../objects/message/message.dart';
 import '../objects/message/response.dart';
 import '../objects/user/user_model.dart';
 import '../remotes/vk_messages_remote.dart';
-import '../repositories/accounts_repository.dart';
 
 const String _kDefaultUrl =
     'https://sun9-4.userapi.com/c840523/v840523166/2630e/yIvhXFkrTys.jpg?ava=1';
@@ -59,7 +56,7 @@ class MessagesService {
   }
 
   Future<List<MessageViewModel>> getHistory(int offset, int userId) async {
-    List<MessageViewModel> messagesList;
+    List<MessageViewModel> messagesList = [];
 
     List<Message> messages =
         await this.messagesRemote.getHistory(offset, userId);
@@ -67,12 +64,14 @@ class MessagesService {
     //TODO: Распарсить модель в модель
     for (var message in messages) {
       messagesList.add(MessageViewModel(
-        out: message.out == 1 ? true : false,
+        out: message.out == 1 ? false : true,
         id: message.fromId,
         text: message.text,
         date: message.date,
         attachments: message.attachments
       ));
     }
+
+    return messagesList;
   }
 }
