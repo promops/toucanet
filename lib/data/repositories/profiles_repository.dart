@@ -5,19 +5,25 @@ class ProfilesRepository {
   ProfilesRepository._();
   factory ProfilesRepository() => _instance;
 
-  List<UserModel> _profilesList = [];
+  Set<UserModel> _profiles = {};
 
-  void add(UserModel userProfile) {
-    if (_profilesList.contains(userProfile)) {
-      _profilesList.remove(userProfile);
-    }
-    this._profilesList.add(userProfile);
+  Set<UserModel> get() => _profiles;
+
+  void add<T>(T userProfile) {
+    if (userProfile is List<UserModel>) _profiles.addAll(userProfile);
+
+    if (userProfile is UserModel) _profiles.add(userProfile);
+  }
+
+  bool contains() {}
+
+  UserModel getById(int id) {
+    return _profiles.firstWhere((element) => element.id == id,
+        orElse: () => UserModel.empty());
   }
 
   void delete(int index) {
-    if (index < 0 && this._profilesList.length < index) return;
-    this._profilesList.removeAt(index);
+    // if (index < 0 && this._profiles.length < index) return;
+    // this._profiles.removeAt(index);
   }
-
-  List<UserModel> get() => _profilesList;
 }

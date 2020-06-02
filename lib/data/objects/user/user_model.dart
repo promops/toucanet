@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:toucanet/view/strings/app_strings.dart';
 
 import 'user_counters_model.dart';
 
-class UserModel extends Equatable{
+class UserModel extends Equatable {
   UserModel(
       {this.id,
       this.firstName,
@@ -14,7 +15,8 @@ class UserModel extends Equatable{
       this.photo200orig,
       this.photo50,
       this.photo100,
-      this.userCounters, this.online});
+      this.userCounters,
+      this.online});
 
   final int id;
 
@@ -35,6 +37,21 @@ class UserModel extends Equatable{
 
   UserCountersModel userCounters;
 
+  factory UserModel.empty() {
+    return UserModel(
+        id: 0,
+        firstName: '',
+        lastName: '',
+        status: '',
+        isClosed: false,
+        sex: 0,
+        photo100: AppStrings.defaultAvatar,
+        photo200orig: AppStrings.defaultAvatar,
+        photo50: AppStrings.defaultAvatar,
+        online: 0,
+        userCounters: UserCountersModel.empty());
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
         id: json['id'],
@@ -46,11 +63,9 @@ class UserModel extends Equatable{
         photo200orig: json['photo_200_orig'],
         photo50: json['photo_50'],
         photo100: json['photo_100'],
-        online : json['online'],
+        online: json['online'],
         userCounters: UserCountersModel.fromJson(json['counters']));
   }
-
-  
 
   @override
   String toString() => '$firstName $lastName';

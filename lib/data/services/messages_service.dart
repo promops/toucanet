@@ -1,3 +1,5 @@
+import 'package:toucanet/data/repositories/profiles_repository.dart';
+
 import '../../app/models/conversation_view_model.dart';
 import '../../app/models/message_view_model.dart';
 import '../objects/enums/dialog_types.dart';
@@ -24,7 +26,11 @@ class MessagesService {
     Response response =
         await this.messagesRemote.getConversations(offset, count: count);
 
+    ProfilesRepository().add(response.profiles);
+
     for (var item in response.items) {
+
+      //Конвертим дату из unixtime
       DateTime _messageDate =
           DateTime.fromMillisecondsSinceEpoch(item.lastMessage.date * 1000);
 
@@ -42,8 +48,7 @@ class MessagesService {
       } else {
         UserModel sender = response.profiles.firstWhere(
             (user) => user.id == item.conversation.peer.id,
-            orElse: () => UserModel(
-                firstName: 'asd', lastName: '123', photo50: _kDefaultUrl));
+            orElse: () => UserModel.empty());
 
         dialogModels.add(ConversationViewModel(
             lastMessage: item.lastMessage.text,
@@ -71,6 +76,7 @@ class MessagesService {
 
     for (var message in messages) {
       messagesList.add(MessageViewModel(
+          senderAvatarUrl: ProfilesRepository().getById(message.id).photo50,
           out: message.out == 1 ? false : true,
           id: message.fromId,
           text: message.text,
