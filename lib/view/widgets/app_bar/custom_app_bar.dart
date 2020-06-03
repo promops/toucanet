@@ -16,21 +16,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-            top: true,
-            child: Container(
-              height: Indents.kAppBarHeight,
-              decoration: BoxDecoration(
-                color: AppColors.background,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  leading ?? Container(),
-                  title ?? Container(),
-                  trailing ?? Container()
-                ],
-              ),
-            ));
+    return SafeArea(
+        top: true,
+        child: Container(
+          height: Indents.kAppBarHeight,
+          decoration: BoxDecoration(
+            color: AppColors.background,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              leading ?? Container(),
+              title ?? Container(),
+              trailing ?? Container()
+            ],
+          ),
+        ));
   }
 }

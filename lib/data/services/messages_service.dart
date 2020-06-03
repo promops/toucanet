@@ -30,14 +30,17 @@ class MessagesService {
 
     for (var item in response.items) {
 
-      //Конвертим дату из unixtime
+      //Конвертим дату из unixtime и прибавляем часовой пояс
       DateTime _messageDate =
-          DateTime.fromMillisecondsSinceEpoch(item.lastMessage.date * 1000);
+          DateTime.fromMillisecondsSinceEpoch(item.lastMessage.date * 1000).add(Duration(hours: 3));
+
+      String _hour = _messageDate.hour < 10 ? '0${_messageDate.hour}' : '${_messageDate.hour}';
+      String _minute = _messageDate.minute < 10 ? '0${_messageDate.minute}' : '${_messageDate.minute}';
 
       if (item.conversation.peer.type == DialogTypes.chat) {
         dialogModels.add(ConversationViewModel(
           lastMessage: item.lastMessage.text,
-          lastMessageDate: '${_messageDate.hour}:${_messageDate.minute}',
+          lastMessageDate: '$_hour:$_minute',
           avatarUrl: _kDefaultUrl,
           title: '${item.conversation.chatSettings.title}',
           out: item.conversation.chatSettings.state == 'in' ? false : true,
@@ -52,7 +55,7 @@ class MessagesService {
 
         dialogModels.add(ConversationViewModel(
             lastMessage: item.lastMessage.text,
-            lastMessageDate: '${_messageDate.hour}:${_messageDate.minute}',
+            lastMessageDate: '$_hour:$_minute',
             avatarUrl: sender.photo100,
             peerId: sender.id,
             online: sender.online == 1 ? true : false,
