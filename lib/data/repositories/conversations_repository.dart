@@ -22,7 +22,6 @@ class ConversationsRepository implements Stored {
       _conversationsList..addAll(conversation);
   }
 
-
   @override
   void addMessage(MessageViewModel message) {
     int _index = _conversationsList
@@ -42,8 +41,10 @@ class ConversationsRepository implements Stored {
       return;
     }
 
-    //Если такая есть, то добавляем в нее сообщение
+    //Если такая есть, то добавляем в нее сообщение и обновляем информацию
     _conversationsList[_index].addMessage(message);
+    _conversationsList[_index].lastMessage = message.text;
+    _conversationsList[_index].unreadCount++;
   }
 
   @override

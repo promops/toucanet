@@ -48,6 +48,7 @@ class MessagesService {
           peerId: item.conversation.peer.id,
           type: DialogTypes.chat,
         ));
+        
       } else {
         UserModel sender = response.profiles.firstWhere(
             (user) => user.id == item.conversation.peer.id,

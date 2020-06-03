@@ -9,22 +9,25 @@ class ConversationViewModel extends Equatable {
     this.title,
     this.lastMessage,
     this.type,
+    this.unreadCount = 0,
     this.lastMessageDate,
     @required this.peerId,
     @required this.online,
     @required this.out,
   });
-  final String avatarUrl;
+  String avatarUrl;
 
-  final String title;
+  String title;
 
-  final String lastMessage;
+  String lastMessage;
 
-  final String lastMessageDate;
+  String lastMessageDate;
 
-  final int peerId;
+  int peerId;
 
-  final String type;
+  int unreadCount;
+
+  String type;
 
   bool online;
 
