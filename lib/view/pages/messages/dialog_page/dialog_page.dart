@@ -65,14 +65,7 @@ class _DialogPageState extends State<DialogPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () async {
-          widget.bloc.add(Reset());
-          return true;
-        },
-        child: SafeArea(
-            top: true,
-            child: Scaffold(
+    return  Scaffold(
                 appBar: CustomAppBar(
                   leading: BackwardButton(),
                   title: Text(widget.dialogModel.title),
@@ -112,6 +105,6 @@ class _DialogPageState extends State<DialogPage> {
                                 }))),
                     MessageField(sendCallback: _sendButtonHandler)
                   ],
-                ))));
+                ));
   }
 }

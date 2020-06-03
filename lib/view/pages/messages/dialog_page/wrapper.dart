@@ -41,14 +41,17 @@ class Wrapper extends StatelessWidget {
                 borderRadius: this.message.out
                     ? BorderRadius.horizontal(right: Radius.circular(15))
                     : BorderRadius.horizontal(left: Radius.circular(15)),
-                color: this.message.out ?  Colors.grey[200] : AppColors.mainBlue),
+                color:
+                    this.message.out ? Colors.grey[200] : AppColors.mainBlue),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               this.message.text.isEmpty
                   ? Container()
                   : Text(
                       this.message.text,
-                      style: Fonts.h3.copyWith(color: this.message.out ? Colors.black : Colors.white),
+                      style: Fonts.h3.copyWith(
+                          color:
+                              this.message.out ? Colors.black : Colors.white),
                       maxLines: 50,
                       textAlign: TextAlign.left,
                     ),
@@ -57,11 +60,13 @@ class Wrapper extends StatelessWidget {
         this.withPhoto && this.message.out
             ? Padding(
                 padding: EdgeInsets.only(left: Indents.medium),
-                child: Container(
-                    width: 20,
-                    height: 20,
-                    child: CachedNetworkImage(imageUrl: this.photoUrl)),
-              )
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Container(
+                      width: 20,
+                      height: 20,
+                      child: CachedNetworkImage(imageUrl: this.photoUrl)),
+                ))
             : Offstage()
       ],
     );
