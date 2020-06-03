@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:toucanet/view/strings/app_strings.dart';
+import 'package:toucanet/view/variables/app_strings.dart';
 
 import 'user_counters_model.dart';
 

@@ -15,10 +15,10 @@ class ConversationListBloc
   final MessagesService messagesService;
 
   ConversationListBloc(this.messagesService) {
-    this.messagesService.onMessage.listen((event) {
-      //TODO Проверка нужна на сообщение
-      this.add(NewMessages());
-    });
+    // this.messagesService.onMessage.listen((event) {
+    //   //TODO Проверка нужна на сообщение
+    //   this.add(NewMessages());
+    // });
   }
 
   @override

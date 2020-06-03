@@ -7,4 +7,6 @@ abstract class Indents {
   static const double large = 20;
 
   static const double extraLarge = 28;
+
+  static const double kAppBarHeight = 54.0;
 }

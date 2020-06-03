@@ -53,7 +53,7 @@ class MessagesService {
         dialogModels.add(ConversationViewModel(
             lastMessage: item.lastMessage.text,
             lastMessageDate: '${_messageDate.hour}:${_messageDate.minute}',
-            avatarUrl: sender.photo50,
+            avatarUrl: sender.photo100,
             peerId: sender.id,
             online: sender.online == 1 ? true : false,
             out: item.lastMessage.out == 1 ? true : false,

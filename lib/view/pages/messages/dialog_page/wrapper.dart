@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:toucanet/view/styles/app_colors.dart';
 
 import '../../../../app/models/message_view_model.dart';
 import '../../../../data/objects/message/attachments/models_by_type/audio.dart';
@@ -40,14 +41,14 @@ class Wrapper extends StatelessWidget {
                 borderRadius: this.message.out
                     ? BorderRadius.horizontal(right: Radius.circular(15))
                     : BorderRadius.horizontal(left: Radius.circular(15)),
-                color: Colors.red[100]),
+                color: this.message.out ?  Colors.grey[200] : AppColors.mainBlue),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               this.message.text.isEmpty
                   ? Container()
                   : Text(
                       this.message.text,
-                      style: Fonts.h3,
+                      style: Fonts.h3.copyWith(color: this.message.out ? Colors.black : Colors.white),
                       maxLines: 50,
                       textAlign: TextAlign.left,
                     ),
@@ -73,7 +74,7 @@ class Wrapper extends StatelessWidget {
 
     for (var attach in attachList) {
       if (attach is Sticker) {
-        attachmentWidgets.add(StickerWidget(url: attach.images[1].url));
+        attachmentWidgets.add(StickerWidget(url: attach.images[2].url));
         continue;
       }
 

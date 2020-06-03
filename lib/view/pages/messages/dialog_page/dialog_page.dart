@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toucanet/app/models/conversation_view_model.dart';
 import 'package:toucanet/view/pages/messages/dialog_page/wrapper.dart';
 import 'package:toucanet/view/styles/fonts.dart';
+import 'package:toucanet/view/widgets/app_bar/backward_button.dart';
+import 'package:toucanet/view/widgets/app_bar/custom_app_bar.dart';
 
 import '../../../../app/blocs/conversation_bloc/conversation_bloc.dart';
 import '../../../../data/remotes/vk_messages_remote.dart';
@@ -47,7 +49,7 @@ class _DialogPageState extends State<DialogPage> {
 
   void _sendButtonHandler(String text) async {
     // await VKMessagesRemote(AccountsRepository().current.token)
-    
+
     await RepositoryProvider.of<VKMessagesRemote>(context)
         .send(widget.dialogModel.peerId, text, widget.dialogModel.type);
 
@@ -71,66 +73,43 @@ class _DialogPageState extends State<DialogPage> {
         child: SafeArea(
             top: true,
             child: Scaffold(
-                appBar: PreferredSize(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(),
-                        Column(
-                          children: <Widget>[
-                            Text(
-                              widget.dialogModel.title,
-                              style: Fonts.h1.copyWith(color: Colors.white),
-                            )
-                          ],
-                        ),
-                        Container()
-                      ],
-                    ),
-                    preferredSize: Size.fromHeight(60)),
-                backgroundColor: AppColors.mainBlue,
+                appBar: CustomAppBar(
+                  leading: BackwardButton(),
+                  title: Text(widget.dialogModel.title),
+                ),
+                backgroundColor: AppColors.background,
                 body: Column(
                   children: <Widget>[
                     Expanded(
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(44),
-                                topRight: Radius.circular(44)),
-                            child: Container(
-                                color: Colors.white,
-                                child: BlocBuilder(
-                                    bloc: widget.bloc,
-                                    builder: (BuildContext context,
-                                        ConversationState state) {
-                                      // print('state:');
-                                      // print(state);
-                                      if (state is MessagesList) {
-                                        //print(state.messages);
-                                        return ListView.builder(
-                                            reverse: true,
-                                            controller: _controller,
-                                            itemCount:
-                                                state.messages.length + 1,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              if (index !=
-                                                  state.messages.length) {
-                                                return Wrapper(
-                                                  message:
-                                                      state.messages[index],
-                                                  withPhoto: true,
-                                                  photoUrl: widget
-                                                      .dialogModel.avatarUrl,
-                                                );
-                                              }
-                                              return index % 12 != 0
-                                                  ? Offstage()
-                                                  : LoadingIndicator();
-                                            });
-                                      }
+                        child: Container(
+                            color: Colors.white,
+                            child: BlocBuilder(
+                                bloc: widget.bloc,
+                                builder: (BuildContext context,
+                                    ConversationState state) {
+                                  if (state is MessagesList) {
+                                    return ListView.builder(
+                                        reverse: true,
+                                        controller: _controller,
+                                        itemCount: state.messages.length + 1,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          if (index != state.messages.length) {
+                                            return Wrapper(
+                                              message: state.messages[index],
+                                              withPhoto: true,
+                                              photoUrl:
+                                                  widget.dialogModel.avatarUrl,
+                                            );
+                                          }
+                                          return index % 12 != 0
+                                              ? Offstage()
+                                              : LoadingIndicator();
+                                        });
+                                  }
 
-                                      return Container();
-                                    })))),
+                                  return Container();
+                                }))),
                     MessageField(sendCallback: _sendButtonHandler)
                   ],
                 ))));
