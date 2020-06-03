@@ -67,7 +67,7 @@ class ConversationListBloc
     if (event is NewMessages) {
       var dialogs =
           await this.messagesService.getConversations(0, count: offset);
-      dialogs.forEach((element) {print(element.lastMessage);});
+      //dialogs.forEach((element) {print(element.lastMessage);});
       yield ConversationList(dialogs);
     }
   }

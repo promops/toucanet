@@ -17,10 +17,9 @@ class ProfilesRepository {
 
   bool contains() {}
 
-  UserModel getById(int id) {
-    return _profiles.firstWhere((element) => element.id == id,
-        orElse: () => UserModel.empty());
-  }
+  UserModel getById(int id) =>
+      _profiles.firstWhere((element) => element.id == id,
+          orElse: () => UserModel.empty());
 
   void delete(int index) {
     // if (index < 0 && this._profiles.length < index) return;

@@ -39,8 +39,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>
 
     if (event is AuthBrowserErrorEvent) 
     {
-      print(this._authService.authUrl);
-      print(event.url);
       if (event.url == this._authService.authUrl) yield AuthErrorState();
     }
 

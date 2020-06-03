@@ -25,7 +25,6 @@ class VKAccountRemote
       'settings': json.encode({"msg": "on", "chat": "on", "friend": "on"})
     });
 
-    print(result);
   }
 
   Future<void> getPushSettings() async {
@@ -35,7 +34,6 @@ class VKAccountRemote
       'device_id': deviceId,
     });
 
-    print(result);
   }
 
   Future<void> setPushSettings() async {
@@ -49,7 +47,6 @@ class VKAccountRemote
       'settings': json.encode({"msg": "on", "chat": "on", "friend": "off"})
     });
 
-    print(result);
   }
 
   Future<void> unregisterDevice() async {
@@ -59,6 +56,5 @@ class VKAccountRemote
       'device_id': deviceId,
     });
 
-    print(result);
   }
 }

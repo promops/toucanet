@@ -21,10 +21,8 @@ class TextMessageWidget extends StatefulWidget implements MessageWidget {
 class _TextMessageWidgetState extends State<TextMessageWidget> {
   @override
   Widget build(BuildContext context) {
-    print(widget.message.attachments);
     if (widget.message.attachments.isNotEmpty) {
       var attach = widget.message.attachments[0];
-      print('++++++++++++');
       if (attach is Sticker) {
         return Image.network(attach.images[1].url);
       }

@@ -23,7 +23,6 @@ class _DialogListPageState extends State<DialogListPage> {
 
     final currentScroll = _controller.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      print(_controller.position.pixels);
       _dialogBloc.add(FetchDialogs());
     }
   }
