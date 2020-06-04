@@ -3,7 +3,8 @@ import 'package:toucanet/app/models/message_view_model.dart';
 import 'package:toucanet/data/objects/enums/dialog_types.dart';
 import 'package:toucanet/data/repositories/stored_interface.dart';
 
-class ConversationsRepository implements Stored {
+class ConversationsRepository {
+  //TODO Избавиться от синглтона
   static final ConversationsRepository _instance = ConversationsRepository._();
   ConversationsRepository._();
   factory ConversationsRepository() => _instance;
@@ -14,6 +15,7 @@ class ConversationsRepository implements Stored {
 
   get list => _conversationsList;
 
+  //Добавить беседу
   void addConversation<T>(T conversation) {
     if (conversation is ConversationViewModel)
       _conversationsList.add(conversation);
@@ -22,7 +24,7 @@ class ConversationsRepository implements Stored {
       _conversationsList..addAll(conversation);
   }
 
-  @override
+  //Добавить сообщение в беседу
   void addMessage(MessageViewModel message) {
     int _index = _conversationsList
         .indexWhere((element) => element.peerId == message.id);
@@ -45,27 +47,22 @@ class ConversationsRepository implements Stored {
     _conversationsList[_index].addMessage(message);
     _conversationsList[_index].lastMessage = message.text;
     _conversationsList[_index].unreadCount++;
+
+    if (this.onChange != null) this.onChange();
   }
 
-  @override
+  //Пометить все сообщения как прочитанные
+  void markAsRead(ConversationViewModel conversation) => _conversationsList
+      .firstWhere((element) => element.peerId == conversation.peerId)
+      .unreadCount = 0;
+
   List<ConversationViewModel> getConversations() {
-    // TODO: implement getConversations
-    throw UnimplementedError();
+    return this._conversationsList.take(10).toList();
   }
 
-  @override
-  MessageViewModel getMessages() {
-    // TODO: implement getMessages
-    throw UnimplementedError();
+  List<MessageViewModel> getMessages(int id) {
+    return _conversationsList
+        .firstWhere((element) => element.peerId == id)
+        .messages;
   }
-
-  // void update(ConversationViewModel conversation) {
-  //   if (_conversationsList.contains(conversation)) {
-  //     int index = _conversationsList.indexOf(conversation);
-  //     _conversationsList.replaceRange(index, index + 1, [conversation]);
-
-  //     if (this.onChange != null) this.onChange();
-  //   }
-  // }
-
 }

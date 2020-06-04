@@ -33,10 +33,10 @@ class ConversationViewModel extends Equatable {
 
   bool out;
 
-  List<MessageViewModel> _messages;
+  List<MessageViewModel> messages = [];
 
   void addMessage(MessageViewModel message) {
-    this._messages.add(message);
+    this.messages.add(message);
   }
 
   @override

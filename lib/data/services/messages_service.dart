@@ -1,3 +1,4 @@
+import 'package:toucanet/data/repositories/conversations_repository.dart';
 import 'package:toucanet/data/repositories/profiles_repository.dart';
 
 import '../../app/models/conversation_view_model.dart';
@@ -14,7 +15,7 @@ const String _kDefaultUrl =
 class MessagesService {
   final VKMessagesRemote messagesRemote;
 
-  Stream<dynamic> get onMessage => this.messagesRemote.vk.longpoll.stream;
+  //Stream<dynamic> get onMessage => this.messagesRemote.vk.longpoll.stream;
 
   MessagesService(this.messagesRemote);
 
@@ -29,13 +30,17 @@ class MessagesService {
     ProfilesRepository().add(response.profiles);
 
     for (var item in response.items) {
-
       //Конвертим дату из unixtime и прибавляем часовой пояс
       DateTime _messageDate =
-          DateTime.fromMillisecondsSinceEpoch(item.lastMessage.date * 1000).add(Duration(hours: 3));
+          DateTime.fromMillisecondsSinceEpoch(item.lastMessage.date * 1000)
+              .add(Duration(hours: 3));
 
-      String _hour = _messageDate.hour < 10 ? '0${_messageDate.hour}' : '${_messageDate.hour}';
-      String _minute = _messageDate.minute < 10 ? '0${_messageDate.minute}' : '${_messageDate.minute}';
+      String _hour = _messageDate.hour < 10
+          ? '0${_messageDate.hour}'
+          : '${_messageDate.hour}';
+      String _minute = _messageDate.minute < 10
+          ? '0${_messageDate.minute}'
+          : '${_messageDate.minute}';
 
       if (item.conversation.peer.type == DialogTypes.chat) {
         dialogModels.add(ConversationViewModel(
@@ -48,7 +53,6 @@ class MessagesService {
           peerId: item.conversation.peer.id,
           type: DialogTypes.chat,
         ));
-        
       } else {
         UserModel sender = response.profiles.firstWhere(
             (user) => user.id == item.conversation.peer.id,
@@ -67,6 +71,7 @@ class MessagesService {
     }
 
     //ConversationsRepository().add(dialogModels);
+    ConversationsRepository().addConversation(dialogModels);
 
     return dialogModels;
   }
@@ -88,6 +93,31 @@ class MessagesService {
           attachments: message.attachments));
     }
 
+    messagesList
+        .forEach((element) => ConversationsRepository().addMessage(element));
+
+  
+
     return messagesList;
+  }
+
+  void initLonpull() {
+    this.messagesRemote.vk.longpoll.stream.listen((event) {
+      Message message = Message.fromJson(event);
+
+      print(event);
+
+      ConversationsRepository().addMessage(MessageViewModel(
+          senderAvatarUrl: ProfilesRepository().getById(message.id).photo50,
+          out: message.out == 1 ? false : true,
+          id: message.fromId,
+          text: message.text,
+          date: message.date,
+          attachments: message.attachments));
+
+          print(ConversationsRepository().getMessages(message.fromId));
+    });
+
+    
   }
 }

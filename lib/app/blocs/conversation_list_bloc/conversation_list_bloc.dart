@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:toucanet/app/models/conversation_view_model.dart';
+import 'package:toucanet/data/repositories/conversations_repository.dart';
 
 import '../../../data/services/messages_service.dart';
 
@@ -19,6 +20,11 @@ class ConversationListBloc
     //   //TODO Проверка нужна на сообщение
     //   this.add(NewMessages());
     // });
+
+    this.messagesService.initLonpull();
+
+    ConversationsRepository().onChange = ()=> this.add(NewMessages());
+
   }
 
   @override
@@ -50,25 +56,26 @@ class ConversationListBloc
   ) async* {
     final currentState = state;
 
+    // if (event is FetchDialogs) {
+
+    //   yield ConversationList((currentState is Loading
+    //           ? List<ConversationViewModel>()
+    //           : (currentState as ConversationList).dialogs) +
+    //       await this.messagesService.getConversations(offset));
+    //   offset += 10;
+    // }
+
     if (event is FetchDialogs) {
-      //   List<Conversation> list =
-      //       await VKMessagesRemote(AccountsRepository().current.token)
-      //           .getConversations(event.offset);
-
-      //   yield DialogList(list);
-
-      yield ConversationList((currentState is Loading
-              ? List<ConversationViewModel>()
-              : (currentState as ConversationList).dialogs) +
-          await this.messagesService.getConversations(offset));
-      offset += 10;
+      await this.messagesService.getConversations(0);
+      yield ConversationList(ConversationsRepository().getConversations());
     }
 
     if (event is NewMessages) {
-      var dialogs =
-          await this.messagesService.getConversations(0, count: offset);
+      // var dialogs =
+      //     await this.messagesService.getConversations(0, count: offset);
       //dialogs.forEach((element) {print(element.lastMessage);});
-      yield ConversationList(dialogs);
+     yield ConversationList(List.from(ConversationsRepository().getConversations()));
+
     }
   }
 }

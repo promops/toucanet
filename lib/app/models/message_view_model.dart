@@ -20,4 +20,7 @@ class MessageViewModel {
   final int id;
 
   final List<Attachment> attachments;
+
+  @override
+  String toString() => '$text';
 }
