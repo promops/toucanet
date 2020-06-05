@@ -14,6 +14,7 @@ part 'conversation_list_state.dart';
 class ConversationListBloc
     extends Bloc<ConversationsListEvent, ConversationListState> {
   final MessagesService messagesService;
+  var messagesList = [];
 
   ConversationListBloc(this.messagesService) {
     // this.messagesService.onMessage.listen((event) {
@@ -23,8 +24,7 @@ class ConversationListBloc
 
     this.messagesService.initLonpull();
 
-    ConversationsRepository().onChange = ()=> this.add(NewMessages());
-
+    ConversationsRepository().onChange = () => this.add(NewMessages());
   }
 
   @override
@@ -66,16 +66,16 @@ class ConversationListBloc
     // }
 
     if (event is FetchDialogs) {
-      await this.messagesService.getConversations(0);
-      yield ConversationList(ConversationsRepository().getConversations());
+     await this.messagesService.getConversations(0);
+          messagesList = ConversationsRepository().getConversations();
+      yield ConversationList(messagesList);
     }
 
     if (event is NewMessages) {
-      // var dialogs =
-      //     await this.messagesService.getConversations(0, count: offset);
-      //dialogs.forEach((element) {print(element.lastMessage);});
-     yield ConversationList(List.from(ConversationsRepository().getConversations()));
-
+      print('new messages');
+      //print(ConversationsRepository().getConversations()[0].lastMessage);
+     messagesList =  ConversationsRepository().getConversations();
+     yield ConversationList(messagesList);
     }
   }
 }

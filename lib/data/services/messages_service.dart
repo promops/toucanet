@@ -46,6 +46,7 @@ class MessagesService {
         dialogModels.add(ConversationViewModel(
           lastMessage: item.lastMessage.text,
           lastMessageDate: '$_hour:$_minute',
+          lastMessageDateNumber: item.lastMessage.date,
           avatarUrl: _kDefaultUrl,
           title: '${item.conversation.chatSettings.title}',
           out: item.conversation.chatSettings.state == 'in' ? false : true,
@@ -61,6 +62,7 @@ class MessagesService {
         dialogModels.add(ConversationViewModel(
             lastMessage: item.lastMessage.text,
             lastMessageDate: '$_hour:$_minute',
+            lastMessageDateNumber: item.lastMessage.date,
             avatarUrl: sender.photo100,
             peerId: sender.id,
             online: sender.online == 1 ? true : false,
@@ -96,8 +98,6 @@ class MessagesService {
     messagesList
         .forEach((element) => ConversationsRepository().addMessage(element));
 
-  
-
     return messagesList;
   }
 
@@ -107,17 +107,8 @@ class MessagesService {
 
       print(event);
 
-      ConversationsRepository().addMessage(MessageViewModel(
-          senderAvatarUrl: ProfilesRepository().getById(message.id).photo50,
-          out: message.out == 1 ? false : true,
-          id: message.fromId,
-          text: message.text,
-          date: message.date,
-          attachments: message.attachments));
+      ConversationsRepository().setLastMessage(message.text, message.fromId, message.date);
 
-          print(ConversationsRepository().getMessages(message.fromId));
     });
-
-    
   }
 }

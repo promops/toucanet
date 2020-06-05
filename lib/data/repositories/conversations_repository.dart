@@ -51,6 +51,21 @@ class ConversationsRepository {
     if (this.onChange != null) this.onChange();
   }
 
+  void setLastMessage(String text, int id, int newDate) {
+    int _index =
+        _conversationsList.indexWhere((element) => element.peerId == id);
+
+    if (_index < 0) throw UnimplementedError();
+
+    _conversationsList[_index].lastMessage = text;
+    _conversationsList[_index].lastMessageDateNumber = newDate;
+
+    _conversationsList.sort(
+        (a, b) => b.lastMessageDateNumber.compareTo(a.lastMessageDateNumber));
+    print('on change');
+    if (this.onChange != null) this.onChange();
+  }
+
   //Пометить все сообщения как прочитанные
   void markAsRead(ConversationViewModel conversation) => _conversationsList
       .firstWhere((element) => element.peerId == conversation.peerId)

@@ -6,7 +6,7 @@ abstract class ConversationListState extends Equatable {
 
 
 class ConversationList extends ConversationListState {
-  ConversationList(this.dialogs);
+  const ConversationList(this.dialogs);
 
   final List<ConversationViewModel> dialogs;
 

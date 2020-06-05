@@ -11,6 +11,7 @@ class ConversationViewModel extends Equatable {
     this.type,
     this.unreadCount = 0,
     this.lastMessageDate,
+    this.lastMessageDateNumber,
     @required this.peerId,
     @required this.online,
     @required this.out,
@@ -22,6 +23,8 @@ class ConversationViewModel extends Equatable {
   String lastMessage;
 
   String lastMessageDate;
+
+  int lastMessageDateNumber;
 
   int peerId;
 
@@ -43,5 +46,5 @@ class ConversationViewModel extends Equatable {
   String toString() => '$title $lastMessage';
 
   @override
-  List<Object> get props => [peerId];
+  List<Object> get props => [peerId, lastMessage, lastMessageDateNumber];
 }
