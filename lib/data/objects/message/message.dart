@@ -13,13 +13,15 @@ class Message {
       this.readState,
       this.text,
       this.out,
-      this.attachments});
+      this.attachments,
+      this.peerId});
 
   final int id;
   final int date;
 
   final int fromId;
   final int readState;
+  final int peerId;
   final String text;
 
   final List<Attachment> attachments;
@@ -43,13 +45,13 @@ class Message {
           attachmentsList.add(Photo.fromJson(attach[AttachmentType.photo]));
       }
     }
-
     return Message(
         id: json['id'],
         date: json['date'],
         fromId: json['from_id'],
         text: json['text'],
         out: json['out'],
+        peerId: json['peer_id'],
         attachments: attachmentsList);
   }
 

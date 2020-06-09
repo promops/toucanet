@@ -107,7 +107,7 @@ class MessagesService {
 
       print(event);
 
-      ConversationsRepository().setLastMessage(message.text, message.fromId, message.date);
+      ConversationsRepository().setLastMessage(message.text,  message.out == 1 ? message.peerId: message.fromId, message.date);
 
     });
   }

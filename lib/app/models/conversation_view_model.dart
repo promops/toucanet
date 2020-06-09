@@ -46,5 +46,5 @@ class ConversationViewModel extends Equatable {
   String toString() => '$title $lastMessage';
 
   @override
-  List<Object> get props => [peerId, lastMessage, lastMessageDateNumber];
+  List<Object> get props => [peerId, lastMessage];
 }
