@@ -4,9 +4,8 @@ abstract class ConversationListState extends Equatable {
   const ConversationListState();
 }
 
-
 class ConversationList extends ConversationListState {
-  const ConversationList(this.dialogs);
+  ConversationList(this.dialogs);
 
   final List<ConversationViewModel> dialogs;
 
@@ -15,6 +14,11 @@ class ConversationList extends ConversationListState {
 }
 
 class Loading extends ConversationListState {
+  @override
+  List<Object> get props => [];
+}
+
+class Asd extends ConversationListState {
   @override
   List<Object> get props => [];
 }

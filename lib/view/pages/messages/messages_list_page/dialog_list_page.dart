@@ -22,9 +22,9 @@ class _DialogListPageState extends State<DialogListPage> {
     final maxScroll = _controller.position.maxScrollExtent;
 
     final currentScroll = _controller.position.pixels;
-    if (maxScroll - currentScroll <= _scrollThreshold) {
-      _dialogBloc.add(FetchDialogs());
-    }
+    // if (maxScroll - currentScroll <= _scrollThreshold) {
+    //   _dialogBloc.add(FetchDialogs());
+    // }
   }
 
   @override
@@ -33,17 +33,24 @@ class _DialogListPageState extends State<DialogListPage> {
     _dialogBloc =
         ConversationListBloc(RepositoryProvider.of<MessagesService>(context));
     _controller.addListener(_onScroll);
-    _dialogBloc.add(FetchDialogs());
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Починить контроллер для скролла
+    _dialogBloc.add(FetchDialogs());
     return Scaffold(
-      backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background,
         body: BlocBuilder(
             bloc: _dialogBloc,
+            condition: (ConversationListState prevState,
+                ConversationListState currentState) {
+              print(prevState);
+              print('---');
+              print(currentState);
+              return true;
+            },
             builder: (BuildContext context, ConversationListState state) {
               print(state);
               if (state is ConversationList) {
@@ -53,8 +60,7 @@ class _DialogListPageState extends State<DialogListPage> {
                     itemCount: state.dialogs.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       if (index != state.dialogs.length) {
-                        return DialogWidget(
-                          dialogModel: state.dialogs[index]);
+                        return DialogWidget(dialogModel: state.dialogs[index]);
                       }
                       return index % 10 != 0 ? Offstage() : LoadingIndicator();
                     });

@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:toucanet/app/models/message_view_model.dart';
-import 'package:toucanet/data/objects/message/message.dart';
 
 class ConversationViewModel extends Equatable {
   ConversationViewModel({

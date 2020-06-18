@@ -66,16 +66,18 @@ class ConversationListBloc
     // }
 
     if (event is FetchDialogs) {
-     await this.messagesService.getConversations(0);
-          messagesList = ConversationsRepository().getConversations();
+      await this.messagesService.getConversations(0);
+      messagesList = ConversationsRepository().getConversations();
       yield ConversationList(messagesList);
     }
 
     if (event is NewMessages) {
       print('new messages');
       //print(ConversationsRepository().getConversations()[0].lastMessage);
-     messagesList =  ConversationsRepository().getConversations();
-     yield ConversationList(messagesList);
+      messagesList = ConversationsRepository().getConversations();
+     // print(messagesList);
+      yield ConversationList(messagesList);
+      //yield Asd();
     }
   }
 }
