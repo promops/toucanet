@@ -21,7 +21,7 @@ dependencies:
   bloc: ^4.0.0
   rxdart: ^0.24.0
   equatable: ^1.1.1
-  flutter_bloc: ^4.0.0
+  flutter_bloc: ^4.0.1
 
   flutter_keychain: ^1.0.0
   cached_network_image: ^2.2.0

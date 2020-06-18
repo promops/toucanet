@@ -10,7 +10,7 @@ class ConversationList extends ConversationListState {
   final List<ConversationViewModel> dialogs;
 
   @override
-  List<Object> get props => [dialogs];
+  List<Object> get props => [Random().nextInt(100)];
 }
 
 class Loading extends ConversationListState {
