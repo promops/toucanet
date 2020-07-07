@@ -88,15 +88,16 @@ class MessagesService {
     for (var message in messages) {
       messagesList.add(MessageViewModel(
           senderAvatarUrl: ProfilesRepository().getById(message.id).photo50,
-          out: message.out == 1 ? false : true,
+          out: message.out != 1,
           id: message.fromId,
           text: message.text,
           date: message.date,
           attachments: message.attachments));
     }
 
-    messagesList
-        .forEach((element) => ConversationsRepository().addMessage(element));
+    // messagesList
+    //     .forEach((element) => ConversationsRepository().addMessage(element));
+
 
     return messagesList;
   }
@@ -107,8 +108,8 @@ class MessagesService {
 
       print(event);
 
-      ConversationsRepository().setLastMessage(message.text,  message.out == 1 ? message.peerId: message.fromId, message.date);
-
+      ConversationsRepository().setLastMessage(message.text,
+          message.out == 1 ? message.peerId : message.fromId, message.date);
     });
   }
 }

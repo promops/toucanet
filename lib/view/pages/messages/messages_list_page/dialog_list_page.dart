@@ -46,15 +46,15 @@ class _DialogListPageState extends State<DialogListPage> {
             bloc: _dialogBloc,
             condition: (ConversationListState prevState,
                 ConversationListState currentState) {
-              print(prevState);
-              print('---');
-              print(currentState);
+              // print(prevState);
+              // print('---');
+              // print(currentState);
               return true;
             },
             builder: (BuildContext context, ConversationListState state) {
-              print(state);
+              //print(state);
               if (state is ConversationList) {
-                print(state.dialogs[0]);
+               // print(state.dialogs[0]);
                 return ListView.builder(
                     controller: _controller,
                     itemCount: state.dialogs.length + 1,

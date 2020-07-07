@@ -13,16 +13,18 @@ import '../../../widgets/loading_indicator.dart';
 import 'message_field.dart';
 
 class DialogPage extends StatefulWidget {
-  const DialogPage({Key key, this.dialogModel, this.bloc}) : super(key: key);
+  const DialogPage({
+    Key key,
+    this.dialogModel,
+  }) : super(key: key);
   final ConversationViewModel dialogModel;
-  final ConversationBloc bloc;
 
   @override
   _DialogPageState createState() => _DialogPageState();
 }
 
 class _DialogPageState extends State<DialogPage> {
-  // ConversationBloc _conversationBloc;
+  ConversationBloc _conversationBloc;
   final _scrollThreshold = 400.0;
 
   ScrollController _controller;
@@ -31,18 +33,18 @@ class _DialogPageState extends State<DialogPage> {
     final maxScroll = _controller.position.maxScrollExtent;
     final currentScroll = _controller.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      widget.bloc.add(FetchMessages(widget.dialogModel.peerId));
+      _conversationBloc.add(FetchMessages(widget.dialogModel.peerId));
     }
   }
 
   @override
   void initState() {
-    // _conversationBloc = ConversationBloc();
+     _conversationBloc = ConversationBloc(RepositoryProvider.of(context));
 
     _controller = ScrollController();
     _controller.addListener(_onScroll);
 
-    widget.bloc.add(FetchMessages(widget.dialogModel.peerId));
+    _conversationBloc.add(FetchMessages(widget.dialogModel.peerId));
 
     super.initState();
   }
@@ -65,46 +67,44 @@ class _DialogPageState extends State<DialogPage> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-                appBar: CustomAppBar(
-                  leading: BackwardButton(),
-                  title: Text(widget.dialogModel.title),
-                ),
-                backgroundColor: AppColors.background,
-                body: Column(
-                  children: <Widget>[
-                    Expanded(
-                        child: Container(
-                            color: Colors.white,
-                            child: BlocBuilder(
-                                bloc: widget.bloc,
-                                builder: (BuildContext context,
-                                    ConversationState state) {
-                                  if (state is MessagesList) {
-                                    return ListView.builder(
-                                        reverse: true,
-                                        controller: _controller,
-                                        itemCount: state.messages.length + 1,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          if (index != state.messages.length) {
-                                            return Wrapper(
-                                              message: state.messages[index],
-                                              withPhoto: true,
-                                              photoUrl:
-                                                  widget.dialogModel.avatarUrl,
-                                            );
-                                          }
-                                          return index % 12 != 0
-                                              ? Offstage()
-                                              : LoadingIndicator();
-                                        });
+    return Scaffold(
+        appBar: CustomAppBar(
+          leading: BackwardButton(),
+          title: Text(widget.dialogModel.title),
+        ),
+        backgroundColor: AppColors.background,
+        body: Column(
+          children: <Widget>[
+            Expanded(
+                child: Container(
+                    color: Colors.white,
+                    child: BlocBuilder(
+                        bloc: _conversationBloc,
+                        builder:
+                            (BuildContext context, ConversationState state) {
+                          if (state is MessagesList) {
+                            return ListView.builder(
+                                reverse: true,
+                                controller: _controller,
+                                itemCount: state.messages.length + 1,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index != state.messages.length) {
+                                    return Wrapper(
+                                      message: state.messages[index],
+                                      withPhoto: true,
+                                      photoUrl: widget.dialogModel.avatarUrl,
+                                    );
                                   }
+                                  return index % 12 != 0
+                                      ? Offstage()
+                                      : LoadingIndicator();
+                                });
+                          }
 
-                                  return Container();
-                                }))),
-                    MessageField(sendCallback: _sendButtonHandler)
-                  ],
-                ));
+                          return Container();
+                        }))),
+            MessageField(sendCallback: _sendButtonHandler)
+          ],
+        ));
   }
 }

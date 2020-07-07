@@ -27,7 +27,7 @@ class _DialogWidgetState extends State<DialogWidget> {
             MaterialPageRoute(
                 builder: (BuildContext context) => DialogPage(
                       dialogModel: widget.dialogModel,
-                      bloc: BlocProvider.of<ConversationBloc>(context),
+                      //bloc: BlocProvider.of<ConversationBloc>(context),
                     ))),
         child: Padding(
           padding: const EdgeInsets.only(
