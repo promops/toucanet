@@ -19,7 +19,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   MessageViewModel currentMessage;
   MessagesService messagesService;
 
-  ConversationBloc(this.messagesService) {
+  ConversationBloc(this.messagesService) : super(Loading());
     // this.messagesRemote.onMessage.listen((event)
     // {
     //   currentMessage = Message.fromJson(event);
@@ -28,7 +28,7 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
 
     //this.messagesService.initLonpull();
     //ConversationsRepository().onChange = () => this.add(NewMessage());
-  }
+  
 
   @override
   ConversationState get initialState => Loading();

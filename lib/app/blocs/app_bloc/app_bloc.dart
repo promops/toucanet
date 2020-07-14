@@ -12,10 +12,10 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthService _authService;
 
-  AppBloc(this._authService);
+  AppBloc(this._authService) : super(AppUninitializedState());
 
-  @override
-  AppState get initialState => AppUninitializedState();
+  // @override
+  // AppState get initialState => AppUninitializedState();
 
   @override
   Stream<AppState> mapEventToState(AppEvent event) async* {

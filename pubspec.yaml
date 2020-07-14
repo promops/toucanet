@@ -18,10 +18,10 @@ dependencies:
   audio_service: ^0.7.2
   photo_view: ^0.9.2
 
-  bloc: ^4.0.0
+  bloc: ^5.0.1
   rxdart: ^0.24.0
   equatable: ^1.1.1
-  flutter_bloc: ^4.0.1
+  flutter_bloc: ^5.0.1
 
   flutter_keychain: ^1.0.0
   cached_network_image: ^2.2.0

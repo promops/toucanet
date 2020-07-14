@@ -14,10 +14,10 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final VKUsersRemote usersRemote;
 
-  UserBloc(this.usersRemote);
+  UserBloc(this.usersRemote) : super(UserInitial());
 
-  @override
-  UserState get initialState => UserInitial();
+  // @override
+  // UserState get initialState => UserInitial();
 
   @override
   Stream<UserState> mapEventToState(

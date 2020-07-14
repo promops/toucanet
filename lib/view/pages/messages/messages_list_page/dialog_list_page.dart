@@ -44,13 +44,6 @@ class _DialogListPageState extends State<DialogListPage> {
         backgroundColor: AppColors.background,
         body: BlocBuilder(
             bloc: _dialogBloc,
-            condition: (ConversationListState prevState,
-                ConversationListState currentState) {
-              // print(prevState);
-              // print('---');
-              // print(currentState);
-              return true;
-            },
             builder: (BuildContext context, ConversationListState state) {
               //print(state);
               if (state is ConversationList) {

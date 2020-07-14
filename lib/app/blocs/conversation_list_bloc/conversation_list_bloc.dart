@@ -17,7 +17,7 @@ class ConversationListBloc
   final MessagesService messagesService;
   var messagesList = [];
 
-  ConversationListBloc(this.messagesService) {
+  ConversationListBloc(this.messagesService) : super(Loading()) {
     // this.messagesService.onMessage.listen((event) {
     //   //TODO Проверка нужна на сообщение
     //   this.add(NewMessages());
@@ -76,7 +76,7 @@ class ConversationListBloc
       print('new messages');
       //print(ConversationsRepository().getConversations()[0].lastMessage);
       messagesList = ConversationsRepository().getConversations();
-     // print(messagesList);
+      // print(messagesList);
       yield ConversationList(messagesList);
       //yield Asd();
     }
