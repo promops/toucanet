@@ -73,7 +73,7 @@ class Wrapper extends StatelessWidget {
   }
 
   void createAttachmentList() {
-    var attachList = this.message.attachments;
+    var attachList = this.message.attachments ?? [];
 
     if (attachList.isEmpty) return;
 

@@ -16,8 +16,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this.usersRemote) : super(UserInitial());
 
-  // @override
-  // UserState get initialState => UserInitial();
 
   @override
   Stream<UserState> mapEventToState(

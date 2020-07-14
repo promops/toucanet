@@ -18,11 +18,6 @@ class ConversationListBloc
   var messagesList = [];
 
   ConversationListBloc(this.messagesService) : super(Loading()) {
-    // this.messagesService.onMessage.listen((event) {
-    //   //TODO Проверка нужна на сообщение
-    //   this.add(NewMessages());
-    // });
-
     this.messagesService.initLonpull();
 
     ConversationsRepository().onChange = () => this.add(NewMessages());

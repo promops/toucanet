@@ -1,14 +1,13 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:toucanet/app/models/message_view_model.dart';
-import 'package:toucanet/data/objects/message/message.dart';
-import 'package:toucanet/data/repositories/conversations_repository.dart';
-import 'package:toucanet/data/services/messages_service.dart';
 
-import '../../../data/remotes/vk_messages_remote.dart';
+import 'package:toucanet/data/services/messages_service.dart';
+import 'package:toucanet/data/repositories/conversations_repository.dart';
 
 part 'conversation_event.dart';
 part 'conversation_state.dart';
@@ -19,19 +18,10 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
   MessageViewModel currentMessage;
   MessagesService messagesService;
 
-  ConversationBloc(this.messagesService) : super(Loading());
-    // this.messagesRemote.onMessage.listen((event)
-    // {
-    //   currentMessage = Message.fromJson(event);
-    //   this.add(NewMessage());
-    // });
+  ConversationBloc(this.messagesService) : super(Loading()) {
+    ConversationsRepository().onChange = () => this.add(NewMessage());
+  }
 
-    //this.messagesService.initLonpull();
-    //ConversationsRepository().onChange = () => this.add(NewMessage());
-  
-
-  @override
-  ConversationState get initialState => Loading();
 
   @override
   Stream<Transition<ConversationEvent, ConversationState>> transformEvents(
@@ -62,24 +52,8 @@ class ConversationBloc extends Bloc<ConversationEvent, ConversationState> {
       if (event.changeOffset) offset += 12;
     }
 
-    // if (event is FetchMessages) {
-    //   currentId = event.userId;
-    //   yield MessagesList((state is Loading
-    //           ? List<MessageViewModel>()
-    //           : (state as MessagesList).messages) +
-    //       ConversationsRepository().getMessages(event.userId));
-    
-    // }
-
     if (event is NewMessage) {
-      // if (currentMessage.id == currentId) {
-        yield MessagesList([currentMessage] + (state as MessagesList).messages);
-     //}
-    }
-
-    if (event is Reset) {
-      offset = 0;
-      yield initialState;
+      yield MessagesList(await messagesService.getHistory(0, currentId));
     }
   }
 }

@@ -81,6 +81,7 @@ class MessagesService {
   ///Вернет список сообщений из диалога
   Future<List<MessageViewModel>> getHistory(int offset, int userId) async {
     List<MessageViewModel> messagesList = [];
+    print(offset);
 
     List<Message> messages =
         await this.messagesRemote.getHistory(offset, userId);

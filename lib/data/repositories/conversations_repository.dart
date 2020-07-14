@@ -52,16 +52,13 @@ class ConversationsRepository {
   // }
 
   void setLastMessage(String text, int id, int newDate) {
-    print(id);
     int _index =
         _conversationsList.indexWhere((element) => element.peerId == id);
 
     if (_index < 0) {
-      print('no index');
       throw UnimplementedError();
     }
 
-    print(_index);
     _conversationsList[_index].lastMessage = text;
     _conversationsList[_index].lastMessageDateNumber = newDate;
 

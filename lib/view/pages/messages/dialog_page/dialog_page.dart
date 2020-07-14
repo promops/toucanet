@@ -39,7 +39,7 @@ class _DialogPageState extends State<DialogPage> {
 
   @override
   void initState() {
-     _conversationBloc = ConversationBloc(RepositoryProvider.of(context));
+    _conversationBloc = ConversationBloc(RepositoryProvider.of(context));
 
     _controller = ScrollController();
     _controller.addListener(_onScroll);

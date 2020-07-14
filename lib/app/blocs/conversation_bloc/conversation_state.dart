@@ -14,7 +14,7 @@ class MessagesList extends ConversationState {
   final List<MessageViewModel> messages;
 
   @override
-  List<Object> get props => [messages];
+  List<Object> get props => [Random().nextInt(100)];
 }
 
 class Loading extends ConversationState {
