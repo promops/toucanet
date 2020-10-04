@@ -2,7 +2,10 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'peer_model.g.dart';
 
-@JsonSerializable(nullable: false)
+//flutter packages pub run build_runner build
+//--delete-conflicting-outputs
+
+@JsonSerializable(explicitToJson: true)
 class PeerModel {
   PeerModel({this.id, this.type, this.localId});
 
@@ -12,5 +15,9 @@ class PeerModel {
   final int id;
 
   final String type;
-  
+
+  factory PeerModel.fromJson(Map<String, dynamic> json) =>
+      _$PeerModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PeerModelToJson(this);
 }

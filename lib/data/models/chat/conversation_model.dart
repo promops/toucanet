@@ -5,10 +5,10 @@ import 'peer_model.dart';
 
 part 'conversation_model.g.dart';
 
-//flutter packages pub run build_runner build 
+//flutter packages pub run build_runner build
 //--delete-conflicting-outputs
 
-@JsonSerializable(nullable: false, explicitToJson: true)
+@JsonSerializable(explicitToJson: true)
 class ConversationModel {
   ConversationModel(
       {this.peer,
@@ -25,6 +25,12 @@ class ConversationModel {
   final int lastMessageId;
   @JsonKey(name: 'out_read')
   final int outRead;
+  //Настройки чата.
   @JsonKey(name: 'chat_settings')
   final ChatSettingsModel chatSettings;
+
+  factory ConversationModel.fromJson(Map<String, dynamic> json) =>
+      _$ConversationModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ConversationModelToJson(this);
 }

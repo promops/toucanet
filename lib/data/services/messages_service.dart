@@ -3,10 +3,6 @@ import 'package:toucanet/data/repositories/profiles_repository.dart';
 
 import '../../app/models/conversation_view_model.dart';
 import '../../app/models/message_view_model.dart';
-import '../objects/enums/dialog_types.dart';
-import '../objects/message/message.dart';
-import '../objects/message/response.dart';
-import '../objects/user/user_model.dart';
 import '../remotes/vk_messages_remote.dart';
 
 const String _kDefaultUrl =
@@ -98,7 +94,6 @@ class MessagesService {
 
     // messagesList
     //     .forEach((element) => ConversationsRepository().addMessage(element));
-
 
     return messagesList;
   }

@@ -1,6 +1,6 @@
 import 'package:toucanet/core/vk/vk.dart';
+import 'package:toucanet/data/models/user/account_model.dart';
 
-import './../objects/account.dart';
 import './../repositories/accounts_repository.dart';
 
 class AuthService {

@@ -5,6 +5,9 @@ import 'package:toucanet/data/models/chat/photo_model.dart';
 
 part 'chat_settings_model.g.dart';
 
+//flutter packages pub run build_runner build
+//--delete-conflicting-outputs
+
 @JsonSerializable(nullable: false, explicitToJson: true)
 class ChatSettingsModel {
   ChatSettingsModel({
@@ -28,4 +31,9 @@ class ChatSettingsModel {
   final bool isGroupChannel;
   @JsonKey(name: 'active_ids ')
   final List<int> activeIds;
+
+  factory ChatSettingsModel.fromJson(Map<String, dynamic> json) =>
+      _$ChatSettingsModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChatSettingsModelToJson(this);
 }

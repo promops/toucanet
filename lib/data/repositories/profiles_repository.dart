@@ -1,4 +1,5 @@
-import '../objects/user/user_model.dart';
+import 'package:toucanet/data/models/user/user_model.dart';
+
 
 class ProfilesRepository {
   static final ProfilesRepository _instance = ProfilesRepository._();
@@ -19,7 +20,7 @@ class ProfilesRepository {
 
   UserModel getById(int id) =>
       _profiles.firstWhere((element) => element.id == id,
-          orElse: () => UserModel.empty());
+          orElse: () => null);
 
   void delete(int index) {
     // if (index < 0 && this._profiles.length < index) return;
