@@ -1,4 +1,4 @@
-# toucanet_app
+# toucanet
 
 A new Flutter project.
 

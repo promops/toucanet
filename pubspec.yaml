@@ -1,20 +1,28 @@
 name: toucanet
-description: Simple vk client
-
 version: 1.0.0+1
+publish_to: 'none' 
+description: A new Flutter project.
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
-  cupertino_icons: ^0.1.2
+  intl: ^0.16.1
+  equatable: ^1.2.5
+  flutter_bloc: ^6.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  mockito: ^4.0.0
+  bloc_test: ^7.0.4
+
 flutter:
+  generate: true
   uses-material-design: true

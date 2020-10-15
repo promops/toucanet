@@ -1,15 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'di.dart';
+import 'internal/application.dart';
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'toucanet',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Container());
-  }
+void main() {
+  runZonedGuarded<void>(
+    _run,
+    (error, stackTrace) => print(error),
+  );
+}
+
+Future<void> _run() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const Injector(app: Toucanet()));
 }
