@@ -6,8 +6,8 @@ import '../settings.dart';
 import 'scopes/initialization.dart';
 import 'scopes/authentication.dart';
 
-// import 'view/screens/auth/auth_screen.dart';
-// import 'view/screens/home/home_screen.dart';
+import '../presentation/screens/auth/auth_screen.dart';
+// import '../presentation/screens/home/home_screen.dart';
 import '../presentation/screens/splash/splash_screen.dart';
 
 class Toucanet extends StatelessWidget {
@@ -27,8 +27,8 @@ class Toucanet extends StatelessWidget {
       //
       home: InitializationScope(
         app: AuthenticationScope(
-          auth: Container(),
-          home: Container(),
+          auth: const AuthScreen(),
+          home: Container(color: Colors.green),
         ),
         initial: const SplashScreen(),
       ),

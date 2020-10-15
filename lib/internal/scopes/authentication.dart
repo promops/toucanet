@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// import '../../bloc/auth/auth_bloc.dart';
-// import '../../bloc/registration/registration_bloc.dart';
+import '../../bloc/auth/auth_bloc.dart';
 
 class AuthenticationScope extends StatelessWidget {
   final Widget auth;
@@ -11,26 +11,18 @@ class AuthenticationScope extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
-    // MultiBlocProvider(
-    //   providers: [
-    //     BlocProvider(
-    //       create: (context) => AuthBloc(RepositoryProvider.of(context)),
-    //     ),
-    //     BlocProvider(
-    //       create: (context) => RegistrationBloc(RepositoryProvider.of(context)),
-    //     ),
-    //   ],
-    //   child: BlocBuilder<AuthBloc, AuthState>(
-    //     builder: (context, state) {
-    //       switch (state.status) {
-    //         case AuthStatus.authenticated:
-    //           return home;
-    //         default:
-    //           return auth;
-    //       }
-    //     },
-    //   ),
-    // );
+    return BlocProvider(
+      create: (context) => AuthBloc(RepositoryProvider.of(context)),
+      child: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          switch (state.status) {
+            case AuthStatus.authenticated:
+              return home;
+            default:
+              return auth;
+          }
+        },
+      ),
+    );
   }
 }

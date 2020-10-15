@@ -16,6 +16,8 @@ dependencies:
   intl: ^0.16.1
   equatable: ^1.2.5
   flutter_bloc: ^6.0.5
+
+  webview_flutter: ^1.0.3
   flutter_secure_storage: ^3.3.5
 
 dev_dependencies:

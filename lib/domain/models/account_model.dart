@@ -10,10 +10,14 @@ class AccountModel {
         assert(created != null),
         assert(expiresIn != null);
 
-  bool get isValid =>
-      expiresIn > 0 &&
-      created + expiresIn * 1000 <= DateTime.now().millisecondsSinceEpoch;
+  bool get isAuth =>
+      token.isNotEmpty &&
+      (expiresIn == 0 ||
+          expiresIn > 0 &&
+              created + expiresIn * 1000 <=
+                  DateTime.now().millisecondsSinceEpoch);
 
   @override
-  String toString() => 'Account(id: $id, created: $created, token: $token)';
+  String toString() =>
+      'Account(id: $id, created: $created, token: $token, $expiresIn)';
 }

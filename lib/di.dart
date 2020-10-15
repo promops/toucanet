@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'domain/repositories/account_repository.dart';
 import 'data/repositories/account_repository_impl.dart';
 
+import 'domain/repositories/auth_repository.dart';
+import 'data/repositories/auth_repository_impl.dart';
+
 class Injector extends StatelessWidget {
   final Widget app;
 
@@ -15,6 +18,10 @@ class Injector extends StatelessWidget {
       providers: [
         RepositoryProvider<AccountRepository>(
           create: (context) => AccountRepositoryImpl(),
+        ),
+        RepositoryProvider<AuthRepository>(
+          create: (context) =>
+              AuthRepositoryImpl(RepositoryProvider.of(context)),
         ),
       ],
       child: app,
