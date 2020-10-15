@@ -102,7 +102,7 @@ linter:
     package_prefixed_library_names: true
     parameter_assignments: true
     prefer_asserts_in_initializer_lists: true
-    prefer_asserts_with_message: true
+    # prefer_asserts_with_message: true
     prefer_const_constructors: true
     prefer_const_constructors_in_immutables: true
     prefer_const_declarations: true
