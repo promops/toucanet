@@ -1,0 +1,13 @@
+name: toucanet_vk_sdk
+description: Toucanet VK SDK
+version: 0.0.1
+homepage: https://toucanet.app
+
+environment:
+  sdk: '>=2.10.0 <3.0.0'
+
+# dependencies:
+#   meta: ^1.2.3
+
+dev_dependencies:
+  test: ^1.14.4

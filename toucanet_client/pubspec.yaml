@@ -1,0 +1,35 @@
+name: toucanet
+version: 1.0.0+1
+publish_to: 'none' 
+description: A new Flutter project.
+
+environment:
+  sdk: ">=2.10.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  toucanet_vk_sdk:
+    path: ../toucanet_vk_sdk
+
+  uuid: ^2.2.2
+  intl: ^0.16.1
+  equatable: ^1.2.5
+  flutter_bloc: ^6.0.5
+
+  webview_flutter: ^1.0.3
+  flutter_secure_storage: ^3.3.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  mockito: ^4.0.0
+  bloc_test: ^7.0.4
+
+flutter:
+  generate: true
+  uses-material-design: true
