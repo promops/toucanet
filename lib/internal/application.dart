@@ -11,7 +11,7 @@ import '../presentation/screens/auth/auth_screen.dart';
 import '../presentation/screens/splash/splash_screen.dart';
 
 class Toucanet extends StatelessWidget {
-  const Toucanet({Key? key}) : super(key: key);
+  const Toucanet({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

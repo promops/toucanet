@@ -28,7 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
   String get authUrl => vkClient.auth.getAuthorizeUrl(scope: scope);
 
   @override
-  AccountModel? get current => accountRepository.current;
+  AccountModel get current => accountRepository.current;
 
   @override
   Future<void> auth(AccountModel account) async {

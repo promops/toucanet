@@ -11,10 +11,10 @@ class AccountRepositoryImpl implements AccountRepository {
   static const _keychain = 'account';
   static const _storage = FlutterSecureStorage();
 
-  AccountObject? _currentAccount;
+  AccountObject _currentAccount;
 
   @override
-  AccountModel? get current => _currentAccount?.toModel();
+  AccountModel get current => _currentAccount?.toModel();
 
   @override
   Future<void> load() async {

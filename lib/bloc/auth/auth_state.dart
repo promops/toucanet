@@ -12,7 +12,7 @@ class AuthState extends Equatable {
   final String authUrl;
   final AuthStatus status;
 
-  const AuthState._({required this.status, required this.authUrl});
+  const AuthState._({@required this.status, @required this.authUrl});
 
   const AuthState.unauthenticated(String url)
       : this._(status: AuthStatus.unauthenticated, authUrl: url);

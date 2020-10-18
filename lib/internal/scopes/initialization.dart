@@ -8,7 +8,7 @@ class InitializationScope extends StatelessWidget {
   final Widget initial;
 
   const InitializationScope(
-      {required this.app, required this.initial, Key? key})
+      {@required this.app, @required this.initial, Key key})
       : super(key: key);
 
   @override

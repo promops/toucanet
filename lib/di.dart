@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toucanet_vk_sdk/toucanet_vk_sdk.dart';
@@ -12,7 +13,7 @@ class Injector extends StatelessWidget {
   final Widget app;
   final VKClient client;
 
-  const Injector({required this.app, required this.client, Key? key})
+  const Injector({@required this.app, @required this.client, Key key})
       : super(key: key);
 
   @override

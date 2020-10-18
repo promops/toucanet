@@ -5,7 +5,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import '../../../bloc/auth/auth_bloc.dart';
 
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

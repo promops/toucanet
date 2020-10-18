@@ -6,7 +6,7 @@ abstract class AuthEvent extends Equatable {
 
   factory AuthEvent.logout() => _AuthLogoutEvent();
 
-  factory AuthEvent.browserUpdate({required String url}) =>
+  factory AuthEvent.browserUpdate({@required String url}) =>
       _AuthBrowserUpdateEvent(url: url);
 
   @override
@@ -16,7 +16,7 @@ abstract class AuthEvent extends Equatable {
 class _AuthBrowserUpdateEvent extends AuthEvent {
   final String url;
 
-  const _AuthBrowserUpdateEvent({required this.url});
+  const _AuthBrowserUpdateEvent({@required this.url});
 
   @override
   List<Object> get props => [url];

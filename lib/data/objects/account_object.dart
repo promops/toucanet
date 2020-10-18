@@ -8,7 +8,7 @@ class AccountObject implements JsonSerializer, ModelMapper<AccountModel> {
   final String token;
   final int expiresIn;
 
-  AccountObject(this.id, this.token, this.expiresIn, [int? created])
+  AccountObject(this.id, this.token, this.expiresIn, [int created])
       : created = created ?? DateTime.now().millisecondsSinceEpoch;
 
   factory AccountObject.fromJson(Map<String, dynamic> json) {

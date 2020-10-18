@@ -7,7 +7,7 @@ class AuthenticationScope extends StatelessWidget {
   final Widget auth;
   final Widget home;
 
-  const AuthenticationScope({required this.auth, required this.home, Key? key})
+  const AuthenticationScope({@required this.auth, @required this.home, Key key})
       : super(key: key);
 
   @override

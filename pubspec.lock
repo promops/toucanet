@@ -480,8 +480,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "44c5bc1c813fdec34609820e2d6eb4c0336c07be"
+      ref: master
+      resolved-ref: "8253eeed7deccfc04871d0770f6a1f254e19f0f2"
       url: "https://github.com/toucanet-app/toucanet_vk_sdk.git"
     source: git
     version: "0.0.1"

@@ -6,7 +6,7 @@ enum AppStatus { unknown, loaded }
 class AppState extends Equatable {
   final AppStatus status;
 
-  const AppState._({required this.status});
+  const AppState._({@required this.status});
 
   const AppState.loaded() : this._(status: AppStatus.loaded);
 
