@@ -1,1 +1,0 @@
-# Toucanet vk sdk

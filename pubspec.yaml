@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
 
   toucanet_vk_sdk:
-    path: ../toucanet_vk_sdk
+    git: https://github.com/toucanet-app/toucanet_vk_sdk.git
 
   uuid: ^2.2.2
   intl: ^0.16.1
