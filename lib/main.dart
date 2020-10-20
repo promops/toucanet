@@ -1,22 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'dart:async';
+import 'package:flutter/widgets.dart';
+import 'package:toucanet_vk_sdk/toucanet_vk_sdk.dart';
 
-import 'package:toucanet/app/application.dart';
+import 'di.dart';
+import 'settings.dart';
 
-import 'package:toucanet/view/app_view.dart';
-import 'package:toucanet/view/app_injector.dart';
+import 'internal/application.dart';
 
-void main() async {
+void main() {
+  runZonedGuarded<void>(
+    _run,
+    (error, stackTrace) => print(error),
+  );
+}
+
+Future<void> _run() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  final app = Application()
-    ..options.numberOfWorkers = 2
-    ..options.configurationFiles = ['vk', 'app'];
-
-  await app.start();
-
-  runApp(AppInjector(child: AppView(), app: app));
-
-
+  runApp(Injector(
+    app: const Toucanet(),
+    client: VKClient(clientId: Settings.vkClientId),
+  ));
 }
