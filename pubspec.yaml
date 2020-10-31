@@ -25,12 +25,17 @@ dependencies:
   webview_flutter: ^1.0.3
   flutter_secure_storage: ^3.3.5
 
+  #db
+  hive: ^1.4.4+1
+  hive_flutter: ^0.3.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   mockito: ^4.0.0
   bloc_test: ^7.0.4
+  hive_generator: ^0.8.1
 
 flutter:
   generate: true
