@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/localizations.dart';
+// import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 import '../settings.dart';
 
@@ -22,8 +22,8 @@ class Toucanet extends StatelessWidget {
       //
       // routes: Routes.getRoutes(),
       //
-      supportedLocales: AppLocalizations.supportedLocales,
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      // supportedLocales: AppLocalizations.supportedLocales,
+      // localizationsDelegates: AppLocalizations.localizationsDelegates,
       //
       home: InitializationScope(
         app: AuthenticationScope(

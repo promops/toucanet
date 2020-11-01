@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
+
 import 'package:toucanet_vk_sdk/toucanet_vk_sdk.dart';
 
 import 'di.dart';
