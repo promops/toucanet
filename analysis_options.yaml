@@ -2,22 +2,22 @@
 # # https://dart.dev/guides/language/analysis-options/
 # # https://dart-lang.github.io/linter/lints/
 
-# analyzer:    
+# analyzer:
 #   exclude:
 #     # Web
-#     - 'web/**'
+#     - "web/**"
 #     # Build
-#     - 'build/**'
+#     - "build/**"
 #     # Generated code
-#     - 'lib/**.g.dart'
-#     - 'lib/**.freezed.dart'
-#     - 'lib/**.graphql.dart'
-#     - 'lib/generated_plugin_registrant.dart'
-#     - '.test_coverage.dart'
+#     - "lib/**.g.dart"
+#     - "lib/**.freezed.dart"
+#     - "lib/**.graphql.dart"
+#     - "lib/generated_plugin_registrant.dart"
+#     - ".test_coverage.dart"
 #     # Assets
-#     - 'assets/**'
+#     - "assets/**"
 #     # Mocks for test
-#     - 'test/data/**'
+#     - "test/data/**"
 
 #   strong-mode:
 #     implicit-casts: false
