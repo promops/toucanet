@@ -19,6 +19,6 @@ jobs:
 
       - run: flutter pub get
 
-      - run: sh ./scripts/analyze/flutter_analyze.sh
+      - run: sh ./scripts/flutter_analyze.sh
 
       - run: flutter test
