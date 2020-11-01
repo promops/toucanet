@@ -39,6 +39,7 @@ dev_dependencies:
   mockito: ^4.0.0
   bloc_test: ^7.0.4
   hive_generator: ^0.8.1
+  json_serializable: ^3.5.0
 
 flutter:
   generate: true

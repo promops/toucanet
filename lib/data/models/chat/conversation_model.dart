@@ -1,15 +1,15 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
+
+import 'package:hive/hive.dart';
+import 'package:toucanet/data/models/db_key.dart';
 
 import 'chat_settings_model.dart';
 import 'peer_model.dart';
 
 part 'conversation_model.g.dart';
 
-//flutter packages pub run build_runner build
-//--delete-conflicting-outputs
-
-@JsonSerializable(explicitToJson: true)
-class ConversationModel {
+@HiveType(typeId: 1)
+class ConversationModel extends DbKey {
   ConversationModel(
       {this.peer,
       this.inRead,
@@ -17,20 +17,48 @@ class ConversationModel {
       this.outRead,
       this.chatSettings});
 
+  @HiveField(0)
   final PeerModel peer;
 
-  @JsonKey(name: 'in_read')
+  @HiveField(1)
   final int inRead;
-  @JsonKey(name: 'last_message_id')
+
+  @HiveField(2)
   final int lastMessageId;
-  @JsonKey(name: 'out_read')
+
+  @HiveField(3)
   final int outRead;
   //Настройки чата.
-  @JsonKey(name: 'chat_settings')
+  @HiveField(4)
   final ChatSettingsModel chatSettings;
 
-  factory ConversationModel.fromJson(Map<String, dynamic> json) =>
-      _$ConversationModelFromJson(json);
+  Map<String, dynamic> toMap() {
+    return {
+      'peer': peer?.toMap(),
+      'in_read': inRead,
+      'last_message_id': lastMessageId,
+      'out_read': outRead,
+      'chat_settings': chatSettings?.toMap(),
+    };
+  }
 
-  Map<String, dynamic> toJson() => _$ConversationModelToJson(this);
+  factory ConversationModel.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return ConversationModel(
+      peer: PeerModel.fromMap(map['peer']),
+      inRead: map['in_read'],
+      lastMessageId: map['last_message_id'],
+      outRead: map['out_read'],
+      chatSettings: ChatSettingsModel.fromMap(map['chat_settings']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ConversationModel.fromJson(String source) =>
+      ConversationModel.fromMap(json.decode(source));
+
+  @override
+  String key() => '${peer.localId}';
 }

@@ -1,12 +1,12 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
+
+import 'package:hive/hive.dart';
+import 'package:toucanet/data/models/db_key.dart';
 
 part 'user_model.g.dart';
 
-//flutter packages pub run build_runner build
-//--delete-conflicting-outputs
-
-@JsonSerializable(explicitToJson: true)
-class UserModel {
+@HiveType(typeId: 5)
+class UserModel extends DbKey {
   UserModel(
       {this.id,
       this.firstName,
@@ -16,24 +16,54 @@ class UserModel {
       this.canAccessClosed});
 
   // Идентификатор пользователя.
+  @HiveField(0)
   final int id;
   //Имя
-  @JsonKey(name: 'first_name')
+  @HiveField(1)
   final String firstName;
   //Фамилия
-  @JsonKey(name: 'last_name')
+  @HiveField(2)
   final String lastName;
   //Поле возвращается, если страница пользователя удалена или заблокирована, содержит значение deleted или banned. В этом случае опциональные поля не возвращаются.
+  @HiveField(3)
   final String deactivated;
   //Cкрыт ли профиль пользователя настройками приватности.
-  @JsonKey(name: 'is_closed')
+  @HiveField(4)
   final String isClosed;
+
   //Может ли текущий пользователь видеть профиль при is_closed = 1 (например, он есть в друзьях).
-  @JsonKey(name: 'can_access_closed')
+  @HiveField(5)
   final bool canAccessClosed;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModelFromJson(json);
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'firstName': firstName,
+      'lastName': lastName,
+      'deactivated': deactivated,
+      'is_closed': isClosed,
+      'can_access_closed': canAccessClosed,
+    };
+  }
 
-  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return UserModel(
+      id: map['id'],
+      firstName: map['first_name'],
+      lastName: map['last_name'],
+      deactivated: map['deactivated'],
+      isClosed: map['is_closed'],
+      canAccessClosed: map['can_access_closed'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source));
+
+  @override
+  String key() => '$id';
 }

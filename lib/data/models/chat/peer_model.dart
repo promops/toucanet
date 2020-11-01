@@ -1,23 +1,40 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:convert';
+
+import 'package:hive/hive.dart';
 
 part 'peer_model.g.dart';
 
-//flutter packages pub run build_runner build
-//--delete-conflicting-outputs
-
-@JsonSerializable(explicitToJson: true)
+@HiveType(typeId: 2)
 class PeerModel {
   PeerModel({this.id, this.type, this.localId});
 
-  @JsonKey(name: 'local_id')
+  @HiveField(0)
   final int localId;
-
+  @HiveField(1)
   final int id;
-
+  @HiveField(2)
   final String type;
 
-  factory PeerModel.fromJson(Map<String, dynamic> json) =>
-      _$PeerModelFromJson(json);
+  Map<String, dynamic> toMap() {
+    return {
+      'local_id': localId,
+      'id': id,
+      'type': type,
+    };
+  }
 
-  Map<String, dynamic> toJson() => _$PeerModelToJson(this);
+  factory PeerModel.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return PeerModel(
+      localId: map['local_id'],
+      id: map['id'],
+      type: map['type'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory PeerModel.fromJson(String source) =>
+      PeerModel.fromMap(json.decode(source));
 }
