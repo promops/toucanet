@@ -32,6 +32,7 @@
 .pub-cache/
 .pub/
 /build/
+coverage/lcov.info
 
 # Web related
 lib/generated_plugin_registrant.dart

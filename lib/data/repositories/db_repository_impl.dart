@@ -23,9 +23,10 @@ class DbRepositoryImpl {
   }
 
   Future<Box> getBox<T>(String name) async {
-    if (Hive.isBoxOpen(name))
-      return Hive.box(name);
-    else
+    if (Hive.isBoxOpen(name)) {
+      return Hive.box<T>(name);
+    } else {
       return await Hive.openBox<T>(name);
+    }
   }
 }

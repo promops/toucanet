@@ -1,8 +1,9 @@
-import 'package:toucanet/data/models/chat/conversation_model.dart';
+import '../../data/models/chat/conversation_model.dart';
 
 abstract class DbRepository<T> {
-  Future save<T>(T model);
-  void delete(ConversationModel model);
-  get(String id);
+  Future<void> save<M>(M model);
+  Future<void> delete(ConversationModel model);
+
+  Future<T> get(String id);
   Future<List<T>> getAll();
 }

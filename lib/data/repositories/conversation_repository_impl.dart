@@ -1,7 +1,7 @@
-import 'package:toucanet/data/models/chat/conversation_model.dart';
-import 'package:toucanet/data/repositories/conversation_box.dart';
-import 'package:toucanet/data/repositories/db_repository_impl.dart';
-import 'package:toucanet/domain/repositories/db_repository.dart';
+import '../models/chat/conversation_model.dart';
+import 'conversation_box.dart';
+import 'db_repository_impl.dart';
+import '../../domain/repositories/db_repository.dart';
 
 class ConversationRepositoryImpl implements DbRepository<ConversationModel> {
   final DbRepositoryImpl dbRepository;
@@ -11,13 +11,13 @@ class ConversationRepositoryImpl implements DbRepository<ConversationModel> {
 
   /// If it does not exist, nothing happens.
   @override
-  Future delete(ConversationModel model) async {
+  Future<void> delete(ConversationModel model) async {
     final box = await conversationBox.box;
-    box.delete(model.key());
+    await box.delete(model.key());
   }
 
   @override
-  Future save<T>(T model) async {
+  Future<void> save<M>(M model) async {
     final box = await conversationBox.box;
     if (model is ConversationModel) await box.add(model);
 
@@ -25,7 +25,7 @@ class ConversationRepositoryImpl implements DbRepository<ConversationModel> {
   }
 
   @override
-  Future get(String id) async {
+  Future<ConversationModel> get(String id) async {
     final box = await conversationBox.box;
     return box.get(id);
   }

@@ -31,7 +31,7 @@ class ChatSettingsModel {
   final List<int> activeIds;
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'owner_id': ownerId,
       'title': title,
       'state': state,
@@ -45,17 +45,17 @@ class ChatSettingsModel {
     if (map == null) return null;
 
     return ChatSettingsModel(
-      ownerId: map['owner_id'],
-      title: map['title'],
-      state: map['state'],
-      photo: PhotoModel.fromMap(map['photo']),
-      isGroupChannel: map['is_group_channel'],
-      activeIds: List<int>.from(map['active_ids']),
+      ownerId: int.tryParse(map['owner_id'] as String),
+      title: map['title'] as String,
+      state: map['state'] as String,
+      photo: PhotoModel.fromMap(map['photo'] as Map<String, dynamic>),
+      isGroupChannel: map['is_group_channel'] as bool,
+      activeIds: List<int>.from(map['active_ids'] as Iterable),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory ChatSettingsModel.fromJson(String source) =>
-      ChatSettingsModel.fromMap(json.decode(source));
+      ChatSettingsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

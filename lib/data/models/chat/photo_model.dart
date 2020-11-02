@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 
 part 'photo_model.g.dart';
+
 @HiveType(typeId: 4)
 class PhotoModel {
   PhotoModel({this.photo50, this.photo100, this.photo200});
@@ -18,7 +19,7 @@ class PhotoModel {
   final String photo200;
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'photo_50': photo50,
       'photo_100': photo100,
       'photo_200': photo200,
@@ -29,14 +30,14 @@ class PhotoModel {
     if (map == null) return null;
 
     return PhotoModel(
-      photo50: map['photo_50'],
-      photo100: map['photo_100'],
-      photo200: map['photo_200'],
+      photo50: map['photo_50'] as String,
+      photo100: map['photo_100'] as String,
+      photo200: map['photo_200'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory PhotoModel.fromJson(String source) =>
-      PhotoModel.fromMap(json.decode(source));
+      PhotoModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

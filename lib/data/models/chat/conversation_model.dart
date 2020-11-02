@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:hive/hive.dart';
-import 'package:toucanet/data/models/db_key.dart';
 
-import 'chat_settings_model.dart';
+import '../db_key.dart';
+
 import 'peer_model.dart';
+import 'chat_settings_model.dart';
 
 part 'conversation_model.g.dart';
 
@@ -33,7 +33,7 @@ class ConversationModel extends DbKey {
   final ChatSettingsModel chatSettings;
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'peer': peer?.toMap(),
       'in_read': inRead,
       'last_message_id': lastMessageId,
@@ -46,18 +46,19 @@ class ConversationModel extends DbKey {
     if (map == null) return null;
 
     return ConversationModel(
-      peer: PeerModel.fromMap(map['peer']),
-      inRead: map['in_read'],
-      lastMessageId: map['last_message_id'],
-      outRead: map['out_read'],
-      chatSettings: ChatSettingsModel.fromMap(map['chat_settings']),
+      peer: PeerModel.fromMap(map['peer'] as Map<String, dynamic>),
+      inRead: map['in_read'] as int,
+      lastMessageId: map['last_message_id'] as int,
+      outRead: map['out_read'] as int,
+      chatSettings: ChatSettingsModel.fromMap(
+          map['chat_settings'] as Map<String, dynamic>),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory ConversationModel.fromJson(String source) =>
-      ConversationModel.fromMap(json.decode(source));
+      ConversationModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String key() => '${peer.localId}';

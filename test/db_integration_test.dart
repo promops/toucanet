@@ -10,9 +10,10 @@ import 'package:toucanet/data/repositories/conversation_box.dart';
 import 'package:toucanet/data/repositories/conversation_repository_impl.dart';
 import 'package:toucanet/data/repositories/db_repository_impl.dart';
 
-void initHive() async {
-  await Hive
-    ..initFlutter()
+Future<void> initHive() async {
+  await Hive.initFlutter();
+
+  Hive
     ..registerAdapter(ConversationModelAdapter())
     ..registerAdapter(PeerModelAdapter())
     ..registerAdapter(ChatSettingsModelAdapter())
@@ -20,11 +21,10 @@ void initHive() async {
     ..registerAdapter(UserModelAdapter());
 
   // await Hive.deleteBoxFromDisk('conversation');
-
   // await Hive.deleteFromDisk();
 }
 
-main() async {
+Future<void> main() async {
   await initHive();
   group('no unit tests', () {
     final model =

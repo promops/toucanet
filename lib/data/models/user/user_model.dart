@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
-import 'package:toucanet/data/models/db_key.dart';
+import '../db_key.dart';
 
 part 'user_model.g.dart';
 
@@ -36,7 +36,7 @@ class UserModel extends DbKey {
   final bool canAccessClosed;
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'id': id,
       'firstName': firstName,
       'lastName': lastName,
@@ -50,19 +50,19 @@ class UserModel extends DbKey {
     if (map == null) return null;
 
     return UserModel(
-      id: map['id'],
-      firstName: map['first_name'],
-      lastName: map['last_name'],
-      deactivated: map['deactivated'],
-      isClosed: map['is_closed'],
-      canAccessClosed: map['can_access_closed'],
+      id: map['id'] as int,
+      firstName: map['first_name'] as String,
+      lastName: map['last_name'] as String,
+      deactivated: map['deactivated'] as String,
+      isClosed: map['is_closed'] as String,
+      canAccessClosed: map['can_access_closed'] as bool,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source));
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String key() => '$id';

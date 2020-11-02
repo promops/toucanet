@@ -11,7 +11,7 @@ class MockConversationBox extends Mock implements ConversationBox {}
 
 class MockBox<T> extends Mock implements Box<T> {}
 
-main() {
+void main() {
   final model =
       ConversationModel(peer: PeerModel(id: 0, localId: 1, type: 'test'));
   final model2 =

@@ -16,7 +16,7 @@ class PeerModel {
   final String type;
 
   Map<String, dynamic> toMap() {
-    return {
+    return <String, dynamic>{
       'local_id': localId,
       'id': id,
       'type': type,
@@ -27,14 +27,14 @@ class PeerModel {
     if (map == null) return null;
 
     return PeerModel(
-      localId: map['local_id'],
-      id: map['id'],
-      type: map['type'],
+      localId: map['local_id'] as int,
+      id: map['id'] as int,
+      type: map['type'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory PeerModel.fromJson(String source) =>
-      PeerModel.fromMap(json.decode(source));
+      PeerModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
