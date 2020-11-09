@@ -20,6 +20,6 @@ Future<void> _run() async {
 
   runApp(Injector(
     app: const Toucanet(),
-    client: VKClient(clientId: Settings.vkClientId),
+    client: VK.implicitFlow(clientId: Settings.vkClientId),
   ));
 }

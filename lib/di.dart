@@ -11,7 +11,7 @@ import 'data/repositories/auth_repository_impl.dart';
 
 class Injector extends StatelessWidget {
   final Widget app;
-  final VKClient client;
+  final VK client;
 
   const Injector({@required this.app, @required this.client, Key key})
       : super(key: key);

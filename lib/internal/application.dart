@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../constraints/routes.dart';
+import '../presentation/screens/main/main_screen.dart';
 // import 'package:flutter_gen/gen_l10n/localizations.dart';
 
 import '../settings.dart';
@@ -20,7 +22,7 @@ class Toucanet extends StatelessWidget {
       //
       title: Settings.appTitle,
       //
-      // routes: Routes.getRoutes(),
+      routes: Routes.getRoutes(),
       //
       // supportedLocales: AppLocalizations.supportedLocales,
       // localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -28,7 +30,7 @@ class Toucanet extends StatelessWidget {
       home: InitializationScope(
         app: AuthenticationScope(
           auth: const AuthScreen(),
-          home: Container(color: Colors.green),
+          home: MainScreen(),
         ),
         initial: const SplashScreen(),
       ),

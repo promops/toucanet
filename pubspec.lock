@@ -35,7 +35,7 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.3"
+    version: "6.1.0"
   bloc_test:
     dependency: "direct dev"
     description:
@@ -236,7 +236,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.6"
+    version: "6.1.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -290,7 +290,7 @@ packages:
     source: hosted
     version: "0.8.1"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -656,7 +656,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "8253eeed7deccfc04871d0770f6a1f254e19f0f2"
+      resolved-ref: "9fddebdf24e478f15373660085db3adcfe368fac"
       url: "https://github.com/toucanet-app/toucanet_vk_sdk.git"
     source: git
     version: "0.0.1"

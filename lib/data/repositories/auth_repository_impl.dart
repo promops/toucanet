@@ -7,7 +7,7 @@ import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/account_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final VKClient vkClient;
+  final VK vkClient;
   final AccountRepository accountRepository;
 
   final scope = [
